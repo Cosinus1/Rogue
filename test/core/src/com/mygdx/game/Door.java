@@ -8,6 +8,7 @@ public class Door {
     private float x;
     private float y;
     private Rectangle bounds;
+    public int TimetoLive;
     private boolean isOpen;
     private Texture sceneryImage;
 
