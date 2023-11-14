@@ -9,7 +9,7 @@ public class PlayState extends GameState{
     private Texture bacground ;
     public PlayState(GameStateManager gsm) {
         super(gsm);
-        this.bacground =  new Texture(Gdx.files.internal("tavern.jpg"));
+        this.bacground =  new Texture(Gdx.files.internal("camp.gif"));
     }
 
     @Override
@@ -25,7 +25,7 @@ public class PlayState extends GameState{
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-        sb.draw(bacground,0,0);
+        sb.draw(bacground,0,0,1200,800);
         sb.end();
     }
 
