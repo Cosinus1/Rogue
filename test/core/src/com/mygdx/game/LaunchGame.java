@@ -1,6 +1,6 @@
 package com.mygdx.game;
 
-import Manager.GameStateManager;
+import com.mygdx.game.Manager.GameStateManager;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
