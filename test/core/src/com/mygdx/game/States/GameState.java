@@ -1,0 +1,25 @@
+package com.mygdx.game.States;
+
+import Manager.GameStateManager;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+public abstract class GameState {
+    public  OrthographicCamera cam ;
+    public GameStateManager gsm;
+
+    public GameState(GameStateManager gsm){
+        this.cam = new OrthographicCamera();
+        this.gsm = gsm ;
+    }
+    public abstract void handleInput();
+    public abstract void update(float dt );
+    public abstract void render(SpriteBatch sb);
+    public abstract void dispose();
+
+
+
+
+
+
+}
