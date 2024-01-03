@@ -176,10 +176,10 @@ public class Map {
         ArrayList<GraphicEnnemie> EnnemiesinRange = new ArrayList<>();
         if(Ennemies != null){
             for(GraphicEnnemie ennemie : Ennemies){
-                float x = (float) ennemie.getObject().getProperties().get("x");
-                float y = (float) ennemie.getObject().getProperties().get("y");
-                double distanceX = x - (float) character.getObject().getProperties().get("x");
-                double distanceY = y - (float) character.getObject().getProperties().get("y");
+                float x = ennemie.getX();
+                float y = ennemie.getY();
+                double distanceX = x - character.getX();
+                double distanceY = y - character.getY();
                 if(Math.sqrt(Math.pow(distanceY, 2) + Math.pow(distanceX, 2)) < character.getCharacter().getRange()){
                     EnnemiesinRange.add(ennemie);
                 }

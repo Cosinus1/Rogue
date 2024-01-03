@@ -84,7 +84,7 @@ public class GraphicEnnemie extends GraphicCharacter{
         float signY = Math.signum(Yh-Y);
 
         //Move towards the hero if in range 
-        if( distanceX + distanceY < 10000){
+        if( distanceX + distanceY < 50000){
             //Set moves towards the Hero
             float moveX = signX*collisionLayer.getTileWidth();
             float moveY = signY*collisionLayer.getTileWidth();
@@ -96,7 +96,8 @@ public class GraphicEnnemie extends GraphicCharacter{
             if (isValidTrajectory((int) X/tileWidth, (int) Y/tileWidth, endX, endY, (int) moveX/tileWidth, (int) moveY/tileWidth, map)) {
                 System.out.println("valid trajectory");
                 switchtorandom = false;
-                this.setPosition(X+moveX/speed, Y+moveY/speed);
+                setPosition(X+moveX/speed, Y+moveY/speed);
+                //System.out.println("Position : " + (int) X+moveX/speed/tileWidth + ", " + Y+moveY/speed/tileWidth);
             }
             else switchtorandom = true;
         }
@@ -141,6 +142,7 @@ public class GraphicEnnemie extends GraphicCharacter{
                 // Ensure the new position is within the map bounds
                 if (isValidPosition((int) newX/tileWidth, (int) newY/tileWidth, map)) {
                     setPosition(newX,newY);
+                    //System.out.println("Position : " + (int) newX/tileWidth + ", " + (int) newY/tileWidth);
                     setMoveTexture(randomX, randomY);
                 }
             }

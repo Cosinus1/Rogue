@@ -108,7 +108,7 @@ public class GraphicCharacter {
         this.Hitbox.x = x;
         this.Hitbox.y = y;
         this.Object.getProperties().put("x",x);
-        this.Object.getProperties().put("y",x);
+        this.Object.getProperties().put("y",y);
     }
     public void setMoveTexture(int x, int y){
         //Check horizontal movement
