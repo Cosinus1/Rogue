@@ -83,7 +83,7 @@ public class Renderer {
                   
                   spriteBatch.setProjectionMatrix(camera.combined);
 
-                   // Adjust position if it's the battle animation texture
+                  // Adjust position if it's the battle animation texture
                   if (textureRegion.getRegionWidth() == 128 && textureRegion.getRegionHeight() == 128) {
                      // Adjust the position to properly center the larger texture
                      objectY -= 64*scaleFactor;

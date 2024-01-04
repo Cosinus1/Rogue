@@ -98,6 +98,15 @@ public class GraphicEnnemie extends GraphicCharacter{
                 switchtorandom = false;
                 setPosition(X+moveX/speed, Y+moveY/speed);
                 //System.out.println("Position : " + (int) X+moveX/speed/tileWidth + ", " + Y+moveY/speed/tileWidth);
+                //Get the appropriate sprite for movement
+                int y;
+                int x;
+                float delta = 4.0f;
+                if (distanceY < delta) y = 0;
+                else y = (int) signY;
+                if (distanceX < delta) x = 0;
+                else x = (int) signX;
+                setMoveTexture(x, y);
             }
             else switchtorandom = true;
         }
