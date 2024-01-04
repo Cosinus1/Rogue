@@ -1,7 +1,6 @@
 package com.mygdx.game.Graphic.GraphicCharacter;
 
 import java.util.Random;
-import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObjects;
@@ -15,12 +14,13 @@ import com.mygdx.game.Graphic.World.World;
 import com.mygdx.game.Graphic.World.Map.Map;
 
 public class GraphicEnnemie extends GraphicCharacter{
+
     public GraphicEnnemie(Character character, float x, float y){
         super(character,x,y);
     }
 
 /* ----------------------------------------------TEXTURE HANDLING---------------------------------------------------- */
-
+    
     public void getEnnemieTextures(World world, String Tileset_name, boolean Boss){
         Map map = world.getDungeon();
         //Setting FPS for slower animation
