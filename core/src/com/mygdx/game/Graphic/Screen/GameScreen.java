@@ -33,8 +33,8 @@ public class GameScreen implements Screen {
     public GameScreen(MyGame game){
         this.game = game;
         world = new World();
-        world.getCurrentMap().getMusic().setLooping(true);
-        world.getCurrentMap().getMusic().play();
+      //   world.getCurrentMap().getMusic().setLooping(true);
+      //   world.getCurrentMap().getMusic().play();
         // create the camera and the SpriteBatch
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 960, 640);

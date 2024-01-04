@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Back.Character.Character;
+import com.mygdx.game.Back.Character.Hero.Hero;
 import com.mygdx.game.Graphic.World.World;
 import com.mygdx.game.Graphic.World.Map.Map;
 
@@ -26,6 +28,10 @@ public class GraphicHero extends GraphicCharacter {
         spawn(world.getHome(), null, this, "hero",true);
         spawn(world.getTavern(), null, this, "hero",true);
         getHeroTextures(world);
+    }
+
+    public Hero getCharacter(){
+        return (Hero) this.character;
     }
 
     public void getHeroTextures(World world){
@@ -255,4 +261,34 @@ public class GraphicHero extends GraphicCharacter {
         }       
     }
 
+    public void render(SpriteBatch spriteBatch, OrthographicCamera camera){
+        int scaleFactor;
+        float offsetX=0;
+        float offsetY=0;
+        TextureRegion textureRegion = Object.getTextureRegion();
+        // Render the object texture based on its position and properties
+        float objectX = (float) Object.getProperties().get("x");
+        float objectY = (float) Object.getProperties().get("y");
+        //Render bigger for boss
+        if (Object.getProperties().get("boss")=="boss"){
+            scaleFactor = 2;
+            offsetX += scaleFactor*16;
+            offsetY -= scaleFactor*16;
+        }
+        else scaleFactor = 1;
+        float objectWidth = textureRegion.getRegionWidth()*scaleFactor;
+        float objectHeight = textureRegion.getRegionHeight()*scaleFactor;
+            
+            spriteBatch.setProjectionMatrix(camera.combined);
+
+            // Adjust position if it's the battle animation texture
+            if (textureRegion.getRegionWidth() == 128 && textureRegion.getRegionHeight() == 128) {
+                // Adjust the position to properly center the larger texture
+                objectY -= 64*scaleFactor;
+            }
+
+        
+            spriteBatch.draw(textureRegion, objectX, objectY, objectWidth, objectHeight);
+            barlife.drawHeroLifeBar(spriteBatch,this.getCharacter());
+        }
 }

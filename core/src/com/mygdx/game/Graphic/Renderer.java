@@ -2,22 +2,21 @@ package com.mygdx.game.Graphic;
 
 import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Collections;
 
 import com.mygdx.game.Graphic.Elements.Door;
 import com.mygdx.game.Graphic.GraphicCharacter.*;
 import com.mygdx.game.Graphic.World.Map.Map;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.TextureMapObject;
+
 
 public class Renderer {
 
@@ -49,62 +48,23 @@ public class Renderer {
       renderObjects(map, hero, camera);
    }
 
-   public void renderObjects(Map map, GraphicCharacter hero, OrthographicCamera camera){
-      MapObjects objects = map.getObjects();
-
-      int scaleFactor;
-      float offsetX, offsetY;
-
+   public void renderObjects(Map map, GraphicCharacter hero, OrthographicCamera camera){  
+      
       spriteBatch.begin();
       for (Door door : map.getDoors()) {
          spriteBatch.draw(door.doorImage, door.getX(), door.getY());
       }
 
-      if (objects != null) {
-         for (MapObject object : objects) {
-            offsetX = 0;
-            offsetY = 0;
-               if (object instanceof TextureMapObject) {
-                  TextureMapObject textureObject = (TextureMapObject) object;
-                  TextureRegion textureRegion = textureObject.getTextureRegion();
-                  // Render the object texture based on its position and properties
-                  float objectX = (float) object.getProperties().get("x");
-                  float objectY = (float) object.getProperties().get("y");
-                  
-
-                  //Render bigger for boss
-                  if (object.getProperties().get("boss")=="boss"){
-                     scaleFactor = 2;
-                     offsetX += scaleFactor*16;
-                     offsetY -= scaleFactor*16;
-                  }
-                  else scaleFactor = 1;
-                  float objectWidth = textureRegion.getRegionWidth()*scaleFactor;
-                  float objectHeight = textureRegion.getRegionHeight()*scaleFactor;
-                  
-                  spriteBatch.setProjectionMatrix(camera.combined);
-
-                  // Adjust position if it's the battle animation texture
-                  if (textureRegion.getRegionWidth() == 128 && textureRegion.getRegionHeight() == 128) {
-                     // Adjust the position to properly center the larger texture
-                     objectY -= 64*scaleFactor;
-                  }
-
-               
-                  spriteBatch.draw(textureRegion, objectX, objectY, objectWidth, objectHeight);
-
-               }
-               else System.out.println("object Texture not found");
-         }
-         if (map.getPNJ_list()!=null){
-            ArrayList<GraphicEnnemie> Characters = new ArrayList<>();
-            Characters = map.getPNJ_list();
-            for (GraphicCharacter character : Characters) {
-               drawLifebar(character);
-            }
-         }
-         drawHeroLifebar(hero);
-      }else System.out.println("object is null");
+      ArrayList<GraphicCharacter> list = new ArrayList<>();
+      list.add(hero);
+      if (map.getPNJ_list()!=null){ 
+         list.addAll(map.getPNJ_list());
+         sortCharacter(list);
+      }
+      for(GraphicCharacter character : list){
+         character.render(spriteBatch, camera);
+      }
+      
       spriteBatch.end();
 
    }
@@ -159,51 +119,21 @@ public class Renderer {
          } else System.out.println("Deadobjects is null");
     }
 
-    public void drawLifebar(GraphicCharacter character){
-      // Get properties
-            TextureMapObject textureObject = (TextureMapObject) character.getObject();
-            TextureRegion textureRegion = textureObject.getTextureRegion();
-            float objectX = (float) character.getObject().getProperties().get("x");
-            float objectY = (float) character.getObject().getProperties().get("y");
-            float objectWidth = textureRegion.getRegionWidth();
-            float objectHeight = textureRegion.getRegionHeight();
-            // Draw life bar
-            int lifeBarWidth = character.getCharacter().getPV(); 
-            int lifeBarHeight = 1; // Height of the life bar
-            float lifeBarX = objectX + (objectWidth - lifeBarWidth) / 2; 
-            float lifeBarY = objectY + objectHeight + 5; // Place the life bar above the character
-            Pixmap pixmap = new Pixmap(lifeBarWidth, lifeBarHeight, Format.RGBA8888);
-            pixmap.setColor(Color.RED);
-            pixmap.fillRectangle(0, 0, lifeBarWidth, lifeBarHeight);
-            Texture lifebar = new Texture(pixmap);
-            pixmap.dispose();
-
-            spriteBatch.setColor(1, 0, 0, 1); // Red color for the life bar
-            spriteBatch.draw(lifebar, lifeBarX, lifeBarY, lifeBarWidth, lifeBarHeight);
-            spriteBatch.setColor(1, 1, 1, 1); // Reset color after drawing the life bar
-    }
-
-    public void drawHeroLifebar(GraphicCharacter character){
-      // Get properties
-            // float objectX = (float) 10;
-            // float objectY = (float) 600;
-            // // Draw life bar
-            // int lifeBarWidth = character.getCharacter().getPV();
-            // int lifeBarHeight = 10;
-            // float lifeBarX = objectX ;
-            // float lifeBarY = objectY ;
-            // Pixmap pixmap = new Pixmap(lifeBarWidth, lifeBarHeight, Format.RGBA8888);
-            // pixmap.setColor(Color.RED);
-            // pixmap.fillRectangle(0, 0, lifeBarWidth, lifeBarHeight);
-            // Texture lifebar = new Texture(pixmap);
-            // pixmap.dispose();
-
-            // spriteBatch.setColor(1, 0, 0, 1); // Red color for the life bar
-            // spriteBatch.draw(lifebar, lifeBarX, lifeBarY, lifeBarWidth, lifeBarHeight);
-            // spriteBatch.setColor(1, 1, 1, 1); // Reset color after drawing the life bar
-            character.getBarlife().drawLifeBar(spriteBatch, character.getCharacter());
-    }
     public void dispose(){
       spriteBatch.dispose();
+    }
+
+   public void sortCharacter(ArrayList<GraphicCharacter> list){
+        // Définition du Comparator pour trier en fonction de l'attribut y
+        Comparator<GraphicCharacter> yComparator = new Comparator<GraphicCharacter>() {
+            @Override
+            public int compare(GraphicCharacter character1, GraphicCharacter character2) {
+                // Comparaison des valeurs de y
+                return Float.compare(character2.getY(), character1.getY());
+            }
+        };
+
+        // Utilisation de Collections.sort() avec le Comparator défini
+        Collections.sort(list, yComparator);
     }
 }

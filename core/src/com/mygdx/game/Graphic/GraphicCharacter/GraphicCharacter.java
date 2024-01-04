@@ -2,6 +2,8 @@ package com.mygdx.game.Graphic.GraphicCharacter;
 
 import java.util.ArrayList;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.TextureMapObject;
@@ -228,6 +230,10 @@ public class GraphicCharacter {
     }
     
 */
+
+  public void render(SpriteBatch batch, OrthographicCamera camera){
+
+  } 
 
 
 
