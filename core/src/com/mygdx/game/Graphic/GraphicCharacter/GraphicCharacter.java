@@ -10,7 +10,7 @@ import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.math.Rectangle;
-
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Back.Character.Character;
 import com.mygdx.game.Graphic.World.Map.Map;
 import com.mygdx.game.Graphic.Elements.*;
@@ -103,6 +103,9 @@ public class GraphicCharacter {
         this.Object.getProperties().put("x",x);
         this.Object.getProperties().put("y",y);
     }
+    public void setPosition (Vector2 position) {
+		setPosition(position.x, position.y);
+	}
     public void setlastX(float x){
         this.lastX = x;
     }

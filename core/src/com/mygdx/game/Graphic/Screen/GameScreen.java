@@ -102,16 +102,12 @@ public class GameScreen implements Screen {
                //change position of the hero
                world.getCurrentMap().updatelastposition(hero.getlastX(), hero.getlastY());
                world.updateCurrentMap(Door.getMap());
-               if(Door.getMap().isOpen()){
-                  hero.getHitbox().setPosition(world.getCurrentMap().getLastposition());
+               if(Door.getMap().isOpen() || (map.getPVP()!="ON" && map!=world.getHome())){          
+                  hero.setPosition(world.getCurrentMap().getLastposition());
                }else{
-                  map.toggle();
-                  hero.setX(world.getCurrentMap().getX());
-                  hero.setY(world.getCurrentMap().getY());
-               }
-               hero.getObject().getProperties().put("x", hero.getX());
-               hero.getObject().getProperties().put("y", hero.getY());
-            
+                  if(map != world.getHome()) map.toggle();
+                  hero.setPosition(world.getCurrentMap().getX(), world.getCurrentMap().getY());
+               }    
          }
       }
       hero.setlastX(hero.getX());

@@ -27,6 +27,7 @@ public class World {
     private Map CurrentMap;
 
     private Hero hero;
+    private Boss boss;
     private GraphicHero graphicHero;
 
     //constructor
@@ -43,7 +44,7 @@ public class World {
 
         //Set up the Doors
         this.Tavern.addDoor(new Door(480, 120, Home));
-        this.Home.addDoor(new Door(800, 435, Dungeon));
+        this.Home.addDoor(new Door(860, 415, Dungeon));
         this.Home.addDoor(new Door(0, 400, Tavern));
 
         //Align TavernMap
@@ -101,9 +102,10 @@ public class World {
                 respawn(map);
                 System.err.println("Dungeon Spawned");
             }
-            if(map==Home){
+            if(map==Home && boss.getPV()<=0){
                 System.out.println("boss killed");
                 Dungeonlevel++;
+                disposeDungeon();
                 initializeDungeon(5);
             }
         }else System.out.println("map is null");
@@ -112,7 +114,7 @@ public class World {
 /* ---------------------------------------------------------------------------------------- */
 
     public void respawn(Map map) {
-        int EnemyCount = 5*Dungeonlevel; // Increase enemy count by 5 each time (for example)
+        int EnemyCount = Dungeonlevel; // Increase enemy count
         
         // Create new, more powerful enemies
         System.out.println("creating ennemies ...");
@@ -122,7 +124,7 @@ public class World {
     }
 
     public void initializeDungeon(int numberOfMaps) {
-        Boss boss = new Boss(500, 100, 50,3,null,"Boss",null);
+        boss = new Boss(100, 0, 50,3,null,"Boss",null);
         GraphicBoss graphicboss = new GraphicBoss(boss,500,500, this);
         System.out.println("              /////////////Initializing Dungeon//////////////");
         Map dungeonMap = getDungeon();
@@ -161,5 +163,24 @@ public class World {
         }
         
         System.out.println("             /////////////////Dungeon Initialized/////////////");
+    }
+    public void disposeDungeon(){
+
+        disposeTiledmaps(Dungeon.getDoors().get(0).getMap());
+        Dungeon.updatelastposition(Dungeon.getX(), Dungeon.getY());
+
+        Dungeon.disposeDoors();
+
+
+    }
+
+    public void disposeTiledmaps(Map map){
+        
+        Door door = map.getDoors().get(1);
+        
+        if (door.getMap().getPVP() == "ON"){
+            map.getTiledMap().dispose();
+            disposeTiledmaps(door.getMap());
+        }
     }
 }

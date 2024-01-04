@@ -50,10 +50,15 @@ public class Renderer {
 
    public void renderObjects(Map map, GraphicCharacter hero, OrthographicCamera camera){  
       
+      boolean renderDoors = false;
       spriteBatch.begin();
-      for (Door door : map.getDoors()) {
-         spriteBatch.draw(door.doorImage, door.getX(), door.getY());
+      
+      if(renderDoors){
+         for (Door door : map.getDoors()) {
+            spriteBatch.draw(door.doorImage, door.getX(), door.getY());
+         }
       }
+
 
       ArrayList<GraphicCharacter> list = new ArrayList<>();
       list.add(hero);

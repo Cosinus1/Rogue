@@ -3,12 +3,19 @@ package com.mygdx.game.Graphic.GraphicCharacter;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.mygdx.game.Back.Character.Ennemie.Ennemie;
 import com.mygdx.game.Back.Character.Ennemie.EnnemieFactory;
 import com.mygdx.game.Graphic.World.World;
 
 public class GraphicEnnemieFactory {
+
+    EnnemieFactory factory;
+
+    public GraphicEnnemieFactory(){
+        this.factory = new EnnemieFactory();
+    }
+
     public GraphicEnnemie createGraphicEnnemie(String request, float x, float y, World world){
-        EnnemieFactory factory = new EnnemieFactory();
         GraphicEnnemie ennemie = null;
         if("gobelin".equals(request)){
             ennemie = new GraphicGobelin(factory.createEnnemie("gobelin"),x,y, world);

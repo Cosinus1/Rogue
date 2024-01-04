@@ -106,7 +106,7 @@ public class GraphicHero extends GraphicCharacter {
          newY = touchPos.y - 32;
         }
 
-        map.sortObjects();
+        //map.sortObjects();
         HeroNPC_collision = map.PNJcollision(this);
 
         // LEFT

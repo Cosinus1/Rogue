@@ -27,9 +27,9 @@ public class BarLife {
     public void drawHeroLifeBar(SpriteBatch batch, Hero hero){
         float remainingLifePercentage = (float) hero.getPV() / hero.getPV_max();
         //dessiner la barre de vie
-        batch.draw(backgroundTexture,5,595);
-        batch.draw(barTexture,10,600,400*remainingLifePercentage, 20);
-        font.draw(batch, hero.getPV() + " / " + hero.getPV_max(), 190, 615);
+        batch.draw(backgroundTexture,0,610);
+        batch.draw(barTexture,5,615,400*remainingLifePercentage, 20);
+        font.draw(batch, hero.getPV() + " / " + hero.getPV_max(), 185, 630);
     }
 
     public void drawPNJLifeBar(SpriteBatch batch, GraphicEnnemie ennemie){

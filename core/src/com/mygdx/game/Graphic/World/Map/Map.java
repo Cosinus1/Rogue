@@ -270,7 +270,7 @@ public class Map {
         Objects = ObjectsSorted;
     }
     
-    //Create Methods
+    /*-----------------------------------------------------------------SPAWN ENNEMIES----------------------------------------------------------------------- */
 
     public void createRandomEnnemies(World world, int n) {
         GraphicEnnemieFactory ennemieFactory = new GraphicEnnemieFactory();
@@ -286,10 +286,11 @@ public class Map {
             int randomX, randomY;
             boolean withinDistance;
             boolean tooClose;
-    
+            
+            int buffer = 0;
             do {
-                randomX = random.nextInt(mapWidth);
-                randomY = random.nextInt(mapHeight);
+                randomX = random.nextInt(mapWidth-5);
+                randomY = random.nextInt(mapHeight-5);
     
                 // Check distance from walls
                 withinDistance = checkDistancefromWall(randomX, randomY);
@@ -297,7 +298,9 @@ public class Map {
                 // Check distance from other enemies
                 tooClose = checkDistancefromEnnemie(randomX, randomY, PNJ_list);
     
-            } while (!withinDistance || tooClose);
+            } while (!withinDistance || tooClose || buffer>1000);
+
+            if(buffer>1000) System.err.println("Buffer overloaded : " + buffer);
     
             float x = randomX * collisionLayer.getTileWidth();
             float y = randomY * collisionLayer.getTileHeight();
@@ -339,5 +342,13 @@ public class Map {
         }
         return false;
     }
+
+    /*------------------------------------------------------------DISPOSE--------------------------------------------------------------------- */
+
+
+    public void disposeDoors(){
+        this.Door_list = null;
+    }
+        
         
 }
