@@ -16,6 +16,7 @@ public class MyGame extends Game {
         pauseScreen = new PauseScreen(this);
         setScreen(gameScreen);
     } 
+    //je rajoute un commentaire
     
     
 }
