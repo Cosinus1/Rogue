@@ -71,106 +71,118 @@ public class GraphicHero extends GraphicCharacter {
 
     public void move(OrthographicCamera camera, World world){
 
+        Map map = world.getCurrentMap();
+        int tileWidth = 32;
+        int tileHeight = 32;
+
+        float newX = getX();
+        float newY = getY();
+
+        // Get Tile coordinates
+        int tileX = (int) (getX()-0) / tileWidth;
+        int tileY = (int) (getY()-0) / tileHeight;
+
+        float delta = 16;
+        float deltaX = Math.abs(newX - tileX*tileWidth);
+        float deltaY = Math.abs(newY - tileY*tileWidth);
+
+        System.out.println(" float position : " + newX + " / " + newY);
+        System.out.println("int position : " + tileX + " / " + tileY);
+
+        System.out.println("deltaX : " + deltaX + " / deltaY : " + deltaY);
+        boolean HeroNPC_collision;
+
         if(Gdx.input.isTouched()) {
          Vector3 touchPos = new Vector3();
          touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
          camera.unproject(touchPos);
-         Hitbox.x = touchPos.x - 32;
-         Object.getProperties().put("x",Hitbox.x);
-         Hitbox.y = touchPos.y - 32;
-         Object.getProperties().put("y",Hitbox.y);
-      }
+         newX = touchPos.x - 32;
+         newY = touchPos.y - 32;
+        }
 
-        TiledMapTileLayer collisionLayer = world.getCurrentcollisionLayer();
-        Map map = world.getCurrentMap();
-        int tileWidth = 32;
-        int tileHeight = 32;
-        // Get Tile coordinates
-        int tileX = (int) (((float) Object.getProperties().get("x")) / tileWidth);
-        int tileY = (int) (((float) Object.getProperties().get("y")) / tileHeight);
-        boolean HeroNPC_collision;
-        TiledMapTileLayer.Cell nextcell;  
         map.sortObjects();
-        HeroNPC_collision = map.PNJcollision(this);
+        HeroNPC_collision = false; //map.PNJcollision(this);
+
+        // LEFT
+
         if(Gdx.input.isKeyPressed(Keys.LEFT)){
-           if(collisionLayer!=null)nextcell = collisionLayer.getCell(tileX, tileY);
-            else nextcell = null;          
-                if (nextcell!=null){
-                if (nextcell.getTile().getProperties().containsKey("blocked")==false){
-                    Hitbox.x -= 200 * Gdx.graphics.getDeltaTime();
-                    Object.getProperties().put("x", Hitbox.x);
-                    }
-                }
-                else if(HeroNPC_collision || angle==1) {
-                Hitbox.x  -= 200 * Gdx.graphics.getDeltaTime();
-                Object.getProperties().put("x", Hitbox.x);
-                }
+           if(isValidPosition(tileX, tileY, map) || deltaX>delta || isValidPosition(tileX, tileY+1, map) && deltaY>(delta-5)){
+                newX -= 200 * Gdx.graphics.getDeltaTime();
+            }
+                
+            else if(HeroNPC_collision) {
+                newX -= 200 * Gdx.graphics.getDeltaTime();
+            }
                 //Get the approprite sprite for render
                 angle = 2;
                 Object.setTextureRegion(moveTexture_list.get((angle+index%360)));
                 index+=4; 
         }
+
+        // RIGHT 
+
         if(Gdx.input.isKeyPressed(Keys.RIGHT)){
-            if(collisionLayer!=null)nextcell = collisionLayer.getCell(tileX+1, tileY);
-            else nextcell = null;          
-                if (nextcell!=null){
-                if (nextcell.getTile().getProperties().containsKey("blocked")==false){
-                    Hitbox.x += 200 * Gdx.graphics.getDeltaTime();
-                    Object.getProperties().put("x", Hitbox.x);
-                    }
-                }
-                else if(HeroNPC_collision || angle==1) {
-                Hitbox.x  += 200 * Gdx.graphics.getDeltaTime();
-                Object.getProperties().put("x", Hitbox.x);
-                }
+            if (isValidPosition(tileX+1, tileY, map) || deltaX > delta || isValidPosition(tileX+1, tileY+1, map) && deltaY>(delta-5)){
+                newX += 200 * Gdx.graphics.getDeltaTime();
+            }
+            else if(HeroNPC_collision) {
+                newX  += 200 * Gdx.graphics.getDeltaTime();
+            }
                 //Get the approprite sprite for render
                 angle = 3;
                 Object.setTextureRegion(moveTexture_list.get((angle+index%360)));
                 index+=4;
         }
+
+        // UP
+
         if(Gdx.input.isKeyPressed(Keys.UP)){  
-            if(collisionLayer!=null)nextcell = collisionLayer.getCell(tileX, tileY);
-            else nextcell = null;          
-                if (nextcell!=null){
-                if (nextcell.getTile().getProperties().containsKey("blocked")==false){
-                    Hitbox.y += 200 * Gdx.graphics.getDeltaTime();
-                    Object.getProperties().put("y", Hitbox.y);
-                    }
-                }
-                else if(HeroNPC_collision || angle==1) {
-                Hitbox.y  += 200 * Gdx.graphics.getDeltaTime();
-                Object.getProperties().put("y", Hitbox.y);
-                }
+            if (isValidPosition(tileX, tileY+1, map) || deltaY>delta || isValidPosition(tileX+1, tileY+1, map) && deltaX>(delta-5)){
+                newY += 200 * Gdx.graphics.getDeltaTime();
+            }
+            else if(HeroNPC_collision) {
+                newY += 200 * Gdx.graphics.getDeltaTime();
+            }
                 //Get the approprite sprite for render
                 angle = 1;
                 Object.setTextureRegion(moveTexture_list.get((angle+index%360)));
                 index+=4;
         }
+
+        // DOWN 
+
         if(Gdx.input.isKeyPressed(Keys.DOWN)){
-            if(collisionLayer!=null)nextcell = collisionLayer.getCell(tileX, tileY-1);
-            else nextcell = null;
-            
-            if (nextcell!=null){
-               if (nextcell.getTile().getProperties().containsKey("blocked")==false){
-                  Hitbox.y -= 200 * Gdx.graphics.getDeltaTime();
-                  Object.getProperties().put("y", Hitbox.y);
-                }
+            if(isValidPosition(tileX, tileY, map) || deltaY>delta+5 || isValidPosition(tileX+1, tileY, map) && deltaX>(delta-5)){
+                newY -= 200 * Gdx.graphics.getDeltaTime();
             }
-            else if(HeroNPC_collision || angle==1) {
-               Hitbox.y  -= 200 * Gdx.graphics.getDeltaTime();
-               Object.getProperties().put("y", Hitbox.y);
+            else if(HeroNPC_collision) {
+                newY -= 200 * Gdx.graphics.getDeltaTime();
             }
             //Get the approprite sprite for render
             angle = 0;
             Object.setTextureRegion(moveTexture_list.get((angle+index%360)));
             index+=4;
+        }
 
-        }          
+        //Update new Position
+        setPosition(newX, newY);
+
+        /*        
         // make sure the character stays within the screen bounds
         if(Hitbox.x < 0) Hitbox.x = 0;
         if(Hitbox.x > camera.viewportWidth - 32) Hitbox.x = camera.viewportWidth - 32;
         if(Hitbox.y < -16) Hitbox.y = -16;
         if(Hitbox.y > camera.viewportHeight - 64) Hitbox.y = camera.viewportHeight - 64;
+        */
+    }
+    private boolean isValidPosition(int X, int Y, Map map) {
+        //Check Map boundaries
+        int mapWidth = map.getmapWidth();
+        int mapHeight = map.getmapHeight();
+        //Check Map boundaries
+        if(X<1 || X>(mapWidth-2) || Y<1 || Y>(mapHeight-2)) return false;
+        // Check distance from walls
+        return map.checkDistancefromWall(X, Y);
     }
 
     public void Attack(Map map){

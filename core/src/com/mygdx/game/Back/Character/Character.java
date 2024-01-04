@@ -96,23 +96,5 @@ public abstract class Character {
     }
 
     /*-------------------------------------------------Battle for Ennemie----------------------------------------*/
-    public boolean isAttack_Charged(){
-        return this.attack_charged;
-    }
-
-    public void toggle_Attack(){
-        this.attack_charged = !attack_charged;
-    }
-
-    public float getAttackTimer(){
-        return this.attackTimer;
-    }
-
-    public void setAttackTimer(float delta){
-        this.attackTimer = delta;
-    }
-
-    public float getAttackCooldown(){
-        return this.attackCooldown;
-    }
+    
 }

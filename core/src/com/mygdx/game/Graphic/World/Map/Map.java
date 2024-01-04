@@ -18,6 +18,7 @@ import com.mygdx.game.Graphic.Elements.Door;
 import com.mygdx.game.Graphic.GraphicCharacter.*;
 
 import com.mygdx.game.Back.Character.Character;
+import com.mygdx.game.Back.Character.Ennemie.Ennemie;
 
 public class Map {
     private float x,y;//position 0 of the character
@@ -210,7 +211,7 @@ public class Map {
             int size = PNJinRange.size();
             for(int index = 0; index<size; index++){
                 GraphicEnnemie Graphic_ennemie = PNJinRange.get(index);
-                Character ennemie = Graphic_ennemie.getCharacter();
+                Ennemie ennemie = Graphic_ennemie.getCharacter();
 
                 //get its attack timer and cooldown
                 float attackTimer = ennemie.getAttackTimer();
@@ -309,9 +310,12 @@ public class Map {
 
     public boolean checkDistancefromWall(int X, int Y){
         TiledMapTileLayer Layer = (TiledMapTileLayer) this.getTiledMap().getLayers().get("Base");
+        if (Layer == null) System.out.println(Layer);
         Cell cell = Layer.getCell(X, Y);
         if (cell != null) {
+            //System.out.println("cell not null");
             if(cell.getTile().getProperties().containsKey("blocked")){
+                //System.out.println("blocked");
                 return false;  
             }
         }
