@@ -1,7 +1,6 @@
 package com.mygdx.game.Graphic;
 
 import java.util.Iterator;
-import java.util.Objects;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Collections;
@@ -10,12 +9,8 @@ import com.mygdx.game.Graphic.Elements.Door;
 import com.mygdx.game.Graphic.GraphicCharacter.*;
 import com.mygdx.game.Graphic.World.Map.Map;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
@@ -67,17 +62,9 @@ public class Renderer {
          sortCharacter(list);
       }
       for(GraphicCharacter character : list){
-         character.renderGraphicCharacter(spriteBatch, camera);
+         character.render(spriteBatch, camera);
       }
-      if (map.getPNJ_list()!=null){
-         ArrayList<GraphicEnnemie> Characters = new ArrayList<>();
-         Characters = map.getPNJ_list();
-         for (GraphicCharacter character : Characters) {
-            drawLifebar(character);
-         }
-      }
-      else System.out.println("object is null");
-      drawHeroLifebar(hero);
+      
       spriteBatch.end();
 
    }
@@ -132,50 +119,6 @@ public class Renderer {
          } else System.out.println("Deadobjects is null");
     }
 
-    public void drawLifebar(GraphicCharacter character){
-      // Get properties
-            TextureMapObject textureObject = (TextureMapObject) character.getObject();
-            TextureRegion textureRegion = textureObject.getTextureRegion();
-            float objectX = (float) character.getObject().getProperties().get("x");
-            float objectY = (float) character.getObject().getProperties().get("y");
-            float objectWidth = textureRegion.getRegionWidth();
-            float objectHeight = textureRegion.getRegionHeight();
-            // Draw life bar
-            int lifeBarWidth = character.getCharacter().getPV(); 
-            int lifeBarHeight = 1; // Height of the life bar
-            float lifeBarX = objectX + (objectWidth - lifeBarWidth) / 2; 
-            float lifeBarY = objectY + objectHeight + 5; // Place the life bar above the character
-            Pixmap pixmap = new Pixmap(lifeBarWidth, lifeBarHeight, Format.RGBA8888);
-            pixmap.setColor(Color.RED);
-            pixmap.fillRectangle(0, 0, lifeBarWidth, lifeBarHeight);
-            Texture lifebar = new Texture(pixmap);
-            pixmap.dispose();
-
-            spriteBatch.setColor(1, 0, 0, 1); // Red color for the life bar
-            spriteBatch.draw(lifebar, lifeBarX, lifeBarY, lifeBarWidth, lifeBarHeight);
-            spriteBatch.setColor(1, 1, 1, 1); // Reset color after drawing the life bar
-    }
-
-    public void drawHeroLifebar(GraphicCharacter character){
-      // Get properties
-            // float objectX = (float) 10;
-            // float objectY = (float) 600;
-            // // Draw life bar
-            // int lifeBarWidth = character.getCharacter().getPV();
-            // int lifeBarHeight = 10;
-            // float lifeBarX = objectX ;
-            // float lifeBarY = objectY ;
-            // Pixmap pixmap = new Pixmap(lifeBarWidth, lifeBarHeight, Format.RGBA8888);
-            // pixmap.setColor(Color.RED);
-            // pixmap.fillRectangle(0, 0, lifeBarWidth, lifeBarHeight);
-            // Texture lifebar = new Texture(pixmap);
-            // pixmap.dispose();
-
-            // spriteBatch.setColor(1, 0, 0, 1); // Red color for the life bar
-            // spriteBatch.draw(lifebar, lifeBarX, lifeBarY, lifeBarWidth, lifeBarHeight);
-            // spriteBatch.setColor(1, 1, 1, 1); // Reset color after drawing the life bar
-            character.getBarlife().drawLifeBar(spriteBatch, character.getCharacter());
-    }
     public void dispose(){
       spriteBatch.dispose();
     }

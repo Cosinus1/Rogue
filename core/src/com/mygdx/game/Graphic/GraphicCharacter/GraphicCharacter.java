@@ -245,36 +245,9 @@ public class GraphicCharacter {
     
 */
 
-    public void renderGraphicCharacter(SpriteBatch spriteBatch, OrthographicCamera camera){
-        int scaleFactor;
-        float offsetX=0;
-        float offsetY=0;
-            TextureRegion textureRegion = Object.getTextureRegion();
-            // Render the object texture based on its position and properties
-            float objectX = (float) Object.getProperties().get("x");
-            float objectY = (float) Object.getProperties().get("y");
-            //Render bigger for boss
-            if (Object.getProperties().get("boss")=="boss"){
-                scaleFactor = 2;
-                offsetX += scaleFactor*16;
-                offsetY -= scaleFactor*16;
-            }
-            else scaleFactor = 1;
-            float objectWidth = textureRegion.getRegionWidth()*scaleFactor;
-            float objectHeight = textureRegion.getRegionHeight()*scaleFactor;
-            
-            spriteBatch.setProjectionMatrix(camera.combined);
+  public void render(SpriteBatch batch, OrthographicCamera camera){
 
-            // Adjust position if it's the battle animation texture
-            if (textureRegion.getRegionWidth() == 128 && textureRegion.getRegionHeight() == 128) {
-                // Adjust the position to properly center the larger texture
-                objectY -= 64*scaleFactor;
-            }
-
-        
-            spriteBatch.draw(textureRegion, objectX, objectY, objectWidth, objectHeight);
-            
-        }
+  } 
 
 
 

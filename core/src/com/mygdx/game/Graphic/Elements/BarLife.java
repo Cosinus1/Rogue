@@ -2,11 +2,15 @@ package com.mygdx.game.Graphic.Elements;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Back.Character.Character;
+import com.mygdx.game.Back.Character.Ennemie.Ennemie;
+import com.mygdx.game.Back.Character.Hero.Hero;
+import com.mygdx.game.Graphic.GraphicCharacter.*;
 
 public class BarLife {
 
@@ -20,12 +24,33 @@ public class BarLife {
         font.setColor(Color.WHITE);
     }
 
-    public void drawLifeBar(SpriteBatch batch, Character character){
-        float remainingLifePercentage = (float) character.getPV() / character.getPV_max();
+    public void drawHeroLifeBar(SpriteBatch batch, Hero hero){
+        float remainingLifePercentage = (float) hero.getPV() / hero.getPV_max();
         //dessiner la barre de vie
         batch.draw(backgroundTexture,5,595);
         batch.draw(barTexture,10,600,400*remainingLifePercentage, 20);
-        font.draw(batch, character.getPV() + " / " + character.getPV_max(), 190, 615);
+        font.draw(batch, hero.getPV() + " / " + hero.getPV_max(), 190, 615);
+    }
+
+    public void drawPNJLifeBar(SpriteBatch batch, GraphicEnnemie ennemie){
+        TextureRegion textureRegion = ennemie.getObject().getTextureRegion();
+        float objectX = (float) ennemie.getObject().getProperties().get("x");
+        float objectY = (float) ennemie.getObject().getProperties().get("y");
+        float objectWidth = textureRegion.getRegionWidth();
+        float objectHeight = textureRegion.getRegionHeight();
+        int lifeBarWidth = ennemie.getCharacter().getPV();
+        int lifeBarHeight = 1;
+        float lifeBarX = objectX + (objectWidth - lifeBarWidth) / 2; 
+        float lifeBarY = objectY + objectHeight + 5; // Place the life bar above the character
+        Pixmap pixmap = new Pixmap(lifeBarWidth, lifeBarHeight, Format.RGBA8888);
+        pixmap.setColor(Color.RED);
+        pixmap.fillRectangle(0, 0, lifeBarWidth, lifeBarHeight);
+        Texture lifebar = new Texture(pixmap);
+        pixmap.dispose();
+
+        batch.setColor(1,0,0,1);
+        batch.draw(lifebar,lifeBarX, lifeBarY, lifeBarWidth, lifeBarHeight);
+        batch.setColor(1,1,1,1);
     }
  
 

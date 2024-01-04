@@ -2,6 +2,8 @@ package com.mygdx.game.Graphic.GraphicCharacter;
 
 import java.util.Random;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
@@ -10,6 +12,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 
 import com.mygdx.game.Back.Character.Character;
+import com.mygdx.game.Back.Character.Ennemie.Ennemie;
+import com.mygdx.game.Back.Character.Hero.Hero;
 import com.mygdx.game.Graphic.World.World;
 import com.mygdx.game.Graphic.World.Map.Map;
 
@@ -19,8 +23,11 @@ public class GraphicEnnemie extends GraphicCharacter{
         super(character,x,y);
     }
 
+    public Ennemie getCharacter(){
+        return (Ennemie) this.character;
+    }
 /* ----------------------------------------------TEXTURE HANDLING---------------------------------------------------- */
-    
+
     public void getEnnemieTextures(World world, String Tileset_name, boolean Boss){
         Map map = world.getDungeon();
         //Setting FPS for slower animation
@@ -275,5 +282,36 @@ public class GraphicEnnemie extends GraphicCharacter{
         map.getPNJ_list().remove(this);
         map.getDeadObjects().add(this.Object);
         map.getDeadPNJ_list().add(this);
-    }        
+    }       
+    
+     public void render(SpriteBatch spriteBatch, OrthographicCamera camera){
+        int scaleFactor;
+        float offsetX=0;
+        float offsetY=0;
+        TextureRegion textureRegion = Object.getTextureRegion();
+        // Render the object texture based on its position and properties
+        float objectX = (float) Object.getProperties().get("x");
+        float objectY = (float) Object.getProperties().get("y");
+        //Render bigger for boss
+        if (Object.getProperties().get("boss")=="boss"){
+            scaleFactor = 2;
+            offsetX += scaleFactor*16;
+            offsetY -= scaleFactor*16;
+        }
+        else scaleFactor = 1;
+        float objectWidth = textureRegion.getRegionWidth()*scaleFactor;
+        float objectHeight = textureRegion.getRegionHeight()*scaleFactor;
+            
+            spriteBatch.setProjectionMatrix(camera.combined);
+
+            // Adjust position if it's the battle animation texture
+            if (textureRegion.getRegionWidth() == 128 && textureRegion.getRegionHeight() == 128) {
+                // Adjust the position to properly center the larger texture
+                objectY -= 64*scaleFactor;
+            }
+
+        
+            spriteBatch.draw(textureRegion, objectX, objectY, objectWidth, objectHeight);
+            barlife.drawPNJLifeBar(spriteBatch,this);
+        }
 }
