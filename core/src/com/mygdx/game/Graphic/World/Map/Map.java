@@ -136,16 +136,17 @@ public class Map {
     public int getmapHeight(){
         return this.mapHeight;
     }
+    //Check for collision with an ennemie
+    //Return true if there is a collision
     public boolean PNJcollision(GraphicHero hero){
-        MapObjects objects = getObjects();
-        for(MapObject object : objects){
-            if (object.getName()!="hero"){
-                float x = (float) object.getProperties().get("x")+10;
-                float y = (float) object.getProperties().get("y");
-                if(Math.abs(x-hero.getX() )<20 && Math.abs(y-hero.getY())<20) return false;
+        if(PNJ_list != null){
+            for (GraphicEnnemie ennemie : PNJ_list){
+                
+                if(Math.abs(ennemie.getX()-hero.getX())<20 && Math.abs(ennemie.getY()-hero.getY())<20) return true;
+                
             }
         }
-        return true;
+        return false;
     }
 /* --------------------------------------------- SETTERS ------------------------------------- */
     public void toggle(){
@@ -180,7 +181,7 @@ public class Map {
         ArrayList<GraphicEnnemie> EnnemiesinRange = new ArrayList<>();
         if(Ennemies != null){
             for(GraphicEnnemie ennemie : Ennemies){
-                if(ennemie.inRange(character)){
+                if(ennemie.inRange(character, this)){
                     EnnemiesinRange.add(ennemie);
                 }
             }

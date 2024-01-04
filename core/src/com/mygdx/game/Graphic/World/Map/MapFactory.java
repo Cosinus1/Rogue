@@ -65,7 +65,7 @@ public class MapFactory {
         // Add wall tiles on all borders (only for baseLayer)
         for (int i = 1; i < mapWidth-1; i++) {
             baseLayer.setCell(i, 0, createCell(createWallTile(tileSets, "base", "horizontal")));
-            baseLayer.setCell(i, mapHeight - 1, createCell(createWallTile(tileSets, "base", "horizontal")));
+            baseLayer.setCell(i, mapHeight - 2, createCell(createWallTile(tileSets, "base", "horizontal")));
         }
         for (int i = 1; i < mapHeight-1; i++) {
             baseLayer.setCell(0, i, createCell(createWallTile(tileSets, "base", "vertical")));

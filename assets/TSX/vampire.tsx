@@ -2158,14 +2158,12 @@
   <properties>
    <property name="battle" value="back"/>
    <property name="boss" value="boss"/>
-   <property name="index" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="411">
   <properties>
    <property name="battle" value="back"/>
    <property name="boss" value="boss"/>
-   <property name="index" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="412">
@@ -2272,14 +2270,12 @@
   <properties>
    <property name="battle" value=""/>
    <property name="boss" value="boss"/>
-   <property name="index" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="429">
   <properties>
    <property name="battle" value=""/>
    <property name="boss" value="boss"/>
-   <property name="index" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="430">
@@ -2386,14 +2382,12 @@
   <properties>
    <property name="battle" value=""/>
    <property name="boss" value="boss"/>
-   <property name="index" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="447">
   <properties>
    <property name="battle" value=""/>
    <property name="boss" value="boss"/>
-   <property name="index" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="448">
@@ -2500,14 +2494,12 @@
   <properties>
    <property name="battle" value="left"/>
    <property name="boss" value="boss"/>
-   <property name="index" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="465">
   <properties>
    <property name="battle" value="left"/>
    <property name="boss" value="boss"/>
-   <property name="index" type="int" value="0"/>
   </properties>
  </tile>
  <tile id="466">

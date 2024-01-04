@@ -176,7 +176,7 @@ public class GraphicEnnemie extends GraphicCharacter{
             if (isValidTrajectory((int) X/tileWidth, (int) Y/tileWidth, endX, endY, (int) moveX/tileWidth, (int) moveY/tileWidth, map)) {
                 
                 switchtorandom = false;
-                if(!(Hitbox.overlaps(hero.Hitbox) || inRange(hero))){
+                if(!(Hitbox.overlaps(hero.Hitbox) || inRange(hero, map))){
                     setPosition(X+moveX/speed, Y+moveY/speed);
                     //Get the appropriate sprite for movement
                     int y;
@@ -276,14 +276,25 @@ public class GraphicEnnemie extends GraphicCharacter{
     }
 
 /*-----------------------------------------------------COMBAT------------------------------------------------------------ */
-    public boolean inRange(GraphicCharacter character){
+    public boolean inRange(GraphicCharacter character, Map map){
         float x = getX();
         float y = getY();
         double distanceX = x - character.getX();
         double distanceY = y - character.getY();
+
         int distance = (int) Math.sqrt(Math.pow(distanceY, 2) + Math.pow(distanceX, 2))/32;
-        //System.out.println(getCharacter().getName()+ " Range : " + (int) getCharacter().getRange()/32);
-        if(distance <= (int) getCharacter().getRange()/32) return true;
+
+        int X = (int) x/32;
+        int Y = (int) y/32;
+        int endX = (int) (x-distanceX)/32;
+        int endY = (int) (y-distanceY)/32;
+
+        int signX = (int) Math.signum(-distanceX);
+        int signY = (int) Math.signum(-distanceY);
+
+        //System.out.println(" signX : " + signX + "signY : " + signY);
+
+        if(distance <= (int) getCharacter().getRange() && isValidTrajectory(X, Y, endX, endY, signX, signY, map)) return true;
         else return false;
     }
     public void attack(GraphicHero hero){

@@ -122,7 +122,7 @@ public class World {
     }
 
     public void initializeDungeon(int numberOfMaps) {
-        Boss boss = new Boss(500, 500, 50,15,null,"Boss",null);
+        Boss boss = new Boss(500, 100, 50,3,null,"Boss",null);
         GraphicBoss graphicboss = new GraphicBoss(boss,500,500, this);
         System.out.println("              /////////////Initializing Dungeon//////////////");
         Map dungeonMap = getDungeon();

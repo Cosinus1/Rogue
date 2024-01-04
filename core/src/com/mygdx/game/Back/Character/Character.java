@@ -27,7 +27,7 @@ public abstract class Character {
         this.PV_max = pv;
         this.defense = defense;
         this.power = power;
-        this.range = range*32;
+        this.range = range;
         this.bag = bag;
         this.name = name;
     }

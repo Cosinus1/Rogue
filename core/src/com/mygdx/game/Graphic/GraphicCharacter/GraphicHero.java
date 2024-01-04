@@ -86,10 +86,10 @@ public class GraphicHero extends GraphicCharacter {
         float deltaX = Math.abs(newX - tileX*tileWidth);
         float deltaY = Math.abs(newY - tileY*tileWidth);
 
-        System.out.println(" float position : " + newX + " / " + newY);
-        System.out.println("int position : " + tileX + " / " + tileY);
+        //System.out.println("float position : " + newX + " / " + newY);
+        //System.out.println("int position : " + tileX + " / " + tileY);
+        //System.out.println("deltaX : " + deltaX + " / deltaY : " + deltaY);
 
-        System.out.println("deltaX : " + deltaX + " / deltaY : " + deltaY);
         boolean HeroNPC_collision;
 
         if(Gdx.input.isTouched()) {
@@ -101,16 +101,12 @@ public class GraphicHero extends GraphicCharacter {
         }
 
         map.sortObjects();
-        HeroNPC_collision = false; //map.PNJcollision(this);
+        HeroNPC_collision = map.PNJcollision(this);
 
         // LEFT
 
         if(Gdx.input.isKeyPressed(Keys.LEFT)){
-           if(isValidPosition(tileX, tileY, map) || deltaX>delta || isValidPosition(tileX, tileY+1, map) && deltaY>(delta-5)){
-                newX -= 200 * Gdx.graphics.getDeltaTime();
-            }
-                
-            else if(HeroNPC_collision) {
+           if((!HeroNPC_collision || angle!=2) && (isValidPosition(tileX, tileY, map) || deltaX>delta || isValidPosition(tileX, tileY+1, map) && deltaY>(delta-5))){
                 newX -= 200 * Gdx.graphics.getDeltaTime();
             }
                 //Get the approprite sprite for render
@@ -122,11 +118,8 @@ public class GraphicHero extends GraphicCharacter {
         // RIGHT 
 
         if(Gdx.input.isKeyPressed(Keys.RIGHT)){
-            if (isValidPosition(tileX+1, tileY, map) || deltaX > delta || isValidPosition(tileX+1, tileY+1, map) && deltaY>(delta-5)){
+            if ((!HeroNPC_collision || angle!=3) && (isValidPosition(tileX+1, tileY, map) || deltaX > delta || isValidPosition(tileX+1, tileY+1, map) && deltaY>(delta-5))){
                 newX += 200 * Gdx.graphics.getDeltaTime();
-            }
-            else if(HeroNPC_collision) {
-                newX  += 200 * Gdx.graphics.getDeltaTime();
             }
                 //Get the approprite sprite for render
                 angle = 3;
@@ -137,10 +130,7 @@ public class GraphicHero extends GraphicCharacter {
         // UP
 
         if(Gdx.input.isKeyPressed(Keys.UP)){  
-            if (isValidPosition(tileX, tileY+1, map) || deltaY>delta || isValidPosition(tileX+1, tileY+1, map) && deltaX>(delta-5)){
-                newY += 200 * Gdx.graphics.getDeltaTime();
-            }
-            else if(HeroNPC_collision) {
+            if ((!HeroNPC_collision || angle!=1) && (isValidPosition(tileX, tileY+1, map) || deltaY>delta || isValidPosition(tileX+1, tileY+1, map) && deltaX>(delta-5))){
                 newY += 200 * Gdx.graphics.getDeltaTime();
             }
                 //Get the approprite sprite for render
@@ -152,16 +142,13 @@ public class GraphicHero extends GraphicCharacter {
         // DOWN 
 
         if(Gdx.input.isKeyPressed(Keys.DOWN)){
-            if(isValidPosition(tileX, tileY, map) || deltaY>delta+5 || isValidPosition(tileX+1, tileY, map) && deltaX>(delta-5)){
+            if((!HeroNPC_collision || angle!=0) && (isValidPosition(tileX, tileY, map) || deltaY>delta+5 || isValidPosition(tileX+1, tileY, map) && deltaX>(delta-5))){
                 newY -= 200 * Gdx.graphics.getDeltaTime();
             }
-            else if(HeroNPC_collision) {
-                newY -= 200 * Gdx.graphics.getDeltaTime();
-            }
-            //Get the approprite sprite for render
-            angle = 0;
-            Object.setTextureRegion(moveTexture_list.get((angle+index%360)));
-            index+=4;
+                //Get the approprite sprite for render
+                angle = 0;
+                Object.setTextureRegion(moveTexture_list.get((angle+index%360)));
+                index+=4;
         }
 
         //Update new Position
@@ -180,7 +167,7 @@ public class GraphicHero extends GraphicCharacter {
         int mapWidth = map.getmapWidth();
         int mapHeight = map.getmapHeight();
         //Check Map boundaries
-        if(X<1 || X>(mapWidth-2) || Y<1 || Y>(mapHeight-2)) return false;
+        if(X<0 || X>(mapWidth) || Y<1 || Y>(mapHeight)) return false;
         // Check distance from walls
         return map.checkDistancefromWall(X, Y);
     }
