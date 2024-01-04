@@ -1,5 +1,6 @@
 package com.mygdx.game.Graphic.GraphicCharacter;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -13,7 +14,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 
 import com.mygdx.game.Back.Character.Character;
 import com.mygdx.game.Back.Character.Ennemie.Ennemie;
-import com.mygdx.game.Back.Character.Hero.Hero;
+
 import com.mygdx.game.Graphic.World.World;
 import com.mygdx.game.Graphic.World.Map.Map;
 
@@ -23,8 +24,10 @@ public class GraphicEnnemie extends GraphicCharacter{
         super(character,x,y);
     }
 
+
+/* --------------------------------------------------GETTERS-------------------------------------------------------------- */
     public Ennemie getCharacter(){
-        return (Ennemie) this.character;
+        return (Ennemie) character;
     }
 /* ----------------------------------------------TEXTURE HANDLING---------------------------------------------------- */
 
@@ -127,6 +130,21 @@ public class GraphicEnnemie extends GraphicCharacter{
             System.out.println("tileset is null, spawn canceled");
         }       
     }
+    //Set appropriate Sprite for battle animation
+    public void setBattleTexture(){
+
+        ArrayList<TextureRegion> BattleSprites = getBattleTexture_List();
+        int size = BattleSprites.size();
+        int index = this.getIndex();
+        int angle = this.getAngle();
+  
+        if(index>size){
+            this.index = 4;
+            this.getCharacter().toggle_Attack();
+
+        }else this.index +=8;
+        this.Object.setTextureRegion(BattleSprites.get((angle+index%size)));
+    }
 
 /* ----------------------------------------------MOVEMENT---------------------------------------------------------------------- */
 
@@ -226,6 +244,7 @@ public class GraphicEnnemie extends GraphicCharacter{
         }
 
     private boolean isValidPosition(int X, int Y, Map map) {
+        //System.out.println("X : " + X+ " / Y : " + Y);
         //Check Map boundaries
         int mapWidth = map.getmapWidth();
         int mapHeight = map.getmapHeight();
@@ -268,7 +287,7 @@ public class GraphicEnnemie extends GraphicCharacter{
         double distanceX = x - character.getX();
         double distanceY = y - character.getY();
         int distance = (int) Math.sqrt(Math.pow(distanceY, 2) + Math.pow(distanceX, 2))/32;
-        System.out.println(getCharacter().getName()+ " Range : " + (int) getCharacter().getRange()/32);
+        //System.out.println(getCharacter().getName()+ " Range : " + (int) getCharacter().getRange()/32);
         if(distance <= (int) getCharacter().getRange()/32) return true;
         else return false;
     }

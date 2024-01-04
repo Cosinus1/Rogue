@@ -14,7 +14,7 @@ public class EnnemieFactory {
         }
         if("sorciere".equals(request)){
             Massue massue = new Massue(null,"massue", 3,1);
-            ennemie = new Sorciere(50,0,10,4,null,"sorciere", massue);
+            ennemie = new Sorciere(50,0,10,2,null,"sorciere", massue);
         }
         return ennemie;
     }
