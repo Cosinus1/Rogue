@@ -145,7 +145,7 @@ public class Map {
     }
 /* --------------------------------------------- SETTERS ------------------------------------- */
     public void toggle(){
-        isOpen = true;
+        isOpen = !isOpen;
     }
     public void centerTavernMap(){
         camx = -225;
