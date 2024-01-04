@@ -1,5 +1,7 @@
 package com.mygdx.game.States;
 
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.Manager.GameStateManager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -7,9 +9,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class PlayState extends GameState{
     private Texture bacground ;
+
+    private ImageButton button;
     public PlayState(GameStateManager gsm) {
         super(gsm);
         this.bacground =  new Texture(Gdx.files.internal("camp.gif"));
+
     }
 
     @Override

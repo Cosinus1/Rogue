@@ -1,10 +1,12 @@
 package com.mygdx.game.States;
 
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.ScreenAdapter;
 import com.mygdx.game.Manager.GameStateManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public abstract class GameState {
+public abstract class GameState extends ApplicationAdapter {
     public  OrthographicCamera cam ;
     public GameStateManager gsm;
 
