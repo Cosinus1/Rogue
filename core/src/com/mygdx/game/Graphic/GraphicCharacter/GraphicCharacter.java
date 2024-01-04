@@ -24,14 +24,14 @@ public class GraphicCharacter {
     protected ArrayList<TextureRegion> deathTexture_list;
     protected BarLife barlife;
 
-    //Status varables
+    //Status variables
     private int death = 0;
     private int index = 0; //to get the appropriate sprite (follow track of movement)
     private int angle = 0; 
 
     public GraphicCharacter(Character character2, float x, float y){
         this.character = character2;
-        this.Hitbox = new Rectangle(x, y, 64, 64);
+        this.Hitbox = new Rectangle(x, y, 32, 32);
         Object = new TextureMapObject();
         moveTexture_list = new ArrayList<>();
         battleTexture_list = new ArrayList<>();
@@ -71,6 +71,12 @@ public class GraphicCharacter {
     public TextureMapObject getObject(){
         return Object;
     }
+    public int getIndex(){
+        return index;
+    }
+    public int getAngle(){
+        return angle;
+    }
     public Rectangle getHitbox(){
         return Hitbox;
     }
@@ -83,6 +89,18 @@ public class GraphicCharacter {
     }
 /*----------------------------------------- SETTERS -------------------------------------- */  
     
+    public void setX(float x){
+        Hitbox.x = x;
+    }
+    public void setY(float y){
+        Hitbox.y = y;
+    }
+    public void setPosition(float x, float y){
+        this.Hitbox.x = x;
+        this.Hitbox.y = y;
+        this.Object.getProperties().put("x",x);
+        this.Object.getProperties().put("y",y);
+    }
     public void setlastX(float x){
         this.lastX = x;
     }
@@ -95,27 +113,35 @@ public class GraphicCharacter {
     public void setName(){
         this.Object.setName(character.getName());
     }
-    public void setX(float x){
-        Hitbox.x = x;
-    }
-    public void setY(float y){
-        Hitbox.y = y;
-    }
     public void setObject(String key, float x){
         Object.getProperties().put(key,x);
     }
-    public void setPosition(float x, float y){
-        this.Hitbox.x = x;
-        this.Hitbox.y = y;
-        this.Object.getProperties().put("x",x);
-        this.Object.getProperties().put("y",y);
+    public void resetIndex(){
+        this.index = 0;
     }
+    //Set appropriate Sprite for battle animation
+    public void setBattleTexture(){
+
+        ArrayList<TextureRegion> BattleSprites = getBattleTexture_List();
+        int size = BattleSprites.size();
+        int index = this.getIndex();
+        int angle = this.getAngle();
+  
+        if(index>size){
+            this.index = 4;
+            this.getCharacter().toggle_Attack();
+
+        }else this.index +=8;
+        this.Object.setTextureRegion(BattleSprites.get((angle+index%size)));
+    }
+    
     public void setMoveTexture(int x, int y){
+        int size = moveTexture_list.size();
         //Check horizontal movement
         switch (x) {
             case -1://Character going left
                 angle = 2;
-                this.Object.setTextureRegion(moveTexture_list.get((angle+index%360)));
+                this.Object.setTextureRegion(moveTexture_list.get((angle+index%size)));
                 this.index+=4;
                 break;
 
@@ -124,7 +150,7 @@ public class GraphicCharacter {
 
             case 1://Character going right
                 angle = 3;
-                this.Object.setTextureRegion(moveTexture_list.get((angle+index%360)));
+                this.Object.setTextureRegion(moveTexture_list.get((angle+index%size)));
                 this.index+=4;
                 break;
         }
@@ -132,7 +158,7 @@ public class GraphicCharacter {
         switch (y){
             case -1://Character going down
                 angle = 0;
-                this.Object.setTextureRegion(moveTexture_list.get((angle+index%360)));
+                this.Object.setTextureRegion(moveTexture_list.get((angle+index%size)));
                 this.index+=4;
                 break;
 
@@ -141,7 +167,7 @@ public class GraphicCharacter {
 
             case 1://Character going up
                 angle = 1;
-                this.Object.setTextureRegion(moveTexture_list.get((angle+index%360)));
+                this.Object.setTextureRegion(moveTexture_list.get((angle+index%size)));
                 this.index+=4;
                 break;
         }
@@ -198,7 +224,7 @@ public class GraphicCharacter {
         return null;
     }
 
-/*----------------------------------------- FIGHT -------------------------------------- */  
+/*----------------------------------------- FIGHT --------------------------------------
     
     public boolean PNJAttack(Map map){
         ArrayList<GraphicEnnemie> PNJinRange = map.lookforPNJinRange(this);
@@ -215,7 +241,7 @@ public class GraphicCharacter {
         return false;
     }
     
-
+*/
 
 
 

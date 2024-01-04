@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 
 
@@ -15,6 +16,8 @@ import java.util.Random;
 import com.mygdx.game.Graphic.World.*;
 import com.mygdx.game.Graphic.Elements.Door;
 import com.mygdx.game.Graphic.GraphicCharacter.*;
+
+import com.mygdx.game.Back.Character.Character;
 
 public class Map {
     private float x,y;//position 0 of the character
@@ -176,11 +179,7 @@ public class Map {
         ArrayList<GraphicEnnemie> EnnemiesinRange = new ArrayList<>();
         if(Ennemies != null){
             for(GraphicEnnemie ennemie : Ennemies){
-                float x = ennemie.getX();
-                float y = ennemie.getY();
-                double distanceX = x - character.getX();
-                double distanceY = y - character.getY();
-                if(Math.sqrt(Math.pow(distanceY, 2) + Math.pow(distanceX, 2)) < character.getCharacter().getRange()){
+                if(ennemie.inRange(character)){
                     EnnemiesinRange.add(ennemie);
                 }
             }
@@ -195,11 +194,53 @@ public class Map {
     public void updatelastposition(float x, float y){
         lastposition.set(x, y);
     }
-
+/* -----------------------------------------MOVE ENNEMIES----------------------------------------- */
     public void moveEnnemies(GraphicHero hero){
         for (GraphicEnnemie Ennemie : PNJ_list){
             Ennemie.move(hero, this);
         }
+    }
+/* -----------------------------------------ENNEMY ATTACK ---------------------------------------- */
+    //Apply damage to hero and return true if the hero is dead, false if not
+    public boolean PNJAttack(GraphicHero Graphic_hero){
+        
+        ArrayList<GraphicEnnemie> PNJinRange = lookforPNJinRange(hero);
+        //Ennemies in range attack the Hero
+        if(PNJinRange != null){
+            int size = PNJinRange.size();
+            for(int index = 0; index<size; index++){
+                GraphicEnnemie Graphic_ennemie = PNJinRange.get(index);
+                Character ennemie = Graphic_ennemie.getCharacter();
+
+                //get its attack timer and cooldown
+                float attackTimer = ennemie.getAttackTimer();
+                float attackCooldown = ennemie.getAttackCooldown();
+
+                //Check cooldown
+                if(attackTimer >= attackCooldown){
+                    //Reset Timer and toggle Attack mode (on/off)
+                    ennemie.setAttackTimer(0);
+                    ennemie.toggle_Attack();
+                    Graphic_ennemie.resetIndex();
+
+                    //Perform the Attack
+                    Graphic_ennemie.attack(hero);
+
+                    //Kill the Hero if its HP are 0
+                    if(hero.getCharacter().getPV() <= 0){
+                        hero.getCharacter().killHero(this);
+                        return true;
+                    }
+                }else ennemie.setAttackTimer(attackTimer + Gdx.graphics.getDeltaTime());//Increment Timer for CD
+
+                //Attack animation if cooldown is up
+                if (ennemie.isAttack_Charged()){
+                    //Get battle sprite
+                    Graphic_ennemie.setBattleTexture();
+                }
+            }
+        }
+        return false;
     }
 /* ----------------------------------------------------------------------------------------- */
     //Sorting in order to render the Characters according to their "y" between each other

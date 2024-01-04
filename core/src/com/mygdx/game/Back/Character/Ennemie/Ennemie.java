@@ -11,4 +11,5 @@ public class Ennemie extends Character {
     public Ennemie(int pv, int defense, int power,int range, Inventory bag, String name){
         super(pv, defense, power, range, bag, name);
     }
+
 }

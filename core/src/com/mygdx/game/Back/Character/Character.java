@@ -16,6 +16,9 @@ public abstract class Character {
     protected Inventory bag;
     protected String name;
    
+    protected boolean attack_charged = false;
+    protected float attackTimer = 1f;
+    protected float attackCooldown = 2f;
 
 
     //constructeur
@@ -78,23 +81,38 @@ public abstract class Character {
     
 /*----------------------------------------- FIGHT -------------------------------------- */  
 
-    public boolean recevoirDegats(int degats) {
+    public void recevoirDegats(int degats) {
         double mitigationFactor = 1 / (1 + Math.log(1+defense)); // Adjust the exponent value as needed
         
         // Calculate mitigated damage
         int mitigatedDamage = (int) (degats * mitigationFactor);
     
         PV -= mitigatedDamage;
-    
-        if (PV <= 0) {
-            return true; // Character is defeated
-        } else {
-            return false; // Character survives
-        }
     }
 
      public void killHero(Map map){
         System.out.println("You Died");
         this.PV = 100;
+    }
+
+    /*-------------------------------------------------Battle for Ennemie----------------------------------------*/
+    public boolean isAttack_Charged(){
+        return this.attack_charged;
+    }
+
+    public void toggle_Attack(){
+        this.attack_charged = !attack_charged;
+    }
+
+    public float getAttackTimer(){
+        return this.attackTimer;
+    }
+
+    public void setAttackTimer(float delta){
+        this.attackTimer = delta;
+    }
+
+    public float getAttackCooldown(){
+        return this.attackCooldown;
     }
 }

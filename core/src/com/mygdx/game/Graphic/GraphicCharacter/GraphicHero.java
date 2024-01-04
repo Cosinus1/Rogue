@@ -75,9 +75,9 @@ public class GraphicHero extends GraphicCharacter {
          Vector3 touchPos = new Vector3();
          touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
          camera.unproject(touchPos);
-         Hitbox.x = touchPos.x - 64 /2;
+         Hitbox.x = touchPos.x - 32;
          Object.getProperties().put("x",Hitbox.x);
-         Hitbox.y = touchPos.y - 64 /2;
+         Hitbox.y = touchPos.y - 32;
          Object.getProperties().put("y",Hitbox.y);
       }
 
@@ -86,8 +86,8 @@ public class GraphicHero extends GraphicCharacter {
         int tileWidth = 32;
         int tileHeight = 32;
         // Get Tile coordinates
-        int tileX = (int) (((float) Object.getProperties().get("x") + tileWidth / 2) / tileWidth);
-        int tileY = (int) (((float) Object.getProperties().get("y") + tileHeight / 2) / tileHeight);
+        int tileX = (int) (((float) Object.getProperties().get("x")) / tileWidth);
+        int tileY = (int) (((float) Object.getProperties().get("y")) / tileHeight);
         boolean HeroNPC_collision;
         TiledMapTileLayer.Cell nextcell;  
         map.sortObjects();
@@ -178,11 +178,12 @@ public class GraphicHero extends GraphicCharacter {
         if(PNJinRange != null){
             int size = PNJinRange.size();
             for(int index = 0; index<size; index++){
-                GraphicEnnemie ennemie = PNJinRange.get(0);
-                if(ennemie.getCharacter().recevoirDegats(this.getCharacter().getPower())){
-                    ennemie.kill(map);
-                    
-                }else System.out.println("pnj still alive");
+                GraphicEnnemie Graphic_ennemie = PNJinRange.get(0);
+                Character ennemie = Graphic_ennemie.getCharacter();
+                ennemie.recevoirDegats(this.getCharacter().getPower());
+                if(ennemie.getPV() <= 0){
+                    Graphic_ennemie.kill(map);
+                }
             }
         }
     }

@@ -1,6 +1,7 @@
 package com.mygdx.game.Graphic.GraphicCharacter;
 
 import java.util.Random;
+import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObjects;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
+
 import com.mygdx.game.Back.Character.Character;
 import com.mygdx.game.Graphic.World.World;
 import com.mygdx.game.Graphic.World.Map.Map;
@@ -17,7 +19,8 @@ public class GraphicEnnemie extends GraphicCharacter{
         super(character,x,y);
     }
 
-    
+/* ----------------------------------------------TEXTURE HANDLING---------------------------------------------------- */
+
     public void getEnnemieTextures(World world, String Tileset_name, boolean Boss){
         Map map = world.getDungeon();
         //Setting FPS for slower animation
@@ -63,6 +66,63 @@ public class GraphicEnnemie extends GraphicCharacter{
         }
     }
 
+    // Graphic spawn of the Ennemie
+    public void spawn(Map map, TiledMapTileSets tileSets, GraphicEnnemie character, String Tileset_name) {
+        //tilesets = null means we use the same tilesets than map
+        TiledMapTileSets Sets;
+        //Check if we use tilsets from another map (used for maps that a generated through out the game)
+        if(tileSets == null)Sets = map.getTiledMap().getTileSets();
+        else Sets = tileSets;
+        MapObjects objects = map.getObjects();
+        int GID = 0;
+        float x = character.getX();
+        float y = character.getY();
+        // Create a new MapObject similar to the ones in Tiled
+        character.Object.setName(Tileset_name); // Set the name to match the object in Tiled
+        
+        // Search for the tileset in the map
+        TiledMapTileSet tileSet = null;
+        for (TiledMapTileSet tileset : Sets) {
+            if (tileset.getName().equals(Tileset_name)) {
+                tileSet = tileset;
+                break;
+            }
+        }
+
+        if (tileSet != null) {
+            TiledMapTile tile = null;
+            // Get the texture region from the tileset's tiles
+            for(TiledMapTile Tile : tileSet){
+                if(Tile.getProperties().containsKey("basic") && Tile.getProperties().get("angle").equals("front")){
+                    GID = Tile.getId();
+                    tile = tileSet.getTile(GID);
+                    break;
+                }
+            }
+
+            if (tile != null) {
+                TextureRegion textureRegion = tile.getTextureRegion();
+                character.Object.setTextureRegion(textureRegion);
+                // Set the position of the MapObject based on provided coordinates
+                character.Object.getProperties().put("x", x);
+                character.Object.getProperties().put("y", y);
+
+                // Set the GID property to match the existing GID of the Gobelin object in the tileset
+                character.Object.getProperties().put("gid", GID);
+
+                // Add the MapObject to the object layer
+                objects.add(character.Object);
+                //add to the PNJ list if not the Hero
+                map.addPNJ(character);
+            }
+            else System.out.println("tile  is null, spawn canceled");
+        } else {
+            System.out.println("tileset is null, spawn canceled");
+        }       
+    }
+
+/* ----------------------------------------------MOVEMENT---------------------------------------------------------------------- */
+
     public void move(GraphicHero hero, Map map){
         TiledMapTileLayer collisionLayer = map.getcollisionLayer();
         int tileWidth = collisionLayer.getTileWidth();
@@ -83,7 +143,7 @@ public class GraphicEnnemie extends GraphicCharacter{
         float signX = Math.signum(Xh-X);
         float signY = Math.signum(Yh-Y);
 
-        //Move towards the hero if in range 
+        //Move towards the hero if in detectionrange 
         if( distanceX + distanceY < 50000){
             //Set moves towards the Hero
             float moveX = signX*collisionLayer.getTileWidth();
@@ -94,19 +154,20 @@ public class GraphicEnnemie extends GraphicCharacter{
 
             //The position must be valid 
             if (isValidTrajectory((int) X/tileWidth, (int) Y/tileWidth, endX, endY, (int) moveX/tileWidth, (int) moveY/tileWidth, map)) {
-                System.out.println("valid trajectory");
+                
                 switchtorandom = false;
-                setPosition(X+moveX/speed, Y+moveY/speed);
-                //System.out.println("Position : " + (int) X+moveX/speed/tileWidth + ", " + Y+moveY/speed/tileWidth);
-                //Get the appropriate sprite for movement
-                int y;
-                int x;
-                float delta = 4.0f;
-                if (distanceY < delta) y = 0;
-                else y = (int) signY;
-                if (distanceX < delta) x = 0;
-                else x = (int) signX;
-                setMoveTexture(x, y);
+                if(!(Hitbox.overlaps(hero.Hitbox) || inRange(hero))){
+                    setPosition(X+moveX/speed, Y+moveY/speed);
+                    //Get the appropriate sprite for movement
+                    int y;
+                    int x;
+                    float delta = 6.0f;
+                    if (distanceY < delta) y = 0;
+                    else y = (int) signY;
+                    if (distanceX < delta) x = 0;
+                    else x = (int) signX;
+                    setMoveTexture(x, y);
+                }
             }
             else switchtorandom = true;
         }
@@ -177,7 +238,6 @@ public class GraphicEnnemie extends GraphicCharacter{
             boolean isValidX;
             if(endX==X){
                 //No move on X needed so it's a valid position on X
-                System.out.println("same X axis");
                 isValidX = true;
                 newX -= moveX;
             }else isValidX = isValidPosition(X+moveX, Y, map);
@@ -185,7 +245,6 @@ public class GraphicEnnemie extends GraphicCharacter{
             boolean isValidY;
             if(endY==Y){
                 //No move on Y needed so it's a valid position on Y
-                System.out.println("same Y axis");
                 isValidY = true;
                 newY -= moveY;
             }else isValidY = isValidPosition(X, Y+moveY, map);
@@ -194,69 +253,27 @@ public class GraphicEnnemie extends GraphicCharacter{
             return isValidTrajectory(newX, newY, endX, endY, moveX, moveY, map);
         }else return false;// A wall is in the trajectory
     }
+
+/*-----------------------------------------------------COMBAT------------------------------------------------------------ */
+    public boolean inRange(GraphicCharacter character){
+        float x = getX();
+        float y = getY();
+        double distanceX = x - character.getX();
+        double distanceY = y - character.getY();
+        int distance = (int) Math.sqrt(Math.pow(distanceY, 2) + Math.pow(distanceX, 2))/32;
+        System.out.println(getCharacter().getName()+ " Range : " + (int) getCharacter().getRange()/32);
+        if(distance <= (int) getCharacter().getRange()/32) return true;
+        else return false;
+    }
+    public void attack(GraphicHero hero){
+
+        hero.getCharacter().recevoirDegats(this.getCharacter().getPower());
+    }
+
     public void kill(Map map){
         map.getObjects().remove(this.Object);
         map.getPNJ_list().remove(this);
         map.getDeadObjects().add(this.Object);
         map.getDeadPNJ_list().add(this);
     }        
-    
-     public void spawn(Map map, TiledMapTileSets tileSets, GraphicEnnemie character, String Tileset_name) {
-        //tilesets = null means we use the same tilesets than map
-        TiledMapTileSets Sets;
-        //Check if we use tilsets from another map (used for maps that a generated through out the game)
-        if(tileSets == null)Sets = map.getTiledMap().getTileSets();
-        else Sets = tileSets;
-        MapObjects objects = map.getObjects();
-        int GID = 0;
-        float x = character.getX();
-        float y = character.getY();
-        // Create a new MapObject similar to the ones in Tiled
-        character.Object.setName(Tileset_name); // Set the name to match the object in Tiled
-        
-        // Search for the tileset in the map
-        TiledMapTileSet tileSet = null;
-        for (TiledMapTileSet tileset : Sets) {
-            if (tileset.getName().equals(Tileset_name)) {
-                tileSet = tileset;
-                break;
-            }
-        }
-
-        if (tileSet != null) {
-            TiledMapTile tile = null;
-            // Get the texture region from the tileset's tiles
-            int i = 0;
-            for(TiledMapTile Tile : tileSet){
-                i+=1;
-                if(Tile.getProperties().containsKey("basic") && Tile.getProperties().get("angle").equals("front")){
-                    GID = Tile.getId();
-                    tile = tileSet.getTile(GID);
-                    break;
-                }
-            }
-            //System.out.println("number of iterations " + i);
-            //System.out.println("GID :" + GID);
-
-
-            if (tile != null) {
-                TextureRegion textureRegion = tile.getTextureRegion();
-                character.Object.setTextureRegion(textureRegion);
-                // Set the position of the MapObject based on provided coordinates
-                character.Object.getProperties().put("x", x);
-                character.Object.getProperties().put("y", y);
-
-                // Set the GID property to match the existing GID of the Gobelin object in the tileset
-                character.Object.getProperties().put("gid", GID);
-
-                // Add the MapObject to the object layer
-                objects.add(character.Object);
-                //add to the PNJ list if not the Hero
-                map.addPNJ(character);
-            }
-            else System.out.println("tile  is null, spawn canceled");
-        } else {
-            System.out.println("tileset is null, spawn canceled");
-        }       
-    }
 }

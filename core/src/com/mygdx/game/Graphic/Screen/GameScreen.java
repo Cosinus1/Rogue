@@ -80,7 +80,7 @@ public class GameScreen implements Screen {
       }
       // Perform NPC attacks
       //Attack hero if cd + check if hero is dead 
-         if(hero.PNJAttack(map)) {
+         if(map.PNJAttack(hero)) {
             //Waiting (hero dying animation to put here) 
             //Respawn hero at the Tavern
             world.updateCurrentMap(world.getTavern());

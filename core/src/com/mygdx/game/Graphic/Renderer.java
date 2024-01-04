@@ -71,10 +71,11 @@ public class Renderer {
                   float objectX = (float) object.getProperties().get("x");
                   float objectY = (float) object.getProperties().get("y");
                   
+
                   //Render bigger for boss
                   if (object.getProperties().get("boss")=="boss"){
                      scaleFactor = 2;
-                     offsetX -= scaleFactor*16;
+                     offsetX += scaleFactor*16;
                      offsetY -= scaleFactor*16;
                   }
                   else scaleFactor = 1;
