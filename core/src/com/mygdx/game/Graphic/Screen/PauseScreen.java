@@ -21,10 +21,10 @@ import com.mygdx.game.MyGame;
 public class PauseScreen implements Screen{
 
    private Stage stage;
-   //private final MyGame game;
+   private final MyGame game;
 
     public PauseScreen(final MyGame game) {
-        //this.game = game;
+        this.game = game;
         this.stage = new Stage(new ScreenViewport());
         Skin skin = new Skin();
         BitmapFont font = new BitmapFont();
@@ -42,7 +42,7 @@ public class PauseScreen implements Screen{
 
         // Créer des boutons pour Continuer et Quitter
         TextButton continueButton = new TextButton("Continuer", skin); // Utilisez votre skin pour les boutons
-        TextButton quitButton = new TextButton("Quitter", skin);
+        TextButton quitButton = new TextButton("Quit", skin);
 
         // Ajouter des gestionnaires d'événements pour les boutons
         continueButton.addListener(new ClickListener() {
@@ -57,6 +57,7 @@ public class PauseScreen implements Screen{
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Quitter l'application
+                System.out.println("PAUSE QUIT TOGGLED");
                 Gdx.app.exit();
             }
         });

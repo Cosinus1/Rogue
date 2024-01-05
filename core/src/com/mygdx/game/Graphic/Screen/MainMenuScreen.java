@@ -4,25 +4,18 @@ package com.mygdx.game.Graphic.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.renderers.BatchTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
 import com.mygdx.game.MyGame;
-import jdk.javadoc.internal.doclets.formats.html.markup.Text;
+//import jdk.javadoc.internal.doclets.formats.html.markup.Text;
 
 public class MainMenuScreen implements Screen {
 
@@ -44,15 +37,12 @@ public class MainMenuScreen implements Screen {
 
     private Label gameTitleLabel;
 
-    private final MyGame game;
+    private MyGame game;
 
 
-
-
-    public MainMenuScreen(AssetManager assetManager,final MyGame game) {
+    public MainMenuScreen(final MyGame game, AssetManager assetManager) {
 
         this.game = game;
-
         this.assetManager = assetManager;
         skin = assetManager.get(Assets.SKIN);
 
