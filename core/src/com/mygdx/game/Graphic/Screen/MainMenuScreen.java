@@ -5,6 +5,7 @@ package com.mygdx.game.Graphic.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -38,9 +39,12 @@ public class MainMenuScreen implements Screen {
     private Label gameTitleLabel;
 
     private MyGame game;
+    private Music backgroundMusic;
 
 
     public MainMenuScreen(final MyGame game, AssetManager assetManager) {
+
+        this.backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("MP3/battleThemeA.mp3"));
 
         this.game = game;
         this.assetManager = assetManager;
@@ -69,6 +73,10 @@ public class MainMenuScreen implements Screen {
        ou bien on peut mettre celle-ci:
        backImage = new Texture(Gdx.files.internal("camp.png"));
         */
+
+        //BackgroundMusic
+        backgroundMusic.play();
+
 
         mainTable = new Table();
         mainTable.setFillParent(true);
@@ -164,11 +172,15 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void hide() {
+        // Arrete le BackgroundMusic quand on change d'ecran
+        backgroundMusic.stop();
+
     }
 
     @Override
     public void dispose() {
         stage.dispose();
+        backgroundMusic.dispose();
     }
 
 
