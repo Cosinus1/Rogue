@@ -34,29 +34,28 @@ public class GraphicHero extends GraphicCharacter {
     }
 
     public void getHeroTextures(World world){
-        boolean Boss = false;
         TiledMapTileSets Tilesets = world.getHome().getTiledMap().getTileSets();
         //Setting FPS for slower animation
         int FPS = 10;
         for(int index=0; index<9; index++){
             //Movement Textures
                 //Front Texture
-                TextureRegion front = getTexturefromTileset(Tilesets, "hero", "angle", "front",index, Boss);
+                TextureRegion front = getTexturefromTileset(Tilesets, "hero", "angle", "front",index);
                 //Back Texture
-                TextureRegion back = getTexturefromTileset(Tilesets, "hero", "angle", "back",index, Boss);
+                TextureRegion back = getTexturefromTileset(Tilesets, "hero", "angle", "back",index);
                 //Left Texture
-                TextureRegion left = getTexturefromTileset(Tilesets, "hero", "angle", "left", index, Boss);
+                TextureRegion left = getTexturefromTileset(Tilesets, "hero", "angle", "left", index);
                 //Right Texture
-                TextureRegion right = getTexturefromTileset(Tilesets, "hero", "angle", "right", index, Boss);
+                TextureRegion right = getTexturefromTileset(Tilesets, "hero", "angle", "right", index);
             //Battle Textures
                 //Front Texture
-                TextureRegion Battlefront = getTexturefromTileset(Tilesets, "hero", "battle", "front",index, Boss);
+                TextureRegion Battlefront = getTexturefromTileset(Tilesets, "hero", "battle", "front",index);
                 //Back Texture
-                TextureRegion Battleback = getTexturefromTileset(Tilesets, "hero", "battle", "back",index, Boss);
+                TextureRegion Battleback = getTexturefromTileset(Tilesets, "hero", "battle", "back",index);
                 //Left Texture
-                TextureRegion Battleleft = getTexturefromTileset(Tilesets, "hero", "battle", "left", index, Boss);
+                TextureRegion Battleleft = getTexturefromTileset(Tilesets, "hero", "battle", "left", index);
                 //Right Texture
-                TextureRegion Battleright = getTexturefromTileset(Tilesets, "hero", "battle", "right", index, Boss);
+                TextureRegion Battleright = getTexturefromTileset(Tilesets, "hero", "battle", "right", index);
             //Adding the Textures to the lists
             for(int i=0; i<FPS; i++){
                 //Movements
@@ -86,6 +85,7 @@ public class GraphicHero extends GraphicCharacter {
         int tileX = (int) (getX()-0) / tileWidth;
         int tileY = (int) (getY()-0) / tileHeight;
 
+        //Delta defines the shortest distance the Hero can have with a wall
         float delta = 16;
         float deltaX = Math.abs(newX - tileX*tileWidth);
         float deltaY = Math.abs(newY - tileY*tileWidth);
@@ -158,13 +158,6 @@ public class GraphicHero extends GraphicCharacter {
         //Update new Position
         setPosition(newX, newY);
 
-        /*        
-        // make sure the character stays within the screen bounds
-        if(Hitbox.x < 0) Hitbox.x = 0;
-        if(Hitbox.x > camera.viewportWidth - 32) Hitbox.x = camera.viewportWidth - 32;
-        if(Hitbox.y < -16) Hitbox.y = -16;
-        if(Hitbox.y > camera.viewportHeight - 64) Hitbox.y = camera.viewportHeight - 64;
-        */
     }
     private boolean isValidPosition(int X, int Y, Map map) {
         //Check Map boundaries
@@ -257,20 +250,15 @@ public class GraphicHero extends GraphicCharacter {
     }
 
     public void render(SpriteBatch spriteBatch, OrthographicCamera camera){
-        int scaleFactor;
-        float offsetX=0;
-        float offsetY=0;
+        int scaleFactor = 1;
+        //float offsetX=0;
+        //float offsetY=0;
         TextureRegion textureRegion = Object.getTextureRegion();
         // Render the object texture based on its position and properties
-        float objectX = (float) Object.getProperties().get("x");
-        float objectY = (float) Object.getProperties().get("y");
+        float objectX = getX();
+        float objectY = getY();
         //Render bigger for boss
-        if (Object.getProperties().get("boss")=="boss"){
-            scaleFactor = 2;
-            offsetX += scaleFactor*16;
-            offsetY -= scaleFactor*16;
-        }
-        else scaleFactor = 1;
+
         float objectWidth = textureRegion.getRegionWidth()*scaleFactor;
         float objectHeight = textureRegion.getRegionHeight()*scaleFactor;
             

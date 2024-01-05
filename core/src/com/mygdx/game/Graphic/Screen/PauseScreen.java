@@ -21,10 +21,10 @@ import com.mygdx.game.MyGame;
 public class PauseScreen implements Screen{
 
    private Stage stage;
-   private final MyGame game;
+   //private final MyGame game;
 
     public PauseScreen(final MyGame game) {
-        this.game = game;
+        //this.game = game;
         this.stage = new Stage(new ScreenViewport());
         Skin skin = new Skin();
         BitmapFont font = new BitmapFont();

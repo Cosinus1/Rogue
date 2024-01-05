@@ -33,10 +33,10 @@ public class Door {
     public Rectangle getBounds(){
         return bounds;
     }
-
+    /* 
     private void updateBounds(){
         bounds = new Rectangle(x, y, 60, 60);
-    }
+    }*/
 
     public Map getMap(){
         return this.map;

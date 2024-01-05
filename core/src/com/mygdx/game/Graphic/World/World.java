@@ -108,6 +108,32 @@ public class World {
     }
 
 /* --------------------------------------------- UPDATE ------------------------------------- */
+    public void update(Map map){
+        ArrayList<Door> Doors = map.getDoors();
+
+        if(Doors!=null){
+            for (Door Door : Doors) {  
+                if(Door.getBounds().overlaps(graphicHero.getHitbox())){
+                    
+                    System.out.println(" Door : " + map.getName() + " --> " + Door.getMap().getName() + " is toggled");
+                    //change position of the graphicHero
+                    map.updatelastposition(graphicHero.getlastX(), graphicHero.getlastY());
+                    //Update map
+                    updateCurrentMap(Door.getMap());
+                    if (map.isOpen()==false) map.toggle();
+                    map = CurrentMap;
+                    //get the appropriate position for hero
+                    if(Door.getMap().isOpen() || (map.getPVP()!="ON" && map!=Home)){          
+                        graphicHero.setPosition(map.getLastposition());
+                    }else{
+                        graphicHero.setPosition(map.getX(), map.getY());
+                    }    
+                }
+            }
+        }
+        //Check for Dungeon reset
+        IsDungeonFinished();
+    }
 
     public Map updateCurrentMap(Map map){
         if(map != null){

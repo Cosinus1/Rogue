@@ -98,7 +98,8 @@ public class GameScreen implements Screen {
          hero.setlastY(hero.getY());
       }else waitingTime += Gdx.graphics.getDeltaTime();
 
-      //Toggle Doors to follow whether they are opened or not
+      //Update World
+      world.update(map);
 
       ArrayList<Door> Doors = map.getDoors();
 

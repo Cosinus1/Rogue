@@ -15,7 +15,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.mygdx.game.Back.Character.Character;
 import com.mygdx.game.Back.Character.Ennemie.Ennemie;
 
-import com.mygdx.game.Graphic.World.World;
 import com.mygdx.game.Graphic.World.Map.Map;
 
 public class GraphicEnnemie extends GraphicCharacter{
@@ -38,25 +37,25 @@ public class GraphicEnnemie extends GraphicCharacter{
         for(int index=0; index<9; index++){
             //Movement Textures
                 //Front Texture
-                TextureRegion front = getTexturefromTileset(Tilesets, Tileset_name, "angle", "front",index, Boss);
+                TextureRegion front = getTexturefromTileset(Tilesets, Tileset_name, "angle", "front",index);
                 //Back Texture
-                TextureRegion back = getTexturefromTileset(Tilesets, Tileset_name, "angle", "back",index, Boss);
+                TextureRegion back = getTexturefromTileset(Tilesets, Tileset_name, "angle", "back",index);
                 //Left Texture
-                TextureRegion left = getTexturefromTileset(Tilesets, Tileset_name, "angle", "left", index, Boss);
+                TextureRegion left = getTexturefromTileset(Tilesets, Tileset_name, "angle", "left", index);
                 //Right Texture
-                TextureRegion right = getTexturefromTileset(Tilesets, Tileset_name, "angle", "right", index, Boss);
+                TextureRegion right = getTexturefromTileset(Tilesets, Tileset_name, "angle", "right", index);
             //Battle Textures
                 //Front Texture
-                TextureRegion Battlefront = getTexturefromTileset(Tilesets, Tileset_name, "battle", "front",index, Boss);
+                TextureRegion Battlefront = getTexturefromTileset(Tilesets, Tileset_name, "battle", "front",index);
                 //Back Texture
-                TextureRegion Battleback = getTexturefromTileset(Tilesets, Tileset_name, "battle", "back",index, Boss);
+                TextureRegion Battleback = getTexturefromTileset(Tilesets, Tileset_name, "battle", "back",index);
                 //Left Texture
-                TextureRegion Battleleft = getTexturefromTileset(Tilesets, Tileset_name, "battle", "left", index, Boss);
+                TextureRegion Battleleft = getTexturefromTileset(Tilesets, Tileset_name, "battle", "left", index);
                 //Right Texture
-                TextureRegion Battleright = getTexturefromTileset(Tilesets, Tileset_name, "battle", "right", index, Boss);
+                TextureRegion Battleright = getTexturefromTileset(Tilesets, Tileset_name, "battle", "right", index);
             //Death Textures
                 //Front Texture
-                TextureRegion deathfront = getTexturefromTileset(Tilesets, Tileset_name, "statut", "dead",index, Boss);
+                TextureRegion deathfront = getTexturefromTileset(Tilesets, Tileset_name, "statut", "dead",index);
             //Adding the Textures to the lists
             for(int i=0; i<FPS; i++){
                 //Movements
@@ -230,14 +229,13 @@ public class GraphicEnnemie extends GraphicCharacter{
                 Object.getProperties().put("previousMoveY",randomY/speed);
                 }
         
-                // Update character's new position
+                // Get New Position
                 float newX = currentX + (randomX * collisionLayer.getTileWidth() / speed);
                 float newY = currentY + (randomY * collisionLayer.getTileHeight() / speed);
         
-                // Ensure the new position is within the map bounds
+                //Update character's new position if valid
                 if (isValidPosition((int) newX/tileWidth, (int) newY/tileWidth, map)) {
                     setPosition(newX,newY);
-                    //System.out.println("Position : " + (int) newX/tileWidth + ", " + (int) newY/tileWidth);
                     setMoveTexture(randomX, randomY);
                 }
             }
@@ -316,17 +314,17 @@ public class GraphicEnnemie extends GraphicCharacter{
     
      public void render(SpriteBatch spriteBatch, OrthographicCamera camera){
         int scaleFactor;
-        float offsetX=0;
-        float offsetY=0;
+        //float offsetX=0;
+        //float offsetY=0;
         TextureRegion textureRegion = Object.getTextureRegion();
         // Render the object texture based on its position and properties
-        float objectX = (float) Object.getProperties().get("x");
-        float objectY = (float) Object.getProperties().get("y");
+        float objectX = getX();
+        float objectY = getY();
         //Render bigger for boss
         if (Object.getProperties().get("boss")=="boss"){
             scaleFactor = 2;
-            offsetX += scaleFactor*16;
-            offsetY -= scaleFactor*16;
+            //offsetX += scaleFactor*16;
+            //offsetY -= scaleFactor*16;
         }
         else scaleFactor = 1;
         float objectWidth = textureRegion.getRegionWidth()*scaleFactor;

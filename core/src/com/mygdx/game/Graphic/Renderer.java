@@ -101,7 +101,7 @@ public class Renderer {
                         float objectY = (float) object.getProperties().get("y");
                         //Render bigger for boss
                         if (object.getProperties().get("boss")=="boss"){
-                           scaleFactor = 3;
+                           scaleFactor = 2;
                         }
                         else scaleFactor = 1;
                         float objectWidth = textureRegion.getRegionWidth()*scaleFactor;

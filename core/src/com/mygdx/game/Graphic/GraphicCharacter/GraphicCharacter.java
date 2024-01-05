@@ -12,8 +12,9 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+
 import com.mygdx.game.Back.Character.Character;
-import com.mygdx.game.Graphic.World.Map.Map;
+
 import com.mygdx.game.Graphic.Elements.*;
 
 public class GraphicCharacter {
@@ -168,7 +169,7 @@ public class GraphicCharacter {
 
 /*----------------------------------------- SPAWN -------------------------------------- */  
 
-    public TextureRegion getTexturefromTileset(TiledMapTileSets Tilesets, String Tileset_name, String property, String value, int index, boolean Boss){
+    public TextureRegion getTexturefromTileset(TiledMapTileSets Tilesets, String Tileset_name, String property, String value, int index){
         // Search for the tileset in the map
         TiledMapTileSet tileSet = null;
         for (TiledMapTileSet tileset : Tilesets) {
@@ -182,15 +183,12 @@ public class GraphicCharacter {
             int GID = 0;
             TiledMapTile tile = null;
             // Get the texture region from the tileset's tiles
-            int i = 0;
             for (TiledMapTile Tile : tileSet) {
                 MapProperties properties = Tile.getProperties();
                 if (properties != null && properties.containsKey(property) && properties.containsKey("index")) {
-                    i++;
                     Object propertyValue = properties.get(property);
                     Object Index = properties.get("index");
                     if (propertyValue != null && propertyValue.equals(value) && Index.equals(index)) {
-                        //System.out.println("index : " + index + "\n" + "number of iterations : " + i + "\n //////////////");
                         GID = Tile.getId();
                         tile = tileSet.getTile(GID);
                         break;
