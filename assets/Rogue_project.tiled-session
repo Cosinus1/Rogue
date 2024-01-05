@@ -1,0 +1,104 @@
+{
+    "activeFile": "TMX/Home.tmx",
+    "expandedProjectPaths": [
+        "TMX",
+        "TSX",
+        "."
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
+        "TMX/Dungeon.tmx": {
+            "scale": 0.92328125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 277.2719580301235,
+                "y": 349.29768150279233
+            }
+        },
+        "TMX/Dungeon.tmx#gobelinEmbed": {
+            "scaleInDock": 1
+        },
+        "TMX/Dungeon.tmx#sorciereEmbed": {
+            "scaleInDock": 1
+        },
+        "TMX/Home.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 8,
+            "viewCenter": {
+                "x": 226,
+                "y": 477.66666666666663
+            }
+        },
+        "TMX/Home.tmx#PathAndObjects": {
+            "scaleInDock": 1
+        },
+        "TMX/Home.tmx#dgn1": {
+            "scaleInDock": 1
+        },
+        "TMX/Home.tmx#houses": {
+            "scaleInDock": 0.33
+        },
+        "TSX/PathAndObjects.tsx": {
+            "scaleInDock": 1
+        },
+        "TSX/dungeon.tsx": {
+            "scaleInDock": 1
+        },
+        "TSX/gobelin.tsx": {
+            "scaleInDock": 1
+        },
+        "TSX/hero.tsx": {
+            "scaleInDock": 1
+        },
+        "TSX/houses.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TSX/jack.tsx": {
+            "scaleInDock": 1
+        },
+        "TSX/minotaure.tsx": {
+            "scaleInDock": 1
+        },
+        "TSX/perspective_walls.tsx": {
+            "scaleInDock": 1
+        },
+        "TSX/sorciere.tsx": {
+            "scaleInDock": 1
+        },
+        "TSX/tavern.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TSX/vampire.tsx": {
+            "scaleInDock": 1
+        }
+    },
+    "last.imagePath": "/home/paul/Documents/Projet JAVA/Morgar-master_remastered/assets/PNG",
+    "openFiles": [
+        "TMX/Dungeon.tmx",
+        "TSX/tavern.tsx",
+        "TMX/Home.tmx",
+        "TSX/tavern.tsx",
+        "TSX/tavern.tsx",
+        "TSX/houses.tsx"
+    ],
+    "project": "Rogue_project.tiled-project",
+    "recentFiles": [
+        "TMX/Dungeon.tmx",
+        "TSX/tavern.tsx",
+        "TSX/houses.tsx",
+        "TMX/Home.tmx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 32,
+        "width": 32
+    },
+    "tileset.transparentColor": "#000000",
+    "tileset.useTransparentColor": false
+}
