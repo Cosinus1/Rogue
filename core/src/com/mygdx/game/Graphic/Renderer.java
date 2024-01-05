@@ -50,7 +50,7 @@ public class Renderer {
 
    public void renderObjects(Map map, GraphicCharacter hero, OrthographicCamera camera){  
       
-      boolean renderDoors = false;
+      boolean renderDoors = true;
       spriteBatch.begin();
       
       if(renderDoors){

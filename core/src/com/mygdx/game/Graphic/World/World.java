@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
 
@@ -18,17 +19,22 @@ public class World {
     private Map Home;
     private Map Tavern;
     private Map Armory;
-    private Map Dungeon;
+    private Map DungeonHub;
+    private ArrayList<Map> Dungeon;
+    private Map CurrentMap;
 
     private MapFactory mapFactory;
 
-    private int Dungeonlevel;
+    private TiledMapTileSets Tilesets;
+
     private TiledMapTileLayer CurrentcollisionLayer;
-    private Map CurrentMap;
 
     private Hero hero;
     private Boss boss;
     private GraphicHero graphicHero;
+
+    private int numberOfMaps = 2;
+    private int Dungeonlevel;
 
     //constructor
     public World(){
@@ -38,34 +44,46 @@ public class World {
         //Set up MapFactory
         this.mapFactory = new MapFactory();
         //loading the based tiledmaps
-        this.Dungeon = new Map(50, 90, new TmxMapLoader().load("TMX/Dungeon.tmx"), null, PNJs, Gdx.audio.newMusic(Gdx.files.internal("MP3/Dungeon_adventure.mp3")));
+        this.DungeonHub = new Map(50, 90, new TmxMapLoader().load("TMX/Dungeon.tmx"), null, PNJs, Gdx.audio.newMusic(Gdx.files.internal("MP3/Dungeon_adventure.mp3")));
         this.Home = new Map(500,20, new TmxMapLoader().load("TMX/Home.tmx"), Door_list, null, Gdx.audio.newMusic(Gdx.files.internal("MP3/Dungeon_adventure.mp3")));
         this.Tavern = new Map(400, 100, new TmxMapLoader().load("TMX/Tavern.tmx"), null, null, Gdx.audio.newMusic(Gdx.files.internal("MP3/tavernMusic.mp3")));
 
+        //Set Names 
+        this.Home.setName("Home");
+        this.Tavern.setName("Tavern");
+        this.DungeonHub.setName("DungeonHub");
+
+        //Get Tilesets
+        this.Tilesets = DungeonHub.getTiledMap().getTileSets();
+
         //Set up the Doors
         this.Tavern.addDoor(new Door(480, 120, Home));
-        this.Home.addDoor(new Door(860, 415, Dungeon));
+        this.Home.addDoor(new Door(860, 415, DungeonHub));
         this.Home.addDoor(new Door(0, 400, Tavern));
 
         //Align TavernMap
         this.Tavern.centerTavernMap();
 
         //Initialization
-        this.Dungeonlevel = 1;
-        this.Dungeon.setPVP("ON");
-        this.CurrentMap = Home;
-        this.CurrentcollisionLayer = Home.getcollisionLayer();
-        //Initialize the Hero
-        hero = new Hero(this, 100, 200, 10, 1, null, "Champion", 0);
-        graphicHero = new GraphicHero(this,hero,CurrentMap.getX(), CurrentMap.getY());
-        //Init the Dungeons Maps
-        initializeDungeon(5);
+            this.CurrentMap = Home;
+            this.CurrentcollisionLayer = Home.getcollisionLayer();
+
+            //Initialize the Hero
+            hero = new Hero(this, 100, 200, 1000, 1, null, "Champion", 0);
+            graphicHero = new GraphicHero(this,hero,CurrentMap.getX(), CurrentMap.getY());
+        
+
+            //Initialize Dungeon
+            this.Dungeon = new ArrayList<>();
+            this.Dungeonlevel = 1;
+            this.DungeonHub.setPVP("OFF");
+            initializeDungeon(numberOfMaps);
         
     }
     
 /* --------------------------------------------- GETTERS ------------------------------------- */
-    public Map getDungeon(){
-        return this.Dungeon;
+    public Map getDungeonHub(){
+        return this.DungeonHub;
     }
     public Map getHome(){
         return this.Home;
@@ -85,10 +103,13 @@ public class World {
     public TiledMapTileLayer getCurrentcollisionLayer(){
         return CurrentcollisionLayer;
     }
+    public TiledMapTileSets getTileSets(){
+        return Tilesets;
+    }
 
 /* --------------------------------------------- UPDATE ------------------------------------- */
 
-    public void updateCurrentMap(Map map){
+    public Map updateCurrentMap(Map map){
         if(map != null){
             
             /*if(map.getMusic()!=null){
@@ -98,17 +119,12 @@ public class World {
             this.CurrentMap = map;
             this.CurrentcollisionLayer = map.getcollisionLayer();
             if((map.getPVP() == "ON") && map.getPNJ_list().size()==0){
-                System.out.println("Spawning Dungeon ...");
+                System.out.println("Spawning  Map...");
                 respawn(map);
-                System.err.println("Dungeon Spawned");
-            }
-            if(map==Home && boss.getPV()<=0){
-                System.out.println("boss killed");
-                Dungeonlevel++;
-                disposeDungeon();
-                initializeDungeon(5);
+                System.err.println("Map Spawned");
             }
         }else System.out.println("map is null");
+        return this.CurrentMap;
     }
 
 /* ---------------------------------------------------------------------------------------- */
@@ -118,25 +134,27 @@ public class World {
         
         // Create new, more powerful enemies
         System.out.println("creating ennemies ...");
-        map.createRandomEnnemies(this, EnemyCount);
+        map.createRandomEnnemies(this.Tilesets, EnemyCount);
 
         System.out.println("Enemies created");
     }
 
     public void initializeDungeon(int numberOfMaps) {
         boss = new Boss(100, 0, 50,3,null,"Boss",null);
-        GraphicBoss graphicboss = new GraphicBoss(boss,500,500, this);
+        GraphicBoss graphicboss = new GraphicBoss(boss,525,400, this.Tilesets);
         System.out.println("              /////////////Initializing Dungeon//////////////");
-        Map dungeonMap = getDungeon();
+        Map DungeonHubMap = getDungeonHub();
         
-        Map previousMap = dungeonMap;
+        Map previousMap = DungeonHubMap;
 
         for (int i = 0; i < numberOfMaps + 1; i++) {
             // Create a new map using the MapFactory
             Map newMap = mapFactory.createMap(50, 100, null, null, previousMap);
+            //set Name
+            newMap.setName("Dungeon " + i);
             newMap.setPVP("ON");
             // Add a door between the previous map and the new map
-            if(i==0)this.Dungeon.addDoor(new Door(550, -20, newMap));//Home is linked to first map
+            if(i==0)this.DungeonHub.addDoor(new Door(470, 350, newMap));//Home is linked to first map
             else if(i==numberOfMaps)mapFactory.addDoorBetweenMaps(previousMap, Home);//Last map is linked back to Home
             else mapFactory.addDoorBetweenMaps(previousMap, newMap);
 
@@ -151,36 +169,47 @@ public class World {
             System.out.println("\n  x   : " +  x    + "       y   : " +    y);
             System.out.println("\nTileX : " + TileX + "            TileY : " + TileY + "\n");
 
-            previousMap.updateTiledmap(mapFactory.createRandomTiledMap(dungeonMap.getTiledMap().getTileSets(), TileX, TileY));
+            previousMap.updateTiledmap(mapFactory.createRandomTiledMap(DungeonHubMap.getTiledMap().getTileSets(), TileX, TileY));
 
             previousMap.setcollisionLayer((TiledMapTileLayer) previousMap.getTiledMap().getLayers().get("Base"));
 
-            graphicHero.spawn(previousMap,dungeonMap.getTiledMap().getTileSets(),this.graphicHero, "hero",false);
-            if(i == numberOfMaps) graphicboss.spawn(previousMap, dungeonMap.getTiledMap().getTileSets(), graphicboss, graphicboss.getCharacter().getName());
+            graphicHero.spawn(previousMap,DungeonHubMap.getTiledMap().getTileSets(),this.graphicHero, "hero",false);
+            if(i == numberOfMaps) graphicboss.spawn(previousMap, DungeonHubMap.getTiledMap().getTileSets(), graphicboss, graphicboss.getCharacter().getName());
             }
+            //Add the map into the Dungeon
+            Dungeon.add(previousMap);
             // Update the previous map reference for the next iteration
             previousMap = newMap;
         }
         
         System.out.println("             /////////////////Dungeon Initialized/////////////");
     }
+    public void IsDungeonFinished(){
+        if(CurrentMap==Home){
+            if(boss.getPV()<=0){
+                System.out.println("boss killed");
+                Dungeonlevel++;
+                disposeDungeon();
+                initializeDungeon(numberOfMaps);
+            }else for(Map map : Dungeon) map.updatelastposition(map.getX(), map.getY());;
+        }
+    }
     public void disposeDungeon(){
 
-        disposeTiledmaps(Dungeon.getDoors().get(0).getMap());
-        Dungeon.updatelastposition(Dungeon.getX(), Dungeon.getY());
-
-        Dungeon.disposeDoors();
-
-
+        for(Map map : Dungeon){
+            ArrayList<Door> Doors = map.getDoors();
+            if(Doors != null){
+                int size = Doors.size();
+                for(int i=0; i<size; i++){
+                    Doors.remove(0);
+                }
+                System.out.println("Door list : " + Doors + "  for : " + map.getName());
+            }else System.out.println("No doors");
+        }
+        DungeonHub.updatelastposition(DungeonHub.getX(), DungeonHub.getY());
     }
 
     public void disposeTiledmaps(Map map){
-        
-        Door door = map.getDoors().get(1);
-        
-        if (door.getMap().getPVP() == "ON"){
-            map.getTiledMap().dispose();
-            disposeTiledmaps(door.getMap());
-        }
+        map.getTiledMap().dispose();
     }
 }

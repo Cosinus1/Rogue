@@ -3,6 +3,7 @@ package com.mygdx.game.Graphic.World.Map;
 import com.badlogic.gdx.maps.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -13,14 +14,15 @@ import com.badlogic.gdx.audio.Music;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.mygdx.game.Graphic.World.*;
 import com.mygdx.game.Graphic.Elements.Door;
 import com.mygdx.game.Graphic.GraphicCharacter.*;
 
-import com.mygdx.game.Back.Character.Character;
 import com.mygdx.game.Back.Character.Ennemie.Ennemie;
 
 public class Map {
+
+    private String Name;
+
     private float x,y;//position 0 of the character
     private Vector2 lastposition;
     private boolean isOpen;
@@ -46,6 +48,7 @@ public class Map {
         this.x = x;
         this.y = y;
         this.lastposition = new Vector2();
+        this.lastposition.set(x, y);
         this.camx = 0;
         this.camy = 0;
 
@@ -76,6 +79,9 @@ public class Map {
     }
 
 /* --------------------------------------------- GETTERS ------------------------------------- */
+    public String getName(){
+        return Name;
+    }
     public boolean isOpen(){
         return isOpen;
     }
@@ -149,6 +155,9 @@ public class Map {
         return false;
     }
 /* --------------------------------------------- SETTERS ------------------------------------- */
+    public void setName(String name){
+        Name = name;
+    }
     public void toggle(){
         isOpen = !isOpen;
     }
@@ -272,7 +281,7 @@ public class Map {
     
     /*-----------------------------------------------------------------SPAWN ENNEMIES----------------------------------------------------------------------- */
 
-    public void createRandomEnnemies(World world, int n) {
+    public void createRandomEnnemies(TiledMapTileSets Tilesets, int n) {
         GraphicEnnemieFactory ennemieFactory = new GraphicEnnemieFactory();
         TiledMapTileLayer collisionLayer = getcollisionLayer();
     
@@ -305,9 +314,9 @@ public class Map {
             float x = randomX * collisionLayer.getTileWidth();
             float y = randomY * collisionLayer.getTileHeight();
     
-            GraphicEnnemie newEnnemie = ennemieFactory.createRandomGraphicEnnemie(x, y,world);
+            GraphicEnnemie newEnnemie = ennemieFactory.createRandomGraphicEnnemie(x, y, Tilesets);
             if (newEnnemie != null) {
-                newEnnemie.spawn(this, world.getDungeon().getTiledMap().getTileSets(), newEnnemie, newEnnemie.getCharacter().getName());
+                newEnnemie.spawn(this, Tilesets, newEnnemie, newEnnemie.getCharacter().getName());
             }
         }
     }
@@ -344,11 +353,5 @@ public class Map {
     }
 
     /*------------------------------------------------------------DISPOSE--------------------------------------------------------------------- */
-
-
-    public void disposeDoors(){
-        this.Door_list = null;
-    }
-        
         
 }

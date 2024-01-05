@@ -1,5 +1,7 @@
 package com.mygdx.game.Graphic.Screen;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
@@ -65,7 +67,7 @@ public class GameScreen implements Screen {
 
       //Keyboard
 
-      hero.move(camera,world);
+      hero.move(camera, map);
       hero.GraphicHeroAttack(map);
       //Enter input : change color
       if(Gdx.input.isKeyJustPressed(Keys.ENTER))BlacknWhite = !BlacknWhite;
@@ -97,19 +99,32 @@ public class GameScreen implements Screen {
       }else waitingTime += Gdx.graphics.getDeltaTime();
 
       //Toggle Doors to follow whether they are opened or not
-      for (Door Door : map.getDoors()) {  
-         if(Door.getBounds().overlaps(hero.getHitbox())){
-               //change position of the hero
-               world.getCurrentMap().updatelastposition(hero.getlastX(), hero.getlastY());
-               world.updateCurrentMap(Door.getMap());
-               if(Door.getMap().isOpen() || (map.getPVP()!="ON" && map!=world.getHome())){          
-                  hero.setPosition(world.getCurrentMap().getLastposition());
-               }else{
-                  if(map != world.getHome()) map.toggle();
-                  hero.setPosition(world.getCurrentMap().getX(), world.getCurrentMap().getY());
-               }    
+
+      ArrayList<Door> Doors = map.getDoors();
+
+      if(Doors!=null){
+         for (Door Door : Doors) {  
+            if(Door.getBounds().overlaps(hero.getHitbox())){
+                  
+                  System.out.println("for : " + map.getName() + " Door " + Door.getMap().getName() + " is toggled");
+                  //change position of the hero
+                  map.updatelastposition(hero.getlastX(), hero.getlastY());
+                  //Update map
+                  world.updateCurrentMap(Door.getMap());
+                  map = world.getCurrentMap();
+                  //get the appropriate position for hero
+                  if(Door.getMap().isOpen() || (map.getPVP()!="ON" && map!=world.getHome())){          
+                     hero.setPosition(map.getLastposition());
+                  }else{
+                     if(map != world.getHome()) map.toggle();
+                        hero.setPosition(map.getX(), map.getY());
+                  }    
+            }
          }
       }
+      //Check for Dungeon reset
+      world.IsDungeonFinished();
+      
       hero.setlastX(hero.getX());
       hero.setlastY(hero.getY());
     }
@@ -125,8 +140,8 @@ public class GameScreen implements Screen {
            map.getTiledMap().dispose();
            map.getRenderer().dispose();
         }
-        if (world.getCurrentMap().getMusic() != null) {
-           world.getCurrentMap().getMusic().dispose();
+        if (map.getMusic() != null) {
+           map.getMusic().dispose();
         }
     }
 

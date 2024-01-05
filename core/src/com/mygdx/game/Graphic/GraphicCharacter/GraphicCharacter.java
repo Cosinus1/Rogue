@@ -9,6 +9,7 @@ import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
+import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Back.Character.Character;
@@ -167,10 +168,10 @@ public class GraphicCharacter {
 
 /*----------------------------------------- SPAWN -------------------------------------- */  
 
-    public TextureRegion getTexturefromTileset(Map map, String Tileset_name, String property, String value, int index, boolean Boss){
+    public TextureRegion getTexturefromTileset(TiledMapTileSets Tilesets, String Tileset_name, String property, String value, int index, boolean Boss){
         // Search for the tileset in the map
         TiledMapTileSet tileSet = null;
-        for (TiledMapTileSet tileset : map.getTiledMap().getTileSets()) {
+        for (TiledMapTileSet tileset : Tilesets) {
             if (tileset.getName().equals(Tileset_name)) {
                 tileSet = tileset;
                 break;

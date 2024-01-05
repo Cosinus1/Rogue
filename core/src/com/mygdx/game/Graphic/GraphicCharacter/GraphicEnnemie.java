@@ -31,32 +31,32 @@ public class GraphicEnnemie extends GraphicCharacter{
     }
 /* ----------------------------------------------TEXTURE HANDLING---------------------------------------------------- */
 
-    public void getEnnemieTextures(World world, String Tileset_name, boolean Boss){
-        Map map = world.getDungeon();
+    public void getEnnemieTextures(TiledMapTileSets Tilesets, String Tileset_name, boolean Boss){
+  
         //Setting FPS for slower animation
         int FPS = 10;
         for(int index=0; index<9; index++){
             //Movement Textures
                 //Front Texture
-                TextureRegion front = getTexturefromTileset(map, Tileset_name, "angle", "front",index, Boss);
+                TextureRegion front = getTexturefromTileset(Tilesets, Tileset_name, "angle", "front",index, Boss);
                 //Back Texture
-                TextureRegion back = getTexturefromTileset(map, Tileset_name, "angle", "back",index, Boss);
+                TextureRegion back = getTexturefromTileset(Tilesets, Tileset_name, "angle", "back",index, Boss);
                 //Left Texture
-                TextureRegion left = getTexturefromTileset(map, Tileset_name, "angle", "left", index, Boss);
+                TextureRegion left = getTexturefromTileset(Tilesets, Tileset_name, "angle", "left", index, Boss);
                 //Right Texture
-                TextureRegion right = getTexturefromTileset(map, Tileset_name, "angle", "right", index, Boss);
+                TextureRegion right = getTexturefromTileset(Tilesets, Tileset_name, "angle", "right", index, Boss);
             //Battle Textures
                 //Front Texture
-                TextureRegion Battlefront = getTexturefromTileset(map, Tileset_name, "battle", "front",index, Boss);
+                TextureRegion Battlefront = getTexturefromTileset(Tilesets, Tileset_name, "battle", "front",index, Boss);
                 //Back Texture
-                TextureRegion Battleback = getTexturefromTileset(map, Tileset_name, "battle", "back",index, Boss);
+                TextureRegion Battleback = getTexturefromTileset(Tilesets, Tileset_name, "battle", "back",index, Boss);
                 //Left Texture
-                TextureRegion Battleleft = getTexturefromTileset(map, Tileset_name, "battle", "left", index, Boss);
+                TextureRegion Battleleft = getTexturefromTileset(Tilesets, Tileset_name, "battle", "left", index, Boss);
                 //Right Texture
-                TextureRegion Battleright = getTexturefromTileset(map, Tileset_name, "battle", "right", index, Boss);
+                TextureRegion Battleright = getTexturefromTileset(Tilesets, Tileset_name, "battle", "right", index, Boss);
             //Death Textures
                 //Front Texture
-                TextureRegion deathfront = getTexturefromTileset(map, Tileset_name, "statut", "dead",index, Boss);
+                TextureRegion deathfront = getTexturefromTileset(Tilesets, Tileset_name, "statut", "dead",index, Boss);
             //Adding the Textures to the lists
             for(int i=0; i<FPS; i++){
                 //Movements

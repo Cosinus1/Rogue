@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.math.Vector3;
@@ -24,7 +23,7 @@ public class GraphicHero extends GraphicCharacter {
 
     public GraphicHero(World world, Character character, float x, float y){
         super(character, x, y);
-        spawn(world.getDungeon(),null, this, "hero",true);
+        spawn(world.getDungeonHub(),null, this, "hero",true);
         spawn(world.getHome(), null, this, "hero",true);
         spawn(world.getTavern(), null, this, "hero",true);
         getHeroTextures(world);
@@ -36,28 +35,28 @@ public class GraphicHero extends GraphicCharacter {
 
     public void getHeroTextures(World world){
         boolean Boss = false;
-        Map map = world.getHome();
+        TiledMapTileSets Tilesets = world.getHome().getTiledMap().getTileSets();
         //Setting FPS for slower animation
         int FPS = 10;
         for(int index=0; index<9; index++){
             //Movement Textures
                 //Front Texture
-                TextureRegion front = getTexturefromTileset(map, "hero", "angle", "front",index, Boss);
+                TextureRegion front = getTexturefromTileset(Tilesets, "hero", "angle", "front",index, Boss);
                 //Back Texture
-                TextureRegion back = getTexturefromTileset(map, "hero", "angle", "back",index, Boss);
+                TextureRegion back = getTexturefromTileset(Tilesets, "hero", "angle", "back",index, Boss);
                 //Left Texture
-                TextureRegion left = getTexturefromTileset(map, "hero", "angle", "left", index, Boss);
+                TextureRegion left = getTexturefromTileset(Tilesets, "hero", "angle", "left", index, Boss);
                 //Right Texture
-                TextureRegion right = getTexturefromTileset(map, "hero", "angle", "right", index, Boss);
+                TextureRegion right = getTexturefromTileset(Tilesets, "hero", "angle", "right", index, Boss);
             //Battle Textures
                 //Front Texture
-                TextureRegion Battlefront = getTexturefromTileset(map, "hero", "battle", "front",index, Boss);
+                TextureRegion Battlefront = getTexturefromTileset(Tilesets, "hero", "battle", "front",index, Boss);
                 //Back Texture
-                TextureRegion Battleback = getTexturefromTileset(map, "hero", "battle", "back",index, Boss);
+                TextureRegion Battleback = getTexturefromTileset(Tilesets, "hero", "battle", "back",index, Boss);
                 //Left Texture
-                TextureRegion Battleleft = getTexturefromTileset(map, "hero", "battle", "left", index, Boss);
+                TextureRegion Battleleft = getTexturefromTileset(Tilesets, "hero", "battle", "left", index, Boss);
                 //Right Texture
-                TextureRegion Battleright = getTexturefromTileset(map, "hero", "battle", "right", index, Boss);
+                TextureRegion Battleright = getTexturefromTileset(Tilesets, "hero", "battle", "right", index, Boss);
             //Adding the Textures to the lists
             for(int i=0; i<FPS; i++){
                 //Movements
@@ -75,9 +74,8 @@ public class GraphicHero extends GraphicCharacter {
         }
     }    
 
-    public void move(OrthographicCamera camera, World world){
+    public void move(OrthographicCamera camera, Map map){
 
-        Map map = world.getCurrentMap();
         int tileWidth = 32;
         int tileHeight = 32;
 
@@ -227,18 +225,15 @@ public class GraphicHero extends GraphicCharacter {
         if (tileSet != null) {
             TiledMapTile tile = null;
             // Get the texture region from the tileset's tiles
-            int i = 0;
+     
             for(TiledMapTile Tile : tileSet){
-                i+=1;
+  
                 if(Tile.getProperties().containsKey("basic") && Tile.getProperties().get("angle").equals("front")){
                     GID = Tile.getId();
                     tile = tileSet.getTile(GID);
                     break;
                 }
             }
-            //System.out.println("number of iterations " + i);
-            //System.out.println("GID :" + GID);
-
 
             if (tile != null) {
                 TextureRegion textureRegion = tile.getTextureRegion();

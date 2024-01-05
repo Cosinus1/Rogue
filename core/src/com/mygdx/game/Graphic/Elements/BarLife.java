@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.Back.Character.Character;
-import com.mygdx.game.Back.Character.Ennemie.Ennemie;
 import com.mygdx.game.Back.Character.Hero.Hero;
 import com.mygdx.game.Graphic.GraphicCharacter.*;
 
