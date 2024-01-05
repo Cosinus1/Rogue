@@ -8,6 +8,7 @@ import com.mygdx.game.Graphic.Screen.PauseScreen;
 
 public class MyGame extends Game {
 
+    public MainMenuScreen mainMenuScreen;
     public GameScreen gameScreen;
     public PauseScreen pauseScreen;
     public Assets assets;
@@ -15,18 +16,19 @@ public class MyGame extends Game {
 
     @Override
     public void create(){
-
-
-        gameScreen = new GameScreen(this);
-        pauseScreen = new PauseScreen(this);
-        setScreen(pauseScreen);
-
-
-        // Pour charger la texture des boutons
+        
+        // Load Button Textures
         assets = new Assets();
         assets.loadAll();
         assets.getAssetManager().finishLoading();
-        setScreen(new MainMenuScreen(assets.getAssetManager(),this));
+        
+        mainMenuScreen = new MainMenuScreen(this, assets.getAssetManager());
+        gameScreen = new GameScreen(this);
+        pauseScreen = new PauseScreen(this);
+        //Set the Main screen
+        //setScreen(pauseScreen);
+        setScreen(mainMenuScreen);
+
 
     } 
     //je rajoute un commentaire

@@ -10,19 +10,16 @@ import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
-import com.badlogic.gdx.math.Rectangle;
+
 import com.badlogic.gdx.math.Vector2;
 
 import com.mygdx.game.Back.Character.Character;
-
+import com.mygdx.game.Graphic.GraphicObject.GraphicObject;
 import com.mygdx.game.Graphic.GraphicObject.Elements.*;
 
-public class GraphicCharacter {
+public class GraphicCharacter extends GraphicObject{
     protected Character character;
 
-    protected Rectangle Hitbox;
-    protected float lastX, lastY;
-    protected TextureMapObject Object;
     protected ArrayList<TextureRegion> moveTexture_list;
     protected ArrayList<TextureRegion> battleTexture_list;
     protected ArrayList<TextureRegion> deathTexture_list;
@@ -34,9 +31,9 @@ public class GraphicCharacter {
     protected int angle = 0; 
 
     public GraphicCharacter(Character character2, float x, float y){
+        super(x, y, 32, 32);
         this.character = character2;
-        this.Hitbox = new Rectangle(x, y, 32, 32);
-        Object = new TextureMapObject();
+        //Init Texture lists
         moveTexture_list = new ArrayList<>();
         battleTexture_list = new ArrayList<>();
         deathTexture_list = new ArrayList<>();
@@ -80,9 +77,6 @@ public class GraphicCharacter {
     }
     public int getAngle(){
         return angle;
-    }
-    public Rectangle getHitbox(){
-        return Hitbox;
     }
     public BarLife getBarlife(){
         return barlife;
