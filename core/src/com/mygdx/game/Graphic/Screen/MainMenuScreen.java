@@ -93,7 +93,7 @@ public class MainMenuScreen implements Screen {
         // Bouton Options
         addbutton("Options");
 
-        // Bouton Qit
+        // Bouton Quit
         addbutton("Quit").addListener(new ClickListener(){
 
             //Quit pour quitter le jeu
