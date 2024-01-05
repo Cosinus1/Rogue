@@ -199,7 +199,10 @@ public class Map {
     }
     public void updateTiledmap(TiledMap newTiledMap) {
         this.tiledmap = newTiledMap;
-        this.collisionLayer = (TiledMapTileLayer) newTiledMap.getLayers().get("Base");
+        //Add the collision Layer
+            this.collisionLayer = (TiledMapTileLayer) newTiledMap.getLayers().get("Base");
+            if(collisionLayer == null) System.err.println("No collision Layer found");
+        //Set renderer
         this.renderer = new OrthogonalTiledMapRenderer(newTiledMap);
     }
     public void updatelastposition(float x, float y){

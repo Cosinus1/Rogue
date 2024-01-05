@@ -164,7 +164,7 @@ public class MapFactory {
             int startX;
             int startY;
             
-            System.out.println("NEW CHAIN");
+            System.out.println("CHAIN No : " + i);
 
             // Ensure starting point is not too close to the corners
             int breakwhile = 0;
@@ -404,7 +404,7 @@ public class MapFactory {
                 doorCoordinates[1] = 0; // Y-coordinate at the southern border
                 break;
         }
-        //System.out.println("DOOR COORDINATES : " + doorCoordinates[0] + doorCoordinates[1]);
+        
         return doorCoordinates;
     }
 
