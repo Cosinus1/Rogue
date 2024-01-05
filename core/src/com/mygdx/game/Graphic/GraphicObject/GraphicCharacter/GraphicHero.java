@@ -1,4 +1,4 @@
-package com.mygdx.game.Graphic.GraphicCharacter;
+package com.mygdx.game.Graphic.GraphicObject.GraphicCharacter;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.mygdx.game.Graphic.GraphicCharacter;
+package com.mygdx.game.Graphic.GraphicObject.GraphicCharacter;
 
 import java.util.ArrayList;
 
@@ -15,7 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import com.mygdx.game.Back.Character.Character;
 
-import com.mygdx.game.Graphic.Elements.*;
+import com.mygdx.game.Graphic.GraphicObject.Elements.*;
 
 public class GraphicCharacter {
     protected Character character;
