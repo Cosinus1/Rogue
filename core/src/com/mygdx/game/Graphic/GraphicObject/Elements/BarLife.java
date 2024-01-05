@@ -1,4 +1,4 @@
-package com.mygdx.game.Graphic.Elements;
+package com.mygdx.game.Graphic.GraphicObject.Elements;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.Back.Character.Hero.Hero;
-import com.mygdx.game.Graphic.GraphicCharacter.*;
+import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.*;
 
 public class BarLife {
 

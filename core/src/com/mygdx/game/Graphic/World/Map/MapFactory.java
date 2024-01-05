@@ -6,8 +6,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.*;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.mygdx.game.Graphic.Elements.Door;
-import com.mygdx.game.Graphic.GraphicCharacter.GraphicEnnemie;
+import com.mygdx.game.Graphic.GraphicObject.Elements.Door;
+import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicEnnemie;
 
 import java.util.ArrayList;
 import java.util.Random;
