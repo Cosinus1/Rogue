@@ -19,7 +19,7 @@ public class MyGame extends Game {
 
         gameScreen = new GameScreen(this);
         pauseScreen = new PauseScreen(this);
-        //setScreen(pauseScreen);
+        setScreen(pauseScreen);
 
 
         // Pour charger la texture des boutons

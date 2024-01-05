@@ -45,6 +45,7 @@ public class MainMenuScreen implements Screen {
     private Label gameTitleLabel;
 
     private final MyGame game;
+   private Music backgroundMusic;
 
 
 
@@ -57,12 +58,13 @@ public class MainMenuScreen implements Screen {
         skin = assetManager.get(Assets.SKIN);
 
         // load the background "music"
-        /*
-       Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("MP3/battleThemeA.mp3"));
 
+        this.backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("MP3/battleThemeA.mp3"));
+       /*
         // start the playback of the background music immediately
         backgroundMusic.setLooping(true);
         backgroundMusic.play(); */
+
 
 
 
@@ -74,17 +76,22 @@ public class MainMenuScreen implements Screen {
         viewport = new ExtendViewport(1200,800);
         stage = new Stage(viewport);
         // Create the background image
-        backImage = new Texture(Gdx.files.internal("GIF/camp.gif"));
-       /*
-       ou bien on peut mettre celle-ci:
-       backImage = new Texture(Gdx.files.internal("camp.png"));
-        */
+        //backImage = new Texture(Gdx.files.internal("GIF/camp.gif"));
+
+       //ou bien on peut mettre celle-ci:
+       backImage = new Texture(Gdx.files.internal("PNG/camp.png"));
+
+       // */
+
+        // play the music
+        backgroundMusic.play();
+
 
         mainTable = new Table();
         mainTable.setFillParent(true);
 
         gameTitleLabel = new Label("MONSTERS", skin); // le nom  du jeu
-        gameTitleLabel.setFontScale(4, 4); // Ajuste la taille de la police
+        gameTitleLabel.setFontScale(5, 5); // Ajuste la taille de la police
 
         mainTable.add(gameTitleLabel).colspan(2).padBottom(50); // colspan(2) pour fusionner sur deux colonnes et ajustez la disposition
         mainTable.row();
@@ -129,7 +136,7 @@ public class MainMenuScreen implements Screen {
 
     }
 
-    /************* NOM DU JEU ************/
+
 
 
     @Override
@@ -174,11 +181,14 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void hide() {
+        backgroundMusic.stop();
+
     }
 
     @Override
     public void dispose() {
         stage.dispose();
+        backgroundMusic.dispose();
     }
 
 
