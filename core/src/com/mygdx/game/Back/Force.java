@@ -1,11 +1,11 @@
 package com.mygdx.game.Back;
 
 public class Force {
-    public int axis;
-    public float value;
+    public float valueX;
+    public float valueY;
 
-    public Force(float value, int axis){
-        this.value = value;
-        this.axis = axis;
+    public Force(float valueX, float valueY){
+        this.valueX = valueX;
+        this.valueY = valueY;
     }
 }

@@ -26,8 +26,8 @@ public class MyGame extends Game {
         gameScreen = new GameScreen(this);
         pauseScreen = new PauseScreen(this);
         //Set the Main screen
-        //setScreen(pauseScreen);
-        setScreen(mainMenuScreen);
+        setScreen(gameScreen);
+        //setScreen(mainMenuScreen);
 
 
     } 

@@ -44,7 +44,7 @@ public class MainMenuScreen implements Screen {
 
     public MainMenuScreen(final MyGame game, AssetManager assetManager) {
 
-        this.backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("MP3/battleThemeA.mp3"));
+        //this.backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("MP3/battleThemeA.mp3"));
 
         this.game = game;
         this.assetManager = assetManager;
@@ -75,13 +75,13 @@ public class MainMenuScreen implements Screen {
         */
 
         //BackgroundMusic
-        backgroundMusic.play();
+        //backgroundMusic.play();
 
 
         mainTable = new Table();
         mainTable.setFillParent(true);
 
-        gameTitleLabel = new Label("MONSTERS", skin); // le nom  du jeu
+        gameTitleLabel = new Label("ROGUE", skin); // le nom  du jeu
         gameTitleLabel.setFontScale(4, 4); // Ajuste la taille de la police
 
         mainTable.add(gameTitleLabel).colspan(2).padBottom(50); // colspan(2) pour fusionner sur deux colonnes et ajustez la disposition
@@ -173,7 +173,7 @@ public class MainMenuScreen implements Screen {
     @Override
     public void hide() {
         // Arrete le BackgroundMusic quand on change d'ecran
-        backgroundMusic.stop();
+        //backgroundMusic.stop();
 
     }
 

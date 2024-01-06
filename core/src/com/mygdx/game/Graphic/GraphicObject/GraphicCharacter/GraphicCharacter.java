@@ -98,6 +98,7 @@ public class GraphicCharacter extends GraphicObject{
         this.Hitbox.y = y;
         this.Object.getProperties().put("x",x);
         this.Object.getProperties().put("y",y);
+        //System.out.println("position set");
     }
     public void setPosition (Vector2 position) {
 		setPosition(position.x, position.y);
