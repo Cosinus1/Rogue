@@ -1,4 +1,4 @@
-package com.mygdx.game.Graphic.GraphicCharacter;
+package com.mygdx.game.Graphic.GraphicObject.GraphicCharacter;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -180,7 +180,7 @@ public class GraphicEnnemie extends GraphicCharacter{
             if (isValidTrajectory((int) X/tileWidth, (int) Y/tileWidth, endX, endY, (int) moveX/tileWidth, (int) moveY/tileWidth, map)) {
                 
                 switchtorandom = false;
-                if(!(Hitbox.overlaps(hero.Hitbox) || inRange(hero, map))){
+                if(!(Hitbox.overlaps(hero.getHitbox()) || inRange(hero, map))){
                     setPosition(X+moveX/speed, Y+moveY/speed);
                     //Get the appropriate sprite for movement
                     int y;

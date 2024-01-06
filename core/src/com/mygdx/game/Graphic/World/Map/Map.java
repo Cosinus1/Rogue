@@ -14,8 +14,8 @@ import com.badlogic.gdx.audio.Music;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.mygdx.game.Graphic.Elements.Door;
-import com.mygdx.game.Graphic.GraphicCharacter.*;
+import com.mygdx.game.Graphic.GraphicObject.Elements.Door;
+import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.*;
 
 import com.mygdx.game.Back.Character.Ennemie.Ennemie;
 
@@ -199,7 +199,10 @@ public class Map {
     }
     public void updateTiledmap(TiledMap newTiledMap) {
         this.tiledmap = newTiledMap;
-        this.collisionLayer = (TiledMapTileLayer) newTiledMap.getLayers().get("Base");
+        //Add the collision Layer
+            this.collisionLayer = (TiledMapTileLayer) newTiledMap.getLayers().get("Base");
+            if(collisionLayer == null) System.err.println("No collision Layer found");
+        //Set renderer
         this.renderer = new OrthogonalTiledMapRenderer(newTiledMap);
     }
     public void updatelastposition(float x, float y){

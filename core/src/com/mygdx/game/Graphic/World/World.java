@@ -2,8 +2,8 @@ package com.mygdx.game.Graphic.World;
 
 import com.mygdx.game.Back.Character.Ennemie.*;
 import com.mygdx.game.Back.Character.Hero.Hero;
-import com.mygdx.game.Graphic.Elements.Door;
-import com.mygdx.game.Graphic.GraphicCharacter.*;
+import com.mygdx.game.Graphic.GraphicObject.Elements.Door;
+import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.*;
 import com.mygdx.game.Graphic.World.Map.*;
 
 import java.util.ArrayList;
@@ -186,21 +186,19 @@ public class World {
 
             //Track last door position for returning to last map at last position
             if(i!=0){
-            float x = previousMap.getDoors().get(1).getX();
-            float y = previousMap.getDoors().get(1).getY();
+                float x = previousMap.getDoors().get(1).getX();
+                float y = previousMap.getDoors().get(1).getY();
 
-            int TileX = (int) x/32;
-            int TileY = (int) y/32;
+                int TileX = (int) x/32;
+                int TileY = (int) y/32;
 
-            System.out.println("\n  x   : " +  x    + "       y   : " +    y);
-            System.out.println("\nTileX : " + TileX + "            TileY : " + TileY + "\n");
-
-            previousMap.updateTiledmap(mapFactory.createRandomTiledMap(DungeonHubMap.getTiledMap().getTileSets(), TileX, TileY));
-
-            previousMap.setcollisionLayer((TiledMapTileLayer) previousMap.getTiledMap().getLayers().get("Base"));
-
-            graphicHero.spawn(previousMap,DungeonHubMap.getTiledMap().getTileSets(),this.graphicHero, "hero",false);
-            if(i == numberOfMaps) graphicboss.spawn(previousMap, DungeonHubMap.getTiledMap().getTileSets(), graphicboss, graphicboss.getCharacter().getName());
+                //Add the Generated TiledMap into the Map
+                previousMap.updateTiledmap(mapFactory.createRandomTiledMap(DungeonHubMap.getTiledMap().getTileSets(), TileX, TileY));
+                
+                //Spawn Hero in the new map (This can be done in respawn)
+                graphicHero.spawn(previousMap,DungeonHubMap.getTiledMap().getTileSets(),this.graphicHero, "hero",false);
+                //Spawn Boss in the last Map
+                if(i == numberOfMaps) graphicboss.spawn(previousMap, DungeonHubMap.getTiledMap().getTileSets(), graphicboss, graphicboss.getCharacter().getName());
             }
             //Add the map into the Dungeon
             Dungeon.add(previousMap);

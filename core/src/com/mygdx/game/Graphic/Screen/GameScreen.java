@@ -8,9 +8,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.MyGame;
+import com.mygdx.game.Back.Force;
 import com.mygdx.game.Graphic.*;
-import com.mygdx.game.Graphic.Elements.Door;
-import com.mygdx.game.Graphic.GraphicCharacter.*;
+import com.mygdx.game.Graphic.GraphicObject.Elements.Door;
+import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.*;
 import com.mygdx.game.Graphic.World.World;
 import com.mygdx.game.Graphic.World.Map.Map;
 
@@ -66,16 +67,27 @@ public class GameScreen implements Screen {
       else renderer.render(map, hero, camera);
 
       //Keyboard
+         //Arrows Inputs
+         hero.move(camera, map);
 
-      hero.move(camera, map);
-      hero.GraphicHeroAttack(map);
-      //Enter input : change color
-      if(Gdx.input.isKeyJustPressed(Keys.ENTER))BlacknWhite = !BlacknWhite;
-      //Escapeinput : quits the game (implement Menu)
-      if(Gdx.input.isKeyPressed(Keys.ESCAPE)){
-        game.setScreen(pauseScreen);
-      }
+         //Space Input
+         hero.GraphicHeroAttack(map);
 
+         //Enter input : change color
+         if(Gdx.input.isKeyJustPressed(Keys.ENTER))BlacknWhite = !BlacknWhite;
+
+         //Escapeinput : quits the game (implement Menu)
+         if(Gdx.input.isKeyPressed(Keys.ESCAPE)) game.setScreen(pauseScreen);
+
+         //F input : apply force to Hero (testing implementation)
+         if(Gdx.input.isKeyJustPressed(Keys.F)){
+            System.out.println("F pressed");
+            hero.applyForce(new Force(2000, 0));
+            
+         }
+         float deltaTime = Gdx.graphics.getDeltaTime();
+         hero.update(deltaTime);
+        
       //Move the Ennemies
       if(map.getPVP() == "ON"){
          map.moveEnnemies(hero);

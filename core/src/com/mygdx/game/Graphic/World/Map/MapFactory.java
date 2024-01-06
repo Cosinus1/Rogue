@@ -6,8 +6,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.*;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.mygdx.game.Graphic.Elements.Door;
-import com.mygdx.game.Graphic.GraphicCharacter.GraphicEnnemie;
+import com.mygdx.game.Graphic.GraphicObject.Elements.Door;
+import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicEnnemie;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -164,7 +164,7 @@ public class MapFactory {
             int startX;
             int startY;
             
-            System.out.println("NEW CHAIN");
+            System.out.println("CHAIN No : " + i);
 
             // Ensure starting point is not too close to the corners
             int breakwhile = 0;
@@ -404,7 +404,7 @@ public class MapFactory {
                 doorCoordinates[1] = 0; // Y-coordinate at the southern border
                 break;
         }
-        //System.out.println("DOOR COORDINATES : " + doorCoordinates[0] + doorCoordinates[1]);
+        
         return doorCoordinates;
     }
 
