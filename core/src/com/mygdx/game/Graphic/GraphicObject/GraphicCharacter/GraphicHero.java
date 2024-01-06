@@ -7,9 +7,6 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.tiled.TiledMapTile;
-import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Back.Character.Character;
@@ -23,10 +20,12 @@ public class GraphicHero extends GraphicCharacter {
 
     public GraphicHero(World world, Character character, float x, float y){
         super(character, x, y);
-        spawn(world.getDungeonHub(),null, this, "hero",true);
-        spawn(world.getHome(), null, this, "hero",true);
-        spawn(world.getTavern(), null, this, "hero",true);
         getHeroTextures(world);
+        Object.setTextureRegion(moveTexture_list.get(0));
+        spawn(world.getDungeonHub());
+        spawn(world.getHome());
+        spawn(world.getTavern());
+        
     }
 
     public Hero getCharacter(){
@@ -40,22 +39,22 @@ public class GraphicHero extends GraphicCharacter {
         for(int index=0; index<9; index++){
             //Movement Textures
                 //Front Texture
-                TextureRegion front = getTexturefromTileset(Tilesets, "hero", "angle", "front",index);
+                TextureRegion front = getTexturefromTileset(Tilesets, Name, "angle", "front",index);
                 //Back Texture
-                TextureRegion back = getTexturefromTileset(Tilesets, "hero", "angle", "back",index);
+                TextureRegion back = getTexturefromTileset(Tilesets, Name, "angle", "back",index);
                 //Left Texture
-                TextureRegion left = getTexturefromTileset(Tilesets, "hero", "angle", "left", index);
+                TextureRegion left = getTexturefromTileset(Tilesets, Name, "angle", "left", index);
                 //Right Texture
-                TextureRegion right = getTexturefromTileset(Tilesets, "hero", "angle", "right", index);
+                TextureRegion right = getTexturefromTileset(Tilesets, Name, "angle", "right", index);
             //Battle Textures
                 //Front Texture
-                TextureRegion Battlefront = getTexturefromTileset(Tilesets, "hero", "battle", "front",index);
+                TextureRegion Battlefront = getTexturefromTileset(Tilesets, Name, "battle", "front",index);
                 //Back Texture
-                TextureRegion Battleback = getTexturefromTileset(Tilesets, "hero", "battle", "back",index);
+                TextureRegion Battleback = getTexturefromTileset(Tilesets, Name, "battle", "back",index);
                 //Left Texture
-                TextureRegion Battleleft = getTexturefromTileset(Tilesets, "hero", "battle", "left", index);
+                TextureRegion Battleleft = getTexturefromTileset(Tilesets, Name, "battle", "left", index);
                 //Right Texture
-                TextureRegion Battleright = getTexturefromTileset(Tilesets, "hero", "battle", "right", index);
+                TextureRegion Battleright = getTexturefromTileset(Tilesets, Name, "battle", "right", index);
             //Adding the Textures to the lists
             for(int i=0; i<FPS; i++){
                 //Movements
@@ -72,7 +71,13 @@ public class GraphicHero extends GraphicCharacter {
             }
         }
     }    
-
+/*--------------------------------------------------------------SPAWN----------------------------------------------------------------- */
+    public void spawn(Map map){
+        System.out.println("Spawning : " + Name);
+        // Add the MapObject to the object layer
+        map.getObjects().add(Object);
+        map.setHero(this);
+    }
     public void move(OrthographicCamera camera, Map map){
 
         int tileWidth = 32;
@@ -191,62 +196,6 @@ public class GraphicHero extends GraphicCharacter {
             //Attack target
             if((int) index%battleTexture_list.size()/13 == 5) Attack(map);
          }
-    }
-
-    public void spawn(Map map, TiledMapTileSets tileSets, GraphicHero character, String Tileset_name, boolean pnj) {
-        //tilesets = null means we use the same tilesets than map
-        TiledMapTileSets Sets;
-        //Check if we use tilsets from another map (used for maps that a generated through out the game)
-        if(tileSets == null)Sets = map.getTiledMap().getTileSets();
-        else Sets = tileSets;
-        MapObjects objects = map.getObjects();
-        int GID = 0;
-        float x = character.getX();
-        float y = character.getY();
-        // Create a new MapObject similar to the ones in Tiled
-        character.Object.setName(Tileset_name); // Set the name to match the object in Tiled
-        
-        // Search for the tileset in the map
-        TiledMapTileSet tileSet = null;
-        for (TiledMapTileSet tileset : Sets) {
-            if (tileset.getName().equals(Tileset_name)) {
-                tileSet = tileset;
-                break;
-            }
-        }
-
-        if (tileSet != null) {
-            TiledMapTile tile = null;
-            // Get the texture region from the tileset's tiles
-     
-            for(TiledMapTile Tile : tileSet){
-  
-                if(Tile.getProperties().containsKey("basic") && Tile.getProperties().get("angle").equals("front")){
-                    GID = Tile.getId();
-                    tile = tileSet.getTile(GID);
-                    break;
-                }
-            }
-
-            if (tile != null) {
-                TextureRegion textureRegion = tile.getTextureRegion();
-                character.Object.setTextureRegion(textureRegion);
-                // Set the position of the MapObject based on provided coordinates
-                character.Object.getProperties().put("x", x);
-                character.Object.getProperties().put("y", y);
-
-                // Set the GID property to match the existing GID of the Gobelin object in the tileset
-                character.Object.getProperties().put("gid", GID);
-
-                // Add the MapObject to the object layer
-                objects.add(character.Object);
-                //add to the PNJ list if not the Hero
-                map.setHero(character);
-            }
-            else System.out.println("tile  is null, spawn canceled");
-        } else {
-            System.out.println("tileset is null, spawn canceled");
-        }       
     }
 
     public void render(SpriteBatch spriteBatch, OrthographicCamera camera){

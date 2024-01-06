@@ -1,6 +1,7 @@
 package com.mygdx.game.Graphic.World;
 
 import com.mygdx.game.Back.Character.Ennemie.*;
+import com.mygdx.game.Back.Character.Hero.Archer;
 import com.mygdx.game.Back.Character.Hero.Hero;
 import com.mygdx.game.Graphic.GraphicObject.Elements.Door;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.*;
@@ -69,7 +70,7 @@ public class World {
             this.CurrentcollisionLayer = Home.getcollisionLayer();
 
             //Initialize the Hero
-            hero = new Hero(this, 100, 200, 1000, 1, null, "Champion", 0);
+            hero = new Archer(this, 100, 200, 1000, 1, null, "Champion");
             graphicHero = new GraphicHero(this,hero,CurrentMap.getX(), CurrentMap.getY());
         
 
@@ -196,9 +197,9 @@ public class World {
                 previousMap.updateTiledmap(mapFactory.createRandomTiledMap(DungeonHubMap.getTiledMap().getTileSets(), TileX, TileY));
                 
                 //Spawn Hero in the new map (This can be done in respawn)
-                graphicHero.spawn(previousMap,DungeonHubMap.getTiledMap().getTileSets(),this.graphicHero, "hero",false);
+                graphicHero.spawn(previousMap);
                 //Spawn Boss in the last Map
-                if(i == numberOfMaps) graphicboss.spawn(previousMap, DungeonHubMap.getTiledMap().getTileSets(), graphicboss, graphicboss.getCharacter().getName());
+                if(i == numberOfMaps) graphicboss.spawn(previousMap);
             }
             //Add the map into the Dungeon
             Dungeon.add(previousMap);

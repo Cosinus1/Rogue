@@ -15,7 +15,9 @@ public class Boss extends Ennemie{
         this.Names.add("jack");
         this.Names.add("minotaure");
         Random random = new Random();
-        this.setName(Names.get(random.nextInt(Names.size())));        
+        String chosen = (Names.get(random.nextInt(Names.size())));
+        this.Class = chosen;   
+        this.name = chosen;     
     }
     /* 
     // Method to set textures for the boss based on the .tsx file

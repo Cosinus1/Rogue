@@ -16,9 +16,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.Back.Character.Character;
 import com.mygdx.game.Graphic.GraphicObject.GraphicObject;
 import com.mygdx.game.Graphic.GraphicObject.Elements.*;
+import com.mygdx.game.Graphic.World.Map.Map;
 
 public class GraphicCharacter extends GraphicObject{
     protected Character character;
+
+    protected String Name;
 
     protected ArrayList<TextureRegion> moveTexture_list;
     protected ArrayList<TextureRegion> battleTexture_list;
@@ -33,6 +36,8 @@ public class GraphicCharacter extends GraphicObject{
     public GraphicCharacter(Character character2, float x, float y){
         super(x, y, 32, 32);
         this.character = character2;
+        this.Name = character.Class();
+        System.out.println("For character : " + character.getName() + " Name = " + Name);
         //Init Texture lists
         moveTexture_list = new ArrayList<>();
         battleTexture_list = new ArrayList<>();
@@ -164,10 +169,15 @@ public class GraphicCharacter extends GraphicObject{
 
 /*----------------------------------------- SPAWN -------------------------------------- */  
 
+    public void spawn(Map map) {
+    }
+
     public TextureRegion getTexturefromTileset(TiledMapTileSets Tilesets, String Tileset_name, String property, String value, int index){
+        //System.out.println("                      SEARCHING TILESET :" + Tileset_name);
         // Search for the tileset in the map
         TiledMapTileSet tileSet = null;
         for (TiledMapTileSet tileset : Tilesets) {
+            //System.out.println("TILESET NAME : " + tileset.getName());
             if (tileset.getName().equals(Tileset_name)) {
                 tileSet = tileset;
                 break;

@@ -24,7 +24,6 @@ public class MainMenuScreen implements Screen {
 
     private Viewport viewport;
 
-    private AssetManager assetManager;
 
     private Skin skin;
     private Table mainTable;
@@ -34,16 +33,12 @@ public class MainMenuScreen implements Screen {
 
     private Label gameTitleLabel;
 
-    private MyGame game;
     private Music backgroundMusic;
 
 
     public MainMenuScreen(final MyGame game, AssetManager assetManager) {
 
         //this.backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("MP3/battleThemeA.mp3"));
-
-        this.game = game;
-        this.assetManager = assetManager;
         skin = assetManager.get(Assets.SKIN);
 
         // load the background "music"

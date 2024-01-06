@@ -11,6 +11,7 @@ public class Gobelin extends Ennemie{
         super(pv, defense, power, range, bag, name);
         this.massue = massue;
         this.setName("gobelin");
+        this.Class = "gobelin";
     }
     /* 
     // Method to set textures for the Gobelin based on the .tsx file

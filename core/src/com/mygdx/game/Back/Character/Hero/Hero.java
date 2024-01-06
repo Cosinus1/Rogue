@@ -9,9 +9,8 @@ public class Hero extends Character{
     protected int exp;
     
 
-    public Hero(World world, int pv, int defense, int power,int range, Inventory bag, String name, int exp){
+    public Hero(World world, int pv, int defense, int power,int range, Inventory bag, String name){
         super(pv, defense, power, range, bag, name);
-        this.exp = exp;       
+        this.exp = 0;       
     }
-
 }

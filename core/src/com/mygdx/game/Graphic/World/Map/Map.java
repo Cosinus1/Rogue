@@ -14,6 +14,7 @@ import com.badlogic.gdx.audio.Music;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.mygdx.game.Graphic.World.World;
 import com.mygdx.game.Graphic.GraphicObject.Elements.Door;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.*;
 
@@ -285,7 +286,7 @@ public class Map {
     /*-----------------------------------------------------------------SPAWN ENNEMIES----------------------------------------------------------------------- */
 
     public void createRandomEnnemies(TiledMapTileSets Tilesets, int n) {
-        GraphicEnnemieFactory ennemieFactory = new GraphicEnnemieFactory();
+        GraphicEnnemieFactory ennemieFactory = new GraphicEnnemieFactory(Tilesets);
         TiledMapTileLayer collisionLayer = getcollisionLayer();
     
         // Get the dimensions of the map
@@ -317,9 +318,9 @@ public class Map {
             float x = randomX * collisionLayer.getTileWidth();
             float y = randomY * collisionLayer.getTileHeight();
     
-            GraphicEnnemie newEnnemie = ennemieFactory.createRandomGraphicEnnemie(x, y, Tilesets);
+            GraphicEnnemie newEnnemie = ennemieFactory.createRandomGraphicEnnemie(x, y);
             if (newEnnemie != null) {
-                newEnnemie.spawn(this, Tilesets, newEnnemie, newEnnemie.getCharacter().getName());
+                newEnnemie.spawn(this);
             }
         }
     }

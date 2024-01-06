@@ -32,8 +32,8 @@ public class BarLife {
 
     public void drawPNJLifeBar(SpriteBatch batch, GraphicEnnemie ennemie){
         TextureRegion textureRegion = ennemie.getObject().getTextureRegion();
-        float objectX = (float) ennemie.getObject().getProperties().get("x");
-        float objectY = (float) ennemie.getObject().getProperties().get("y");
+        float objectX = (float) ennemie.getX();
+        float objectY = (float) ennemie.getY();
         float objectWidth = textureRegion.getRegionWidth();
         float objectHeight = textureRegion.getRegionHeight();
         int lifeBarWidth = ennemie.getCharacter().getPV();

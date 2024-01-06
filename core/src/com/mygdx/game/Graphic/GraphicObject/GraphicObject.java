@@ -84,13 +84,13 @@ public class GraphicObject {
         speedX = aX * deltaTime ;
         speedY = aY * deltaTime ;
 
-        System.out.println("speedX : " + speedX + " speedY ; " + speedY);
+        //System.out.println("speedX : " + speedX + " speedY ; " + speedY);
 
         //Update Position
         X = speedX * deltaTime + Hitbox.x;
         Y = speedY * deltaTime + Hitbox.y;
 
-        System.out.println("X : " + X + " Y ; " + Y);
+        //System.out.println("X : " + X + " Y ; " + Y);
         setPosition(X, Y);
 
         //Reset Acceleration

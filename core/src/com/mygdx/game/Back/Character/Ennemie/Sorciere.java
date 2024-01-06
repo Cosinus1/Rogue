@@ -10,6 +10,7 @@ public class Sorciere extends Ennemie{
         super(pv, defense, power, range, bag, name);
         this.massue = massue;
         this.setName("sorciere");
+        this.Class = "sorciere";
         
     }
 

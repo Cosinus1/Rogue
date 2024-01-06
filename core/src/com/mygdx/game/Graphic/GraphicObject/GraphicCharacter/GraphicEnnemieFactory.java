@@ -11,29 +11,31 @@ import com.mygdx.game.Back.Character.Ennemie.EnnemieFactory;
 public class GraphicEnnemieFactory {
 
     EnnemieFactory factory;
+    TiledMapTileSets TileSets;
 
-    public GraphicEnnemieFactory(){
+    public GraphicEnnemieFactory(TiledMapTileSets TileSets){
         this.factory = new EnnemieFactory();
+        this.TileSets = TileSets;
     }
 
-    public GraphicEnnemie createGraphicEnnemie(String request, float x, float y, TiledMapTileSets Tilesets){
+    public GraphicEnnemie createGraphicEnnemie(String request, float x, float y){
         GraphicEnnemie ennemie = null;
         if("gobelin".equals(request)){
-            ennemie = new GraphicGobelin(factory.createEnnemie("gobelin"),x,y, Tilesets);
+            ennemie = new GraphicEnnemie(factory.createEnnemie("gobelin"),x,y, TileSets);
         }
         if("sorciere".equals(request)){
-            ennemie = new GraphicSorciere(factory.createEnnemie("sorciere"),x,y, Tilesets);
+            ennemie = new GraphicEnnemie(factory.createEnnemie("sorciere"),x,y, TileSets);
         }
         return ennemie;
     }
 
-    public GraphicEnnemie createRandomGraphicEnnemie(float x, float y, TiledMapTileSets Tilesets){
+    public GraphicEnnemie createRandomGraphicEnnemie(float x, float y){
         ArrayList<String> list = new ArrayList<String>();
             list.add("gobelin");
             list.add("sorciere");
             Random random = new Random();
         String request = list.get(random.nextInt(list.size()));
 
-        return createGraphicEnnemie(request, x, y, Tilesets); 
+        return createGraphicEnnemie(request, x, y); 
     }
 }

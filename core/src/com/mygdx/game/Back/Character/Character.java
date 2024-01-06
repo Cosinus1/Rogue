@@ -8,6 +8,7 @@ import com.mygdx.game.Graphic.World.Map.Map;
 
 public abstract class Character {
     
+    protected String Class;
     protected int PV;
     protected int PV_max;
     protected int defense;
@@ -33,6 +34,9 @@ public abstract class Character {
     }
 
 /*----------------------------------------- GETTERS -------------------------------------- */
+    public String Class(){
+        return Class;
+    }
     public int getDefense(){
         return defense;
     }
