@@ -20,10 +20,6 @@ import com.mygdx.game.MyGame;
 
 public class MainMenuScreen implements Screen {
 
-
-
-
-
     private Stage stage;
 
     private Viewport viewport;
@@ -59,12 +55,6 @@ public class MainMenuScreen implements Screen {
         backgroundMusic.play(); */
 
 
-
-
-    }
-
-    @Override
-    public void show() {
         viewport = new ExtendViewport(1200,800);
         stage = new Stage(viewport);
         // Create the background image
@@ -111,10 +101,6 @@ public class MainMenuScreen implements Screen {
             }
         });
 
-        Gdx.input.setInputProcessor(stage); //met l'effet quand on click sur le bouton
-
-
-
     }
 
     private TextButton addbutton(String name){
@@ -154,6 +140,10 @@ public class MainMenuScreen implements Screen {
 
 
     @Override
+    public void show() {
+        Gdx.input.setInputProcessor(stage); //Set Buttons
+    }
+    @Override
     public void resize(int width, int height) {
 
         viewport.update(width, height, true); // Mettez à jour le viewport avec le redimensionnement
@@ -172,8 +162,9 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void hide() {
-        // Arrete le BackgroundMusic quand on change d'ecran
+        // Stop BackgroundMusic
         //backgroundMusic.stop();
+        Gdx.input.setInputProcessor(null); //Hide Buttons
 
     }
 

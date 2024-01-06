@@ -21,10 +21,9 @@ import com.mygdx.game.MyGame;
 public class PauseScreen implements Screen{
 
    private Stage stage;
-   private final MyGame game;
 
     public PauseScreen(final MyGame game) {
-        this.game = game;
+
         this.stage = new Stage(new ScreenViewport());
         Skin skin = new Skin();
         BitmapFont font = new BitmapFont();
@@ -74,12 +73,11 @@ public class PauseScreen implements Screen{
             (stage.getWidth()-table.getWidth()) / 2,
             (stage.getHeight()-table.getHeight())/2
         );
-
-        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -105,6 +103,7 @@ public class PauseScreen implements Screen{
 
     @Override
     public void hide() {
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override

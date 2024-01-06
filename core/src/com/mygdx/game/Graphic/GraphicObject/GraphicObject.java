@@ -2,7 +2,6 @@ package com.mygdx.game.Graphic.GraphicObject;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -18,8 +17,6 @@ public class GraphicObject {
     //Speed of the Object
     protected float speedX;
     protected float speedY;
-    protected float lastspeedX;
-    protected float lastspeedY;
     //Acceleration of the object
     protected float aX;
     protected float aY;
@@ -62,8 +59,6 @@ public class GraphicObject {
         this.Y = Hitbox.y;
         this.lastX = Y;
         this.lastY = X;
-        this.lastspeedX = 0;
-        this.lastspeedY = 0;
     }
     public void PFD(){
         if(Forces != null){
@@ -86,10 +81,9 @@ public class GraphicObject {
     public void update(float deltaTime){
         PFD();
         //Update Speed
-        speedX = aX * deltaTime ;//+ lastspeedX;
-        speedY = aY * deltaTime ;//+ lastspeedY;
-        lastspeedX = speedX;
-        lastspeedY = speedY;
+        speedX = aX * deltaTime ;
+        speedY = aY * deltaTime ;
+
         System.out.println("speedX : " + speedX + " speedY ; " + speedY);
 
         //Update Position

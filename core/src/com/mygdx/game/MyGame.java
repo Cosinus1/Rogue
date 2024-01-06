@@ -24,10 +24,10 @@ public class MyGame extends Game {
         
         mainMenuScreen = new MainMenuScreen(this, assets.getAssetManager());
         gameScreen = new GameScreen(this);
-        pauseScreen = new PauseScreen(this);
+  
         //Set the Main screen
-        setScreen(gameScreen);
-        //setScreen(mainMenuScreen);
+        //setScreen(gameScreen);
+        setScreen(mainMenuScreen);
 
 
     } 
