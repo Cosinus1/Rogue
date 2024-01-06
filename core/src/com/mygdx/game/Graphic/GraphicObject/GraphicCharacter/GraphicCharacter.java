@@ -11,8 +11,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 
-import com.badlogic.gdx.math.Vector2;
-
 import com.mygdx.game.Back.Character.Character;
 import com.mygdx.game.Graphic.GraphicObject.GraphicObject;
 import com.mygdx.game.Graphic.GraphicObject.Elements.*;
@@ -37,7 +35,6 @@ public class GraphicCharacter extends GraphicObject{
         super(x, y, 32, 32);
         this.character = character2;
         this.Name = character.Class();
-        System.out.println("For character : " + character.getName() + " Name = " + Name);
         //Init Texture lists
         moveTexture_list = new ArrayList<>();
         battleTexture_list = new ArrayList<>();
@@ -47,12 +44,6 @@ public class GraphicCharacter extends GraphicObject{
 
 /*----------------------------------------- GETTERS -------------------------------------- */
 
-    public float getX(){
-        return this.Hitbox.x;
-    }
-    public float getY(){
-        return this.Hitbox.y;
-    }
     public ArrayList<TextureRegion> getMoveTexture_List(){
         return moveTexture_list;
     }
@@ -90,6 +81,9 @@ public class GraphicCharacter extends GraphicObject{
     public boolean overlaps(GraphicCharacter character){
         return Hitbox.overlaps(character.getHitbox());
     }
+    public int getRange(){
+        return character.getRange();
+    }
 /*----------------------------------------- SETTERS -------------------------------------- */  
     
     public void setX(float x){
@@ -98,16 +92,6 @@ public class GraphicCharacter extends GraphicObject{
     public void setY(float y){
         Hitbox.y = y;
     }
-    public void setPosition(float x, float y){
-        this.Hitbox.x = x;
-        this.Hitbox.y = y;
-        this.Object.getProperties().put("x",x);
-        this.Object.getProperties().put("y",y);
-        //System.out.println("position set");
-    }
-    public void setPosition (Vector2 position) {
-		setPosition(position.x, position.y);
-	}
     public void setlastX(float x){
         this.lastX = x;
     }
@@ -167,11 +151,36 @@ public class GraphicCharacter extends GraphicObject{
 
     }  
 
-/*----------------------------------------- SPAWN -------------------------------------- */  
+/*------------------------------------------------------------------CHECKERS------------------------------------------------------------ */
+    public boolean inRange(GraphicObject object, Map map){
+        float x = getX();
+        float y = getY();
+        double distanceX = x - object.getX();
+        double distanceY = y - object.getY();
+
+        int distance = (int) Math.sqrt(Math.pow(distanceY, 2) + Math.pow(distanceX, 2))/32;
+
+        int X = (int) x/32;
+        int Y = (int) y/32;
+        int endX = (int) (x-distanceX)/32;
+        int endY = (int) (y-distanceY)/32;
+
+        int signX = (int) Math.signum(-distanceX);
+        int signY = (int) Math.signum(-distanceY);
+
+        //System.out.println(" signX : " + signX + "signY : " + signY);
+
+        if(distance <= (int) object.getRange() && isValidTrajectory(X, Y, endX, endY, signX, signY, map)) return true;
+        else return false;
+    }
+
+/*------------------------------------------------------------ SPAWN ------------------------------------------------------------------ */  
 
     public void spawn(Map map) {
     }
+    
 
+/*---------------------------------------------------------------------------------------------------------------------------------------- */
     public TextureRegion getTexturefromTileset(TiledMapTileSets Tilesets, String Tileset_name, String property, String value, int index){
         //System.out.println("                      SEARCHING TILESET :" + Tileset_name);
         // Search for the tileset in the map
@@ -219,24 +228,7 @@ public class GraphicCharacter extends GraphicObject{
         return null;
     }
 
-/*----------------------------------------- FIGHT --------------------------------------
-    
-    public boolean PNJAttack(Map map){
-        ArrayList<GraphicEnnemie> PNJinRange = map.lookforPNJinRange(this);
-        if(PNJinRange != null){
-            int size = PNJinRange.size();
-            for(int index = 0; index<size; index++){
-                GraphicCharacter ennemie = PNJinRange.get(index);
-                if(this.getCharacter().recevoirDegats(ennemie.getCharacter().getPower())){
-                    this.getCharacter().killHero(map);
-                    return true;
-                }else System.out.println("hero has been hit : PV =" + this.getCharacter().getPV());
-            }
-        }
-        return false;
-    }
-    
-*/
+    /*-------------------------------------------RENDER---------------------------------------------- */
 
   public void render(SpriteBatch batch, OrthographicCamera camera){
 

@@ -109,7 +109,7 @@ public class World {
     }
 
 /* --------------------------------------------- UPDATE ------------------------------------- */
-    public void update(Map map){
+    public Map update(Map map){
         ArrayList<Door> Doors = map.getDoors();
 
         if(Doors!=null){
@@ -134,6 +134,7 @@ public class World {
         }
         //Check for Dungeon reset
         IsDungeonFinished();
+    return map;
     }
 
     public Map updateCurrentMap(Map map){
@@ -145,7 +146,7 @@ public class World {
             }*/
             this.CurrentMap = map;
             this.CurrentcollisionLayer = map.getcollisionLayer();
-            if((map.getPVP() == "ON") && map.getPNJ_list().size()==0){
+            if((map.getPVP() == "ON") && map.getNPCs().size()==0){
                 System.out.println("Spawning  Map...");
                 respawn(map);
                 System.err.println("Map Spawned");

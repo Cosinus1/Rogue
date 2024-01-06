@@ -11,7 +11,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 
 import com.mygdx.game.Back.Character.Character;
 import com.mygdx.game.Back.Character.Ennemie.Ennemie;
-
 import com.mygdx.game.Graphic.World.Map.Map;
 
 public class GraphicEnnemie extends GraphicCharacter{
@@ -31,7 +30,6 @@ public class GraphicEnnemie extends GraphicCharacter{
 
     public void getEnnemieTextures(TiledMapTileSets Tilesets){
         
-        System.out.println("Getting textures for : " + Name + "with" + Tilesets);
         //Setting FPS for slower animation
         int FPS = 10;
         for(int index=0; index<9; index++){
@@ -191,76 +189,17 @@ public class GraphicEnnemie extends GraphicCharacter{
                 }
             }
         }
-
-    private boolean isValidPosition(int X, int Y, Map map) {
-        //System.out.println("X : " + X+ " / Y : " + Y);
-        //Check Map boundaries
-        int mapWidth = map.getmapWidth();
-        int mapHeight = map.getmapHeight();
-        //Check Map boundaries
-        if(X<1 || X>(mapWidth-2) || Y<1 || Y>(mapHeight-2)) return false;
-        // Check distance from walls
-        return map.checkDistancefromWall(X, Y);
-    }
-    private boolean isValidTrajectory(int X, int Y, int endX, int endY, int moveX, int moveY, Map map){
-        int newX = X + moveX;
-        int newY = Y + moveY;
-        //Check if we arrived at target
-        if (X==endX && Y==endY) return true;
-
-        //Otherwise check if the next step is valid
-            //Check if we are at the same X than the target
-            boolean isValidX;
-            if(endX==X){
-                //No move on X needed so it's a valid position on X
-                isValidX = true;
-                newX -= moveX;
-            }else isValidX = isValidPosition(X+moveX, Y, map);
-            //Check if we are at the same Y than the target
-            boolean isValidY;
-            if(endY==Y){
-                //No move on Y needed so it's a valid position on Y
-                isValidY = true;
-                newY -= moveY;
-            }else isValidY = isValidPosition(X, Y+moveY, map);
-
-        if(isValidX && isValidY){
-            return isValidTrajectory(newX, newY, endX, endY, moveX, moveY, map);
-        }else return false;// A wall is in the trajectory
-    }
-
+    
 /*-----------------------------------------------------COMBAT------------------------------------------------------------ */
-    public boolean inRange(GraphicCharacter character, Map map){;
-        float x = getX();
-        float y = getY();
-        double distanceX = x - character.getX();
-        double distanceY = y - character.getY();
-
-        int distance = (int) Math.sqrt(Math.pow(distanceY, 2) + Math.pow(distanceX, 2))/32;
-
-        int X = (int) x/32;
-        int Y = (int) y/32;
-        int endX = (int) (x-distanceX)/32;
-        int endY = (int) (y-distanceY)/32;
-
-        int signX = (int) Math.signum(-distanceX);
-        int signY = (int) Math.signum(-distanceY);
-
-        //System.out.println(" signX : " + signX + "signY : " + signY);
-
-        if(distance <= (int) getCharacter().getRange() && isValidTrajectory(X, Y, endX, endY, signX, signY, map)) return true;
-        else return false;
-    }
+    
     public void attack(GraphicHero hero){
 
         hero.getCharacter().recevoirDegats(this.getCharacter().getPower());
     }
 
     public void kill(Map map){
-        map.getObjects().remove(this.Object);
-        map.getPNJ_list().remove(this);
-        map.getDeadObjects().add(this.Object);
-        map.getDeadPNJ_list().add(this);
+        map.getNPCs().remove(this);
+        map.getDeadNPCs().add(this);
     }       
     
      public void render(SpriteBatch spriteBatch, OrthographicCamera camera){
@@ -269,8 +208,9 @@ public class GraphicEnnemie extends GraphicCharacter{
         //float offsetY=0;
         TextureRegion textureRegion = Object.getTextureRegion();
         // Render the object texture based on its position and properties
-        float objectX = getX();
-        float objectY = getY();
+        float objectX = getX() - Hitbox.width/2;
+        float objectY = getY() - Hitbox.height/2;
+
         //Render bigger for boss
         if (Object.getProperties().get("boss")=="boss"){
             scaleFactor = 2;

@@ -75,10 +75,13 @@ public class GraphicHero extends GraphicCharacter {
     public void spawn(Map map){
         System.out.println("Spawning : " + Name);
         // Add the MapObject to the object layer
-        map.getObjects().add(Object);
         map.setHero(this);
     }
     public void move(OrthographicCamera camera, Map map){
+
+        //reset orientation if movement
+        if(Gdx.input.isKeyPressed(Keys.ANY_KEY) && !Gdx.input.isKeyPressed(Keys.F)) setOrientation(0, 0);
+        
 
         int tileWidth = 32;
         int tileHeight = 32;
@@ -87,11 +90,11 @@ public class GraphicHero extends GraphicCharacter {
         float newY = getY();
 
         // Get Tile coordinates
-        int tileX = (int) (getX()-0) / tileWidth;
-        int tileY = (int) (getY()-0) / tileHeight;
+        int tileX = (int) getX() / tileWidth;
+        int tileY = (int) getY() / tileHeight;
 
         //Delta defines the shortest distance the Hero can have with a wall
-        float delta = 16;
+        float delta = 10;
         float deltaX = Math.abs(newX - tileX*tileWidth);
         float deltaY = Math.abs(newY - tileY*tileWidth);
 
@@ -105,8 +108,8 @@ public class GraphicHero extends GraphicCharacter {
          Vector3 touchPos = new Vector3();
          touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
          camera.unproject(touchPos);
-         newX = touchPos.x - 32;
-         newY = touchPos.y - 32;
+         newX = touchPos.x;
+         newY = touchPos.y;
         }
 
         //map.sortObjects();
@@ -122,6 +125,8 @@ public class GraphicHero extends GraphicCharacter {
                 angle = 2;
                 Object.setTextureRegion(moveTexture_list.get((angle+index%360)));
                 index+=4; 
+                //Set Orientation
+                OrX = -1;
         }
 
         // RIGHT 
@@ -134,6 +139,8 @@ public class GraphicHero extends GraphicCharacter {
                 angle = 3;
                 Object.setTextureRegion(moveTexture_list.get((angle+index%360)));
                 index+=4;
+                //Set Orientation
+                OrX = 1;
         }
 
         // UP
@@ -146,6 +153,8 @@ public class GraphicHero extends GraphicCharacter {
                 angle = 1;
                 Object.setTextureRegion(moveTexture_list.get((angle+index%360)));
                 index+=4;
+                //Set Orientation
+                OrY = 1;
         }
 
         // DOWN 
@@ -158,20 +167,15 @@ public class GraphicHero extends GraphicCharacter {
                 angle = 0;
                 Object.setTextureRegion(moveTexture_list.get((angle+index%360)));
                 index+=4;
+                //Set Orientation
+                OrY = -1;
         }
 
         //Update new Position
         setPosition(newX, newY);
+        //Update Orientation
+        setOrientation(OrX, OrY);
 
-    }
-    private boolean isValidPosition(int X, int Y, Map map) {
-        //Check Map boundaries
-        int mapWidth = map.getmapWidth();
-        int mapHeight = map.getmapHeight();
-        //Check Map boundaries
-        if(X<0 || X>(mapWidth) || Y<1 || Y>(mapHeight)) return false;
-        // Check distance from walls
-        return map.checkDistancefromWall(X, Y);
     }
 
     public void Attack(Map map){
@@ -204,9 +208,8 @@ public class GraphicHero extends GraphicCharacter {
         //float offsetY=0;
         TextureRegion textureRegion = Object.getTextureRegion();
         // Render the object texture based on its position and properties
-        float objectX = getX();
-        float objectY = getY();
-        //Render bigger for boss
+        float objectX = getX() ;
+        float objectY = getY() ;
 
         float objectWidth = textureRegion.getRegionWidth()*scaleFactor;
         float objectHeight = textureRegion.getRegionHeight()*scaleFactor;

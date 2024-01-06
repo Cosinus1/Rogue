@@ -86,8 +86,6 @@ public class RendererBW {
 
         }
 
-        renderObjects(map.getObjects(), camera);
-        renderDeadObjects(map.getDeadObjects(), map.getDeadPNJ_list(), camera);
     }
 
     private void renderObjects(MapObjects objects, OrthographicCamera camera) {
