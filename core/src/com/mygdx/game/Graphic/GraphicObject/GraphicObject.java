@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -76,6 +77,12 @@ public class GraphicObject {
     public String getType(){
         return GraphicType;
     }
+    public float getWidth(){
+        return Hitbox.width;
+    }
+    public float getHeight(){
+        return Hitbox.height;
+    }
     /*-------------------------------------------------------------SETTERS---------------------------------------------------------------------- */
     public void setPosition(float x, float y){
         this.Hitbox.x = x;
@@ -96,6 +103,9 @@ public class GraphicObject {
     }
     public void resetForces(){
         Forces = new ArrayList<>();
+    }
+    public void setObject(TextureMapObject Object){
+        this.Object = Object;
     }
     /*--------------------------------------------------------------Update--------------------------------------------------------------------- */
     public void initPosition(){
