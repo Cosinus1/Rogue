@@ -33,6 +33,7 @@ public class InventoryIterator implements InventoryIteratorInterface<Item> {
         }
     }
 
+
     //renvoie la position du prochain élement du bon type
     //renvoie -1 si il n'y en a pas
     private int findNextPosition(){
@@ -50,5 +51,9 @@ public class InventoryIterator implements InventoryIteratorInterface<Item> {
               }
         }
         return position_temp;
+    }
+
+    public int getPosition(){
+        return position;
     }
 }

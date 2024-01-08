@@ -15,6 +15,7 @@ import com.mygdx.game.Graphic.World.Map.Map;
 public class GameScreen implements Screen {
     MyGame game;
     PauseScreen pauseScreen;
+    InventoryScreen inventoryScreen;
     
     private Map map;
     private World world;
@@ -42,10 +43,11 @@ public class GameScreen implements Screen {
         renderer = new Renderer();
         rendererBW = new RendererBW();
         shapeRenderer = new ShapeRenderer();
+        
 
         // Initialize our champion
         hero = world.getHero();
-
+        inventoryScreen = new InventoryScreen(game,hero);
         //Init menu pause
         pauseScreen = new PauseScreen(game);
     }
@@ -72,6 +74,9 @@ public class GameScreen implements Screen {
       //Escapeinput : quits the game (implement Menu)
       if(Gdx.input.isKeyPressed(Keys.ESCAPE)){
         game.setScreen(pauseScreen);
+      }
+      if(Gdx.input.isKeyJustPressed(Keys.E)){
+         game.setScreen(inventoryScreen);
       }
 
       //Move the Ennemies

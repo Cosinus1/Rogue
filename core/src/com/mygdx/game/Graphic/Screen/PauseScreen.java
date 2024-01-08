@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import com.mygdx.game.MyGame;
+import com.mygdx.game.Graphic.Elements.MySkin;
 
 public class PauseScreen implements Screen{
 
@@ -26,23 +27,11 @@ public class PauseScreen implements Screen{
     public PauseScreen(final MyGame game) {
         this.game = game;
         this.stage = new Stage(new ScreenViewport());
-        Skin skin = new Skin();
-        BitmapFont font = new BitmapFont();
-        font.setColor(Color.WHITE);
-
-        Pixmap pixmap = new Pixmap(200, 50, Format.RGBA8888);
-        pixmap.setColor(Color.WHITE);
-        pixmap.fill();
-        skin.add("buttonBackground", new Texture(pixmap));
-
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.font = font; // Définir la police pour le bouton
-        textButtonStyle.up = skin.newDrawable("buttonBackground", Color.DARK_GRAY); // Utiliser la texture ou Pixmap pour le visuel du bouton
-        skin.add("default", textButtonStyle); // Ajouter le style "default" pour les TextButton
+        MySkin mySkin = new MySkin();
 
         // Créer des boutons pour Continuer et Quitter
-        TextButton continueButton = new TextButton("Continuer", skin); // Utilisez votre skin pour les boutons
-        TextButton quitButton = new TextButton("Quitter", skin);
+        TextButton continueButton = new TextButton("Continuer", mySkin.createWhiteSkin(),"White"); // Utilisez votre skin pour les boutons
+        TextButton quitButton = new TextButton("Quitter", mySkin.createWhiteSkin(),"White");
 
         // Ajouter des gestionnaires d'événements pour les boutons
         continueButton.addListener(new ClickListener() {
@@ -74,11 +63,12 @@ public class PauseScreen implements Screen{
             (stage.getHeight()-table.getHeight())/2
         );
 
-        Gdx.input.setInputProcessor(stage);
+        
     }
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -104,6 +94,7 @@ public class PauseScreen implements Screen{
 
     @Override
     public void hide() {
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override
