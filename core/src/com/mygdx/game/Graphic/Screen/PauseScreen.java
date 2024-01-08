@@ -39,8 +39,9 @@ public class PauseScreen implements Screen{
         textButtonStyle.up = skin.newDrawable("buttonBackground", Color.DARK_GRAY); // Utiliser la texture ou Pixmap pour le visuel du bouton
         skin.add("default", textButtonStyle); // Ajouter le style "default" pour les TextButton
 
-        // Créer des boutons pour Continuer et Quitter
+        // Créer des boutons pour Continuer, Menu et Quitter
         TextButton continueButton = new TextButton("Continuer", skin); // Utilisez votre skin pour les boutons
+        TextButton menuButton = new TextButton("Menu", skin);
         TextButton quitButton = new TextButton("Quit", skin);
 
         // Ajouter des gestionnaires d'événements pour les boutons
@@ -61,12 +62,25 @@ public class PauseScreen implements Screen{
             }
         });
 
+        menuButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // Return to Main Menu
+                game.setScreen(game.mainMenuScreen);
+            }
+        });
+
         // Placer les boutons sur la scène
         Table table = new Table();
         table.center();
         table.add(continueButton).padBottom(20);
+
+        table.row();
+        table.add(menuButton).padBottom(20);
+
         table.row();
         table.add(quitButton);
+        
         stage.addActor(table);
 
         table.setPosition(

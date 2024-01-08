@@ -1,7 +1,5 @@
 package com.mygdx.game.Graphic.GraphicObject.GraphicCharacter;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;

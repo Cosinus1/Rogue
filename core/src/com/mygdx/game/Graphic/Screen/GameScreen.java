@@ -1,7 +1,5 @@
 package com.mygdx.game.Graphic.Screen;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
@@ -10,7 +8,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.Back.Force;
 import com.mygdx.game.Graphic.*;
-import com.mygdx.game.Graphic.GraphicObject.Elements.Element;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.*;
 import com.mygdx.game.Graphic.World.World;
 import com.mygdx.game.Graphic.World.Map.Map;
@@ -37,7 +34,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(MyGame game){
         this.game = game;
-        world = new World();
+        world = new World(game.getHero());
          //Store current map from the world
          map = world.getCurrentMap();
     

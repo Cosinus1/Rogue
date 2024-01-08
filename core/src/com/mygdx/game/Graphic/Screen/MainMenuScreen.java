@@ -79,7 +79,7 @@ public class MainMenuScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Play pour jouer
-                game.setScreen(game.gameScreen);
+                game.setScreen(game.chooseClassScreen);
             }
         });
 

@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 
-import com.mygdx.game.Back.Character.Character;
 import com.mygdx.game.Back.Character.Ennemie.Ennemie;
 import com.mygdx.game.Graphic.World.Map.Map;
 

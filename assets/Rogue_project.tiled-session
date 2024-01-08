@@ -1,9 +1,9 @@
 {
-    "activeFile": "TSX/hero.tsx",
+    "activeFile": "TSX/warrior.tsx",
     "expandedProjectPaths": [
         "TMX",
-        "TSX",
-        "."
+        ".",
+        "TSX"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -83,6 +83,10 @@
         },
         "TSX/vampire.tsx": {
             "scaleInDock": 1
+        },
+        "TSX/warrior.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         }
     },
     "last.imagePath": "/home/paul/Documents/Projet JAVA/Rogue/assets/PNG",
@@ -91,18 +95,19 @@
         "TSX/tavern.tsx",
         "TMX/Home.tmx",
         "TSX/houses.tsx",
-        "TSX/hero.tsx",
-        "TSX/archer.tsx"
+        "TSX/archer.tsx",
+        "TSX/warrior.tsx"
     ],
     "project": "Rogue_project.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "TMX/Home.tmx",
         "TMX/Dungeon.tmx",
-        "TSX/hero.tsx",
         "TSX/tavern.tsx",
+        "TMX/Home.tmx",
         "TSX/houses.tsx",
-        "TSX/archer.tsx"
+        "TSX/archer.tsx",
+        "TSX/warrior.tsx",
+        "TSX/hero.tsx"
     ],
     "tileset.embedInMap": false,
     "tileset.lastUsedFormat": "tsx",

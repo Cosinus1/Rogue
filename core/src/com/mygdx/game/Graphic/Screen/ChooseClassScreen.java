@@ -16,7 +16,8 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import com.mygdx.game.MyGame;
-//import jdk.javadoc.internal.doclets.formats.html.markup.Text;
+import com.mygdx.game.Back.Character.Hero.Archer;
+import com.mygdx.game.Back.Character.Hero.Warrior;
 
 public class ChooseClassScreen implements Screen {
 
@@ -75,24 +76,33 @@ public class ChooseClassScreen implements Screen {
         stage.addActor(mainTable);
 
        // Ajouter des gestionnaires d'événements pour les boutons
-        addbutton("Play").addListener(new ClickListener(){
+        addbutton("Warrior").addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Play pour jouer
+                game.setHero(new Warrior(100, 200, 1000, 1, null, "Champion"));
+                game.gameScreen = new GameScreen(game);
+                game.setScreen(game.gameScreen);
+            }
+        });
+        addbutton("Archer").addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                // Play pour jouer
+                game.setHero(new Archer(100, 200, 1000, 1, null, "Champion"));
+                game.gameScreen = new GameScreen(game);
                 game.setScreen(game.gameScreen);
             }
         });
 
-        // Bouton Options
-        addbutton("Options");
-
         // Bouton Quit
-        addbutton("Quit").addListener(new ClickListener(){
+        addbutton("Back").addListener(new ClickListener(){
 
             //Quit pour quitter le jeu
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
+                //Return to Main Menu
+                game.setScreen(game.mainMenuScreen);
             }
         });
 

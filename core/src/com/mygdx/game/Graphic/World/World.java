@@ -29,7 +29,7 @@ public class World {
 
     private TiledMapTileLayer CurrentcollisionLayer;
 
-    private Hero hero;
+    private Hero Hero;
     private Boss boss;
     private GraphicHero graphicHero;
 
@@ -37,7 +37,7 @@ public class World {
     private int Dungeonlevel;
 
     //constructor
-    public World(){
+    public World(Hero hero){
         //Create Lists of NPCs
         ArrayList<GraphicEnnemie> PNJs = new ArrayList<>();
         ArrayList<Door> Door_list = new ArrayList<>();
@@ -69,8 +69,8 @@ public class World {
             this.CurrentcollisionLayer = Home.getcollisionLayer();
 
             //Initialize the Hero
-            hero = new Warrior(100, 200, 1000, 1, null, "Champion");
-            graphicHero = new GraphicHero(this,hero,CurrentMap.getX(), CurrentMap.getY());
+            this.Hero = hero;
+            graphicHero = new GraphicHero(this,Hero,CurrentMap.getX(), CurrentMap.getY());
         
 
             //Initialize Dungeon
