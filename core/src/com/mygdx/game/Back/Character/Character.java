@@ -84,6 +84,9 @@ public abstract class Character {
     }
     
 /*----------------------------------------- FIGHT -------------------------------------- */  
+    public void Attack(){
+        
+    }
 
     public void recevoirDegats(int degats) {
         double mitigationFactor = 1 / (1 + Math.log(1+defense)); // Adjust the exponent value as needed
@@ -92,6 +95,7 @@ public abstract class Character {
         int mitigatedDamage = (int) (degats * mitigationFactor);
     
         PV -= mitigatedDamage;
+        if(PV<0) PV = 0;
     }
 
      public void killHero(Map map){

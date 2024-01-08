@@ -196,11 +196,6 @@ public class GraphicEnnemie extends GraphicCharacter{
 
         hero.getCharacter().recevoirDegats(this.getCharacter().getPower());
     }
-
-    public void kill(Map map){
-        map.getNPCs().remove(this);
-        map.getDeadNPCs().add(this);
-    }       
     
      public void render(SpriteBatch spriteBatch, OrthographicCamera camera){
         int scaleFactor;

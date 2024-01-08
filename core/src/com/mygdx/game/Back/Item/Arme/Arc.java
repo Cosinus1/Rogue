@@ -1,10 +1,15 @@
 package com.mygdx.game.Back.Item.Arme;
 
 import com.mygdx.game.Back.Item.ItemType;
+import com.mygdx.game.Graphic.GraphicObject.Elements.ElementFactory;
+import com.mygdx.game.Graphic.World.Map.Map;
+import com.mygdx.game.Graphic.GraphicObject.Elements.Element;
 
 public class Arc extends Weapon {
-    public Arc(ItemType t, String name, int power, int range){
-        super(t, name, power, range);
+    private ElementFactory factory;
+    public Arc(ItemType t, String name, int power){
+        super(t, name, power);
+        this.factory = new ElementFactory();
     }
 
     public void presenter(){
@@ -13,5 +18,10 @@ public class Arc extends Weapon {
 
     public String getName(){
         return name;
+    }
+    /*------------------------------ATTACK------------------------------------- */
+    public void Attack(float X, float Y, Map map){
+        Element arrow = factory.createProjectile(X, Y);
+        map.addElement(arrow);
     }
 }

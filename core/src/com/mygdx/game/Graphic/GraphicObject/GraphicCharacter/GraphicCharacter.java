@@ -152,11 +152,11 @@ public class GraphicCharacter extends GraphicObject{
     }  
 
 /*------------------------------------------------------------------CHECKERS------------------------------------------------------------ */
-    public boolean inRange(GraphicObject object, Map map){
+    public boolean inRange(GraphicCharacter character, Map map){
         float x = getX();
         float y = getY();
-        double distanceX = x - object.getX();
-        double distanceY = y - object.getY();
+        double distanceX = x - character.getX();
+        double distanceY = y - character.getY();
 
         int distance = (int) Math.sqrt(Math.pow(distanceY, 2) + Math.pow(distanceX, 2))/32;
 
@@ -170,7 +170,7 @@ public class GraphicCharacter extends GraphicObject{
 
         //System.out.println(" signX : " + signX + "signY : " + signY);
 
-        if(distance <= (int) object.getRange() && isValidTrajectory(X, Y, endX, endY, signX, signY, map)) return true;
+        if(distance <= (int) character.getRange() && isValidTrajectory(X, Y, endX, endY, signX, signY, map)) return true;
         else return false;
     }
 

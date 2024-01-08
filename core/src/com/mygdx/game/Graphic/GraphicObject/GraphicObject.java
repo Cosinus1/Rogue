@@ -18,7 +18,6 @@ public class GraphicObject {
     protected Rectangle Hitbox;
     protected float X, Y;
     protected float lastX, lastY;
-    protected int Range;
 
     //Orientation for targeting
     protected int OrX;
@@ -77,11 +76,6 @@ public class GraphicObject {
     public String getType(){
         return GraphicType;
     }
-    public int getRange(){
-        //if type character -> return character.getRange
-        return 1;
-    }
-
     /*-------------------------------------------------------------SETTERS---------------------------------------------------------------------- */
     public void setPosition(float x, float y){
         this.Hitbox.x = x;

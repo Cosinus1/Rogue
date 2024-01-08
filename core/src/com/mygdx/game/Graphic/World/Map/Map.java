@@ -198,6 +198,7 @@ public class Map {
 /*--------------------------------------------------UPDATE------------------------------------------------------ */
     public void update(float deltaTime){
         ArrayList<GraphicObject> List = new ArrayList<>();
+        updateNPCs();
         if(NPCs!=null) List.addAll(NPCs);
         updateElements();
         if(Elements!=null) List.addAll(Elements);
@@ -207,15 +208,26 @@ public class Map {
             object.update(deltaTime);
         }
     }
-    public void updateElements(){
-        ArrayList<Element> List = new ArrayList<>();
+    public void updateElements(){ 
         if(Elements!=null){
+            ArrayList<Element> List = new ArrayList<>();
             for(Element element : Elements){
                 if(element.isValidPosition((int) element.getX()/tilewidth, (int) element.getY()/tileheight, this)) List.add(element);
             }
             Elements.clear();
+            Elements = List;
         }
-        Elements = List;
+    }
+    public void updateNPCs(){
+        if (NPCs!=null){
+            ArrayList<GraphicEnnemie> List = new ArrayList<>();
+            for(GraphicEnnemie enemy : NPCs){
+                if(enemy.getCharacter().getPV()<=0) DeadNPCs.add(enemy);
+                else List.add(enemy);
+            }
+            NPCs.clear();
+            NPCs = List;
+        }
     }
     public void updateTiledmap(TiledMap newTiledMap) {
         this.tiledmap = newTiledMap;
@@ -235,12 +247,12 @@ public class Map {
         }
     }
 /* -----------------------------------------ENNEMY ATTACK ---------------------------------------- */
-    public ArrayList<GraphicEnnemie> lookforPNJinRange(GraphicObject object){
+    public ArrayList<GraphicEnnemie> lookforEnemyinRange(GraphicCharacter character){
         ArrayList<GraphicEnnemie> Ennemies = getNPCs();
         ArrayList<GraphicEnnemie> EnnemiesinRange = new ArrayList<>();
         if(Ennemies != null){
             for(GraphicEnnemie ennemie : Ennemies){
-                if(ennemie.inRange(object, this)){
+                if(ennemie.inRange(character, this)){
                     EnnemiesinRange.add(ennemie);
                 }
             }
@@ -250,13 +262,13 @@ public class Map {
     //Apply damage to NPC from Element
     public void ElementAttack(){
         if(Elements!=null) for (Element element : Elements){
-            element.Attack(this);
+            element.LookforAttack(this);
         }
     }
     //Apply damage to hero and return true if the hero is dead, false if not
     public boolean PNJAttack(){
         
-        ArrayList<GraphicEnnemie> PNJinRange = lookforPNJinRange(hero);
+        ArrayList<GraphicEnnemie> PNJinRange = lookforEnemyinRange(hero);
         //Ennemies in range attack the Hero
         if(PNJinRange != null){
             int size = PNJinRange.size();

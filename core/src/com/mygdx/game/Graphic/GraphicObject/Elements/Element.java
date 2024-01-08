@@ -1,6 +1,9 @@
 package com.mygdx.game.Graphic.GraphicObject.Elements;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -9,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.Texture;
 
-import com.mygdx.game.Back.Character.Ennemie.Ennemie;
 import com.mygdx.game.Graphic.GraphicObject.GraphicObject;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicCharacter;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicEnnemie;
@@ -21,7 +23,7 @@ public class Element extends GraphicObject{
     public Element(float x, float y, int width, int height){
         super(x, y, width, height);
         this.friction = 1;
-        this.Power = 1000;
+        this.Power = 10;
         this.GraphicType = "Element";
         this.Object.setTextureRegion(new TextureRegion(createRedRectangleTexture(), width, height));
     }
@@ -81,19 +83,16 @@ public class Element extends GraphicObject{
         else return false;
     }
 
-    public void Attack(Map map){
-        ArrayList<GraphicEnnemie> PNJinRange = map.lookforPNJinRange(this);
-        if(PNJinRange != null){
-            int size = PNJinRange.size();
-            for(int index = 0; index<size; index++){
-                GraphicEnnemie Graphic_ennemie = PNJinRange.get(0);
-                Ennemie ennemie = Graphic_ennemie.getCharacter();
-                ennemie.recevoirDegats(Power);
-                if(ennemie.getPV() <= 0){
-                    Graphic_ennemie.kill(map);
-                }
-            }
-        }
+    public void LookforAttack(Map map){
+        ArrayList<GraphicEnnemie> Enemies = map.getNPCs();
+        Iterator<GraphicEnnemie> Iterator = Enemies.iterator();
+        while(Iterator.hasNext()){
+            GraphicEnnemie enemy = Iterator.next();
+            if(enemy.getHitbox().overlaps(Hitbox)) this.Attack(enemy);
+        }       
     }
     
+    public void Attack(GraphicEnnemie enemy){
+        enemy.getCharacter().recevoirDegats(Power);
+    }
 }

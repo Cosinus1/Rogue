@@ -70,7 +70,7 @@ public class World {
             this.CurrentcollisionLayer = Home.getcollisionLayer();
 
             //Initialize the Hero
-            hero = new Archer(this, 100, 200, 1000, 1, null, "Champion");
+            hero = new Archer(100, 200, 1000, 1, null, "Champion");
             graphicHero = new GraphicHero(this,hero,CurrentMap.getX(), CurrentMap.getY());
         
 

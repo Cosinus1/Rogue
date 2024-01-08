@@ -6,26 +6,27 @@ import com.mygdx.game.Back.Item.ItemType;
 public class Weapon extends Item {
     protected String name;
     protected int power;
-    protected int range;
 
-    public Weapon(ItemType t, String name, int power, int range){
+    public Weapon(ItemType t, String name, int power){
         super(t);
         this.name=name;
         this.power=power;
-        this.range=range;
     }
 
     public void description(){
         System.out.println("Je suis une arme");
     }
-
+    /*---------------------------------------GETTERS------------------------------------- */
     public int getPower(){
         return power;
     }
 
     public int getRange(){
-        return range;
+        return 0;
     }
 
-
+    /*----------------------------------------ATTACK-------------------------------- */
+    public void Attack(){
+        
+    }
 }

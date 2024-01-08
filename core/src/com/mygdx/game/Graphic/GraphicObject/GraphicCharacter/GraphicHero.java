@@ -179,16 +179,13 @@ public class GraphicHero extends GraphicCharacter {
     }
 
     public void Attack(Map map){
-        ArrayList<GraphicEnnemie> PNJinRange = map.lookforPNJinRange(this);
+        ArrayList<GraphicEnnemie> PNJinRange = map.lookforEnemyinRange(this);
         if(PNJinRange != null){
             int size = PNJinRange.size();
             for(int index = 0; index<size; index++){
-                GraphicEnnemie Graphic_ennemie = PNJinRange.get(0);
+                GraphicEnnemie Graphic_ennemie = PNJinRange.get(index);
                 Character ennemie = Graphic_ennemie.getCharacter();
                 ennemie.recevoirDegats(this.getCharacter().getPower());
-                if(ennemie.getPV() <= 0){
-                    Graphic_ennemie.kill(map);
-                }
             }
         }
     }
