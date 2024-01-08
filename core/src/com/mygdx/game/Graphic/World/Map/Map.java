@@ -1,6 +1,9 @@
 package com.mygdx.game.Graphic.World.Map;
 
 
+import java.util.Comparator;
+import java.util.Collections;
+
 import com.badlogic.gdx.maps.*;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
@@ -195,7 +198,23 @@ public class Map {
     public void addElement(Element element){
         Elements.add(element);
     }
-/*--------------------------------------------------UPDATE------------------------------------------------------ */
+
+    /*--------------------------------------------------------------LIST SORTING------------------------------------------------------------------- */
+    public void sortObjects(){
+        // Définition du Comparator pour trier en fonction de l'attribut y
+        Comparator<GraphicObject> yComparator = new Comparator<GraphicObject>() {
+            @Override
+            public int compare(GraphicObject object1, GraphicObject object2) {
+                // Comparaison des valeurs de y
+                return Float.compare(object2.getY(), object1.getY());
+            }
+        };
+
+        // Utilisation de Collections.sort() avec le Comparator défini
+        Collections.sort(Objects, yComparator);
+    }
+/*-------------------------------------------------------------------UPDATE------------------------------------------------------------------------ */
+
     public void update(float deltaTime){
         ArrayList<GraphicObject> List = new ArrayList<>();
         updateNPCs();
@@ -204,6 +223,7 @@ public class Map {
         if(Elements!=null) List.addAll(Elements);
         List.add(hero);
         Objects = List;
+        sortObjects();
         for(GraphicObject object : Objects){
             object.update(deltaTime);
         }
@@ -259,6 +279,18 @@ public class Map {
         }
         return EnnemiesinRange;
     }
+    public ArrayList<GraphicEnnemie> lookforEnemyinRange(float X, float Y){
+        ArrayList<GraphicEnnemie> Ennemies = getNPCs();
+        ArrayList<GraphicEnnemie> EnnemiesinRange = new ArrayList<>();
+        if(Ennemies != null){
+            for(GraphicEnnemie ennemie : Ennemies){
+                if(ennemie.inRange(X, Y, this)){
+                    EnnemiesinRange.add(ennemie);
+                }
+            }
+        }
+        return EnnemiesinRange;
+    }
     //Apply damage to NPC from Element
     public void ElementAttack(){
         if(Elements!=null) for (Element element : Elements){
@@ -288,7 +320,7 @@ public class Map {
                     Graphic_ennemie.resetIndex();
 
                     //Perform the Attack
-                    Graphic_ennemie.attack(hero);
+                    Graphic_ennemie.Attack(this);
 
                     //Kill the Hero if its HP are 0
                     if(hero.getCharacter().getPV() <= 0){

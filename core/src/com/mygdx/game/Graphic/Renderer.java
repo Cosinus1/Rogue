@@ -2,8 +2,6 @@ package com.mygdx.game.Graphic;
 
 import java.util.Iterator;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Collections;
 
 import com.mygdx.game.Graphic.GraphicObject.GraphicObject;
 import com.mygdx.game.Graphic.GraphicObject.Elements.Door;
@@ -110,19 +108,5 @@ public class Renderer {
 
     public void dispose(){
       spriteBatch.dispose();
-    }
-
-   public void sortObject(ArrayList<GraphicObject> list){
-        // Définition du Comparator pour trier en fonction de l'attribut y
-        Comparator<GraphicObject> yComparator = new Comparator<GraphicObject>() {
-            @Override
-            public int compare(GraphicObject object1, GraphicObject object2) {
-                // Comparaison des valeurs de y
-                return Float.compare(object1.getY(), object2.getY());
-            }
-        };
-
-        // Utilisation de Collections.sort() avec le Comparator défini
-        Collections.sort(list, yComparator);
     }
 }

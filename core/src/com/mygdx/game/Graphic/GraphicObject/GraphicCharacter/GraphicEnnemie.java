@@ -15,7 +15,7 @@ import com.mygdx.game.Graphic.World.Map.Map;
 
 public class GraphicEnnemie extends GraphicCharacter{
 
-    public GraphicEnnemie(Character character, float x, float y, TiledMapTileSets TileSets){
+    public GraphicEnnemie(Ennemie character, float x, float y, TiledMapTileSets TileSets){
         super(character,x,y);
         getEnnemieTextures(TileSets);
         Object.setTextureRegion(moveTexture_list.get(0));
@@ -119,10 +119,10 @@ public class GraphicEnnemie extends GraphicCharacter{
         float signY = Math.signum(Yh-Y);
 
         //Move towards the hero if in detectionrange 
-        if( distanceX + distanceY < 50000){
+        if( (Math.sqrt(distanceX) + Math.sqrt(distanceY))/tileWidth < character.getDetecRange()){
             //Set moves towards the Hero
-            float moveX = signX*collisionLayer.getTileWidth();
-            float moveY = signY*collisionLayer.getTileWidth();
+            float moveX = signX*tileWidth;
+            float moveY = signY*tileWidth;
 
             int endX = (int) Xh/tileWidth;
             int endY = (int) Yh/tileWidth;
@@ -192,11 +192,25 @@ public class GraphicEnnemie extends GraphicCharacter{
     
 /*-----------------------------------------------------COMBAT------------------------------------------------------------ */
     
-    public void attack(GraphicHero hero){
+    public void Attack(Map map){
+        float Xh = (float) map.getHero().getX();
+        float Yh = (float) map.getHero().getY();
+        float signX = Math.signum(Xh-X);
+        float signY = Math.signum(Yh-Y);
+        float distanceX = (Xh-X)*(Xh-X);
+        float distanceY = (Yh-Y)*(Yh-Y);
+        int orX;
+        int orY;
+        float delta = 64.0f;
+        if (distanceY/32 < delta) orY = 0;
+        else orY = (int) signY;
+        if (distanceX/32 < delta) orX = 0;
+        else orX = (int) signX;
 
-        hero.getCharacter().recevoirDegats(this.getCharacter().getPower());
+        character.Attack(X, Y, orX, orY, map);
+        //hero.getCharacter().recevoirDegats(this.getCharacter().getPower());
     }
-    
+/*------------------------------------------------------RENDER----------------------------------------------------------- */
      public void render(SpriteBatch spriteBatch, OrthographicCamera camera){
         int scaleFactor;
         //float offsetX=0;

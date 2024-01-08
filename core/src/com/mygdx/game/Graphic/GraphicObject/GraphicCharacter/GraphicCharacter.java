@@ -153,10 +153,32 @@ public class GraphicCharacter extends GraphicObject{
 
 /*------------------------------------------------------------------CHECKERS------------------------------------------------------------ */
     public boolean inRange(GraphicCharacter character, Map map){
+        int tilewidth = map.getcollisionLayer().getTileWidth();
         float x = getX();
         float y = getY();
         double distanceX = x - character.getX();
         double distanceY = y - character.getY();
+
+        int distance = (int) Math.sqrt(Math.pow(distanceY, 2) + Math.pow(distanceX, 2))/32;
+
+        int X = (int) x/32;
+        int Y = (int) y/32;
+        int endX = (int) (x-distanceX)/32;
+        int endY = (int) (y-distanceY)/32;
+
+        int signX = (int) Math.signum(-distanceX);
+        int signY = (int) Math.signum(-distanceY);
+
+        //System.out.println(" signX : " + signX + "signY : " + signY);
+
+        if(distance <= (int) character.getRange()*tilewidth && isValidTrajectory(X, Y, endX, endY, signX, signY, map)) return true;
+        else return false;
+    }
+    public boolean inRange(float x2, float y2, Map map){
+        float x = getX();
+        float y = getY();
+        double distanceX = x - x2;
+        double distanceY = y - y2;
 
         int distance = (int) Math.sqrt(Math.pow(distanceY, 2) + Math.pow(distanceX, 2))/32;
 
@@ -212,7 +234,7 @@ public class GraphicCharacter extends GraphicObject{
         
             if (tile != null) {
                 TextureRegion textureRegion = tile.getTextureRegion();
-                if (property.equals("battle")) {
+                if (property.equals("battle") && tile.getProperties().containsKey("melee")) {
                     // Create a new TextureRegion with modified size for the battle animation
                     TextureRegion modifiedRegion = new TextureRegion(textureRegion);
                     modifiedRegion.setRegionWidth(128);

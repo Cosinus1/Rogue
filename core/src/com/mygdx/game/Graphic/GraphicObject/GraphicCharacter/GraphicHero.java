@@ -35,6 +35,7 @@ public class GraphicHero extends GraphicCharacter {
     public void getHeroTextures(World world){
         TiledMapTileSets Tilesets = world.getHome().getTiledMap().getTileSets();
         //Setting FPS for slower animation
+        System.out.println("Name : " + Name);
         int FPS = 10;
         for(int index=0; index<9; index++){
             //Movement Textures
@@ -80,7 +81,7 @@ public class GraphicHero extends GraphicCharacter {
     public void move(OrthographicCamera camera, Map map){
 
         //reset orientation if movement
-        if(Gdx.input.isKeyPressed(Keys.ANY_KEY) && !Gdx.input.isKeyPressed(Keys.F)) setOrientation(0, 0);
+        if(Gdx.input.isKeyJustPressed(Keys.ANY_KEY) && !(Gdx.input.isKeyPressed(Keys.SPACE)) ) setOrientation(0, 0);
         
 
         int tileWidth = 32;
@@ -179,15 +180,7 @@ public class GraphicHero extends GraphicCharacter {
     }
 
     public void Attack(Map map){
-        ArrayList<GraphicEnnemie> PNJinRange = map.lookforEnemyinRange(this);
-        if(PNJinRange != null){
-            int size = PNJinRange.size();
-            for(int index = 0; index<size; index++){
-                GraphicEnnemie Graphic_ennemie = PNJinRange.get(index);
-                Character ennemie = Graphic_ennemie.getCharacter();
-                ennemie.recevoirDegats(this.getCharacter().getPower());
-            }
-        }
+        character.Attack(X, Y, OrX, OrY, map);
     }
 
     public void GraphicHeroAttack(Map map){

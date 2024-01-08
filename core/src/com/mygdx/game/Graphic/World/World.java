@@ -1,8 +1,7 @@
 package com.mygdx.game.Graphic.World;
 
 import com.mygdx.game.Back.Character.Ennemie.*;
-import com.mygdx.game.Back.Character.Hero.Archer;
-import com.mygdx.game.Back.Character.Hero.Hero;
+import com.mygdx.game.Back.Character.Hero.*;
 import com.mygdx.game.Graphic.GraphicObject.Elements.Door;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.*;
 import com.mygdx.game.Graphic.World.Map.*;
@@ -70,7 +69,7 @@ public class World {
             this.CurrentcollisionLayer = Home.getcollisionLayer();
 
             //Initialize the Hero
-            hero = new Archer(100, 200, 1000, 1, null, "Champion");
+            hero = new Warrior(100, 200, 1000, 1, null, "Champion");
             graphicHero = new GraphicHero(this,hero,CurrentMap.getX(), CurrentMap.getY());
         
 
@@ -168,7 +167,7 @@ public class World {
     }
 
     public void initializeDungeon(int numberOfMaps) {
-        boss = new Boss(100, 0, 50,3,null,"Boss",null);
+        boss = new Boss(100, 0, 50,3, 10, null,"Boss",null);
         GraphicBoss graphicboss = new GraphicBoss(boss,525,400, this.Tilesets);
         System.out.println("              /////////////Initializing Dungeon//////////////");
         Map DungeonHubMap = getDungeonHub();

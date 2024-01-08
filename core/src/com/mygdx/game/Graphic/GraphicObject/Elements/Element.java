@@ -15,15 +15,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Graphic.GraphicObject.GraphicObject;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicCharacter;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicEnnemie;
+import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicHero;
 import com.mygdx.game.Graphic.World.Map.Map;
 
 public class Element extends GraphicObject{
     public int Power;
+    public String target;
     
     public Element(float x, float y, int width, int height){
         super(x, y, width, height);
         this.friction = 1;
         this.Power = 10;
+        this.target = "enemy";
         this.GraphicType = "Element";
         this.Object.setTextureRegion(new TextureRegion(createRedRectangleTexture(), width, height));
     }
@@ -35,6 +38,7 @@ public class Element extends GraphicObject{
         pixmap.dispose();
         return texture;
     }
+    /*--------------------------------------------------RENDER------------------------------------------------------------- */
     public void render(SpriteBatch spriteBatch, OrthographicCamera camera){
     int scaleFactor = 1;
     //float offsetX=0;
@@ -60,7 +64,11 @@ public class Element extends GraphicObject{
         spriteBatch.draw(textureRegion, objectX, objectY, objectWidth, objectHeight);
 
     }
-
+    /*-----------------------------------------------------------------SETTERS----------------------------------------------------------- */
+    public void setTarget(String target){
+        this.target = target;
+    }
+    /*----------------------------------------------------------------CHECKERS---------------------------------------------------------- */
     public boolean inRange(GraphicCharacter character, Map map){
         float x = getX();
         float y = getY();
@@ -82,17 +90,21 @@ public class Element extends GraphicObject{
         if(distance <= 1 && isValidTrajectory(X, Y, endX, endY, signX, signY, map)) return true;
         else return false;
     }
-
+    /*--------------------------------------------------------ATTACK----------------------------------------------------------------- */
     public void LookforAttack(Map map){
         ArrayList<GraphicEnnemie> Enemies = map.getNPCs();
-        Iterator<GraphicEnnemie> Iterator = Enemies.iterator();
-        while(Iterator.hasNext()){
-            GraphicEnnemie enemy = Iterator.next();
-            if(enemy.getHitbox().overlaps(Hitbox)) this.Attack(enemy);
-        }       
+        if(Enemies!=null){
+            Iterator<GraphicEnnemie> Iterator = Enemies.iterator();
+            while(Iterator.hasNext()){
+                GraphicEnnemie enemy = Iterator.next();
+                if(enemy.getHitbox().overlaps(Hitbox) && target == "enemy") this.Attack(enemy);
+            }  
+        }
+        GraphicHero Hero = map.getHero();
+        if(Hero.getHitbox().overlaps(Hitbox) && target == "hero") this.Attack(Hero);     
     }
     
-    public void Attack(GraphicEnnemie enemy){
-        enemy.getCharacter().recevoirDegats(Power);
+    public void Attack(GraphicCharacter character){
+        character.getCharacter().recevoirDegats(Power);
     }
 }

@@ -1,5 +1,6 @@
-package com.mygdx.game.Back.Item.Arme;
+package com.mygdx.game.Back.Item.Weapon;
 
+import com.mygdx.game.Back.Force;
 import com.mygdx.game.Back.Item.ItemType;
 import com.mygdx.game.Graphic.GraphicObject.Elements.ElementFactory;
 import com.mygdx.game.Graphic.World.Map.Map;
@@ -20,8 +21,9 @@ public class Arc extends Weapon {
         return name;
     }
     /*------------------------------ATTACK------------------------------------- */
-    public void Attack(float X, float Y, Map map){
+    public void Attack(float X, float Y, int OrX, int OrY, Map map){
         Element arrow = factory.createProjectile(X, Y);
+        arrow.applyForce(new Force(OrX*2000, OrY*2000));
         map.addElement(arrow);
     }
 }

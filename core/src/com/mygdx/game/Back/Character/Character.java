@@ -58,6 +58,9 @@ public abstract class Character {
     public int getPower(){
         return power;
     }
+    public int getDetecRange(){
+        return 0;
+    }
     /*----------------------------------------- SETTERS -------------------------------------- */
     public void setName(String name){
         this.name = name;
@@ -84,7 +87,7 @@ public abstract class Character {
     }
     
 /*----------------------------------------- FIGHT -------------------------------------- */  
-    public void Attack(){
+    public void Attack(float X, float Y, int OrX, int OrY, Map map){
         
     }
 

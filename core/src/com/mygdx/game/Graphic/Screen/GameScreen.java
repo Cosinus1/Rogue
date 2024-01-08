@@ -66,7 +66,7 @@ public class GameScreen implements Screen {
    public void render(float delta) {
       //Get Time
       deltaTime = Gdx.graphics.getDeltaTime();
-        
+/*-------------------------------------------------INPUTS---------------------------------------------------------- */
       //Keyboard
          //Arrows Inputs
          hero.move(camera, map);
@@ -83,21 +83,21 @@ public class GameScreen implements Screen {
          //F input : apply force to Hero (testing implementation)
          if(Gdx.input.isKeyJustPressed(Keys.F)){
             hero.applyForce(new Force(-2000*hero.getorX(), -2000*hero.getorY()));
-            Element arrow = new Element(hero.getX(), hero.getY(), 16, 16);
-            arrow.applyForce(new Force(2000*hero.getorX(), 2000*hero.getorY()));
-            map.addElement(arrow);
             
             
          }
+/*---------------------------------------------NON PLAYER OBJECTS HANDLING--------------------------------------------- */
 
+      /*-----------------------------------------------MOVE-------------------------------------------------------- */
       //Move the Ennemies
-      if(map.getPVP() == "ON"){
-         map.moveEnnemies(hero);
-      }
+         if(map.getPVP() == "ON"){
+            map.moveEnnemies(hero);
+         }
+      /*----------------------------------------------ATTACK--------------------------------------------------------*/
       // Perform Element attacks
-      map.ElementAttack();
+         map.ElementAttack();
       // Perform NPC attacks
-      //Attack hero if cd + check if hero is dead 
+         //Attack hero if cd + check if hero is dead 
          if(map.PNJAttack()) {
             //Waiting (hero dying animation to put here) 
             //Respawn hero at the Tavern

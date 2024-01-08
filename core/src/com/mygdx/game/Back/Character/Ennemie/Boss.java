@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.mygdx.game.Back.Inventory.Inventory;
-import com.mygdx.game.Back.Item.Arme.Massue;
+import com.mygdx.game.Back.Item.Weapon.Massue;
 
 public class Boss extends Ennemie{
     ArrayList<String> Names = new ArrayList<>();
     
-    public Boss(int pv, int defense, int power,int range, Inventory bag,String name ,Massue massue){
-        super(pv, defense, power, range, bag, name);
+    public Boss(int pv, int defense, int power,int combatRange, int detectionRange, Inventory bag,String name ,Massue massue){
+        super(pv, defense, power, combatRange, detectionRange, bag, name);
         this.Names.add("vampire");
         this.Names.add("jack");
         this.Names.add("minotaure");
