@@ -8,9 +8,11 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.Back.Inventory.Inventory;
@@ -23,12 +25,16 @@ import com.mygdx.game.Graphic.GraphicCharacter.GraphicHero;
 public class InventoryScreen implements Screen {
     private final MyGame game;
     private Stage stage;
+    private Table potionTable;
+    private Table weaponTable;
 
     private Inventory inventory;
     private ShapeRenderer shapeRenderer;
     private GraphicHero hero;
     private BitmapFont font;
     private SpriteBatch batch;
+    private boolean showPotion; 
+    private boolean showWeapon;
     
     public InventoryScreen(final MyGame game, GraphicHero hero){
         this.game = game;
@@ -38,38 +44,24 @@ public class InventoryScreen implements Screen {
         font = new BitmapFont();
         batch = new SpriteBatch();
         this.stage = new Stage(new ScreenViewport());
+        potionTable = new Table();
+        weaponTable = new Table();
+
 
         MySkin mySkin = new MySkin();
-        
+        //on affiche les armes par default
+        showWeapon =true;
+        showPotion=false;
+
         //création du bouton Arme 
-        TextButton weaponsButton = new TextButton("Weapon", mySkin.createStyle(Color.NAVY)); 
-        /*
-        //ajout de l'icone d'arme    
-        Texture weaponTexture = new Texture("PNG/weapon.png");
-        TextButtonStyle weaponStyle = weaponsButton.getStyle();
-        
-        //create drawable for back
-        TextureRegionDrawable weaponDrawable = new TextureRegionDrawable(new TextureRegion(weaponTexture));
-        weaponDrawable.setMinSize(64,64);
-        weaponStyle.up = weaponDrawable;
-        //set du style
-        weaponsButton.setStyle(weaponStyle);
-        //add icone to button
-        weaponStyle.up = new TextureRegionDrawable(new TextureRegion(weaponTexture));
-        */
+        TextButton weaponsButton = new TextButton("Weapon", mySkin.createStyle(Color.CYAN)); 
         //création du bouton pour les potions
         TextButton potionButton = new TextButton("Potion", mySkin.createStyle(Color.NAVY));
-        /*
-        Texture potionTexture = new Texture("PNG/potion.png");
-        TextButtonStyle potionStyle = potionButton.getStyle();
-        potionStyle.up = new TextureRegionDrawable(new TextureRegion(potionTexture));
-        //redimensioné l'image
-        TextureRegionDrawable potionDrawable = new TextureRegionDrawable(new TextureRegion(potionTexture));
-        potionDrawable.setMinSize(64,64);
-        //set button
-        potionStyle.up = potionDrawable;
-        potionButton.setStyle(potionStyle);
-        */
+        weaponsButton.addListener(new MyClickListenerWeapon(potionButton, weaponsButton, potionTable, weaponTable));
+        
+    
+        potionButton.addListener(new MyClickListenerPotion(potionButton, weaponsButton,potionTable, weaponTable, inventory));
+
         //positionnement des boutons
         Table table = new Table();
         table.add(weaponsButton).padRight(5);
@@ -94,7 +86,8 @@ public class InventoryScreen implements Screen {
             shapeRenderer.rect(598,stage.getHeight()- 60, 4,56 );
         shapeRenderer.end();
         batch.begin();
-            showPotions(batch);
+        if(showWeapon) showItems(batch, ItemType.WEAPON);
+        //else if(showPotion) showItems(batch,ItemType.POTION);
         batch.end();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1/30f));
@@ -107,13 +100,23 @@ public class InventoryScreen implements Screen {
     }
 
 
-    public void showPotions(SpriteBatch batch){
-        InventoryIteratorInterface<Item> iterator = inventory.getIterator(ItemType.POTION);
+    public void showItems(SpriteBatch batch, ItemType type){
+        int i=0;
+        InventoryIteratorInterface<Item> iterator = inventory.getIterator(type);
         while(iterator.hasnext()){
             Item item = iterator.next();
-            font.draw(batch,"Potion" + item.getType().toString(), 10,stage.getHeight()-70-iterator.getPosition() );
+            if(type == ItemType.POTION){
+                font.draw(batch,"Potion /" + iterator.getPosition() , 10, stage.getHeight()-70 - i );
+            }
+            else if(type == ItemType.WEAPON){
+                font.draw(batch,"Arme /" + iterator.getPosition() , 10, stage.getHeight()-70 - i );
+            }
+            i+=30;
         }
     }
+
+
+
 
     @Override
     public void resize(int width, int height) {
@@ -135,4 +138,75 @@ public class InventoryScreen implements Screen {
     @Override
     public void dispose() {
     }
+
+    private class MyClickListenerWeapon extends ClickListener{
+        private TextButton weaponsButton;
+        private TextButton potionButton;
+        private MySkin mySkin;
+
+        public MyClickListenerWeapon(TextButton potionButton, TextButton weaponButton, Table potionTable, Table weaponTable){
+            this.weaponsButton = weaponButton;
+            this.potionButton = potionButton;
+            mySkin = new MySkin();
+        }
+
+        @Override
+        public void clicked(InputEvent event, float x, float y) {
+            if(!showWeapon){
+                showWeapon = true;
+                showPotion = false;
+                potionTable.clear();
+                //On change la couleur du bouton d'arme
+                TextButton.TextButtonStyle style = weaponsButton.getStyle();
+                style.up = mySkin.createStyle(Color.CYAN).newDrawable("buttonBackground", Color.CYAN);
+                weaponsButton.setStyle(style);
+                //on change la couleur du bouton potion
+                style = potionButton.getStyle();
+                style.up = mySkin.createStyle(Color.NAVY).newDrawable("buttonBackground", Color.NAVY);
+                potionButton.setStyle(style);
+                
+            }
+        }
+        
+    }
+
+    private class MyClickListenerPotion extends ClickListener{
+        private TextButton weaponsButton;
+        private TextButton potionButton;
+        private MySkin mySkin;
+
+        public MyClickListenerPotion( TextButton potionButton, TextButton weaponButton, Table potionTable, Table weaponTable, Inventory inventory){
+            this.weaponsButton = weaponButton;
+            this.potionButton = potionButton;
+            mySkin = new MySkin();
+        }
+
+        @Override
+        public void clicked(InputEvent event, float x, float y) {
+            if(!showPotion){
+                showPotion = true;
+                showWeapon = false;
+
+                //On change la couleur du bouton d'arme
+                TextButton.TextButtonStyle style = weaponsButton.getStyle();
+                style.up = mySkin.createStyle(Color.NAVY).newDrawable("buttonBackground", Color.NAVY);
+                weaponsButton.setStyle(style);
+                //on change la couleur du bouton potion
+                style = potionButton.getStyle();
+                style.up = mySkin.createStyle(Color.CYAN).newDrawable("buttonBackground", Color.CYAN);
+                potionButton.setStyle(style);
+
+                //On créer les boutons de rendu
+                InventoryIteratorInterface<Item> iterator = inventory.getIterator(ItemType.POTION);
+                while(iterator.hasnext()){
+                    Item item = iterator.next();
+                    TextButton potionButton = new TextButton(item.getType().toString(), mySkin.createStyle(Color.GRAY)); 
+                    potionTable.add(potionButton).padBottom(10);
+                    potionTable.row();
+                }
+                stage.addActor(potionTable);
+                potionTable.setPosition( 300,stage.getHeight()-160);
+            }
+        }
+    }  
 }   

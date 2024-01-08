@@ -6,6 +6,8 @@ import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Item.Item;
 import com.mygdx.game.Back.Item.ItemType;
 import com.mygdx.game.Back.Item.Potion;
+import com.mygdx.game.Back.Item.Arme.Arc;
+import com.mygdx.game.Back.Item.Arme.Massue;
 import com.mygdx.game.Graphic.Elements.Door;
 import com.mygdx.game.Graphic.GraphicCharacter.*;
 import com.mygdx.game.Graphic.World.Map.*;
@@ -59,11 +61,18 @@ public class World {
         this.CurrentMap = Home;
         this.CurrentcollisionLayer = Home.getcollisionLayer();
         //Initialize the Hero
-        Potion potion1 = new Potion(ItemType.POTION,10);
-        Potion potion2 = new Potion(ItemType.POTION,20);
+        Potion potion1 = new Potion(10);
+        Potion potion2 = new Potion(20);
+        Potion potion3 = new Potion(20);
+        Arc arc = new Arc( "arc", 15, 10 );
+        Massue massue = new Massue("massue",30, 1);
         Inventory bag = new Inventory();
-        bag.addItem(potion2);
         bag.addItem(potion1);
+        bag.addItem(arc);
+        bag.addItem(potion2);
+        bag.addItem(potion3);
+        bag.addItem(massue);
+        
         hero = new Hero(this, 100, 200, 10, 1, bag, "Champion", 0);
         graphicHero = new GraphicHero(this,hero,CurrentMap.getX(), CurrentMap.getY());
         //Init the Dungeons Maps

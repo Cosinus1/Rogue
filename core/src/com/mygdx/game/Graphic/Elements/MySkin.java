@@ -34,7 +34,7 @@ public class MySkin {
         font.setColor(color);
 
         Pixmap navyBluePixmap = new Pixmap(600, 50, Format.RGBA8888);
-        navyBluePixmap.setColor(Color.NAVY); // Couleur bleu marine
+        navyBluePixmap.setColor(color); // Couleur bleu marine
         navyBluePixmap.fill();
         skin.add("buttonBackground", new Texture(navyBluePixmap));
 
@@ -45,6 +45,25 @@ public class MySkin {
 
         return skin;
 
+    }
+
+    public Skin createPotionSkin(){
+        Skin skin = new Skin();
+        BitmapFont font = new BitmapFont();
+
+        font.setColor(Color.GRAY);
+
+        Pixmap GrayPixmap = new Pixmap(600, 50, Format.RGBA8888);
+        GrayPixmap.setColor(Color.GRAY); // Couleur bleu marine
+        GrayPixmap.fill();
+        skin.add("buttonBackground", new Texture(GrayPixmap));
+
+        TextButton.TextButtonStyle customButtonStyle = new TextButton.TextButtonStyle();
+        customButtonStyle.font = font;
+        customButtonStyle.up = skin.newDrawable("buttonBackground", Color.GRAY); // Utiliser le fond bleu marine
+        skin.add("Gray", customButtonStyle);
+
+        return skin;
     }
 
 }

@@ -9,11 +9,11 @@ public class EnnemieFactory {
     public Ennemie createEnnemie( String request){
         Ennemie ennemie = null;
         if("gobelin".equals(request)){
-            Massue massue = new Massue(null,"massue", 3, 1);
+            Massue massue = new Massue("massue", 3, 1);
             ennemie = new Gobelin(50,0,10,1,null,"gobelin",massue);
         }
         if("sorciere".equals(request)){
-            Massue massue = new Massue(null,"massue", 3,1);
+            Massue massue = new Massue("massue", 3,1);
             ennemie = new Sorciere(50,0,10,2,null,"sorciere", massue);
         }
         return ennemie;

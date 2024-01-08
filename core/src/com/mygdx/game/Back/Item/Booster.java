@@ -5,8 +5,8 @@ public class Booster extends Item{
         private int boostDef;
         private int boostRange;
 
-        public Booster(ItemType t, int boostDam, int boostDef, int boostRange){
-            super(t);
+        public Booster(int boostDam, int boostDef, int boostRange){
+            super(ItemType.BOOSTER);
             this.boostDam = boostDam;
             this.boostDef = boostDef;
             this.boostRange = boostRange;

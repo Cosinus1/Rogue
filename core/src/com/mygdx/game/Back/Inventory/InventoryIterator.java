@@ -47,6 +47,8 @@ public class InventoryIterator implements InventoryIteratorInterface<Item> {
                 break;
             }
             if (type.equals(ItemType.ANY) || items.get(position_temp).getType().equals(type)) {
+                // System.out.println("le type de l iterator : "+type);
+                // System.out.println("type : "+ items.get(position_temp).getType().equals(type));
                 break;
               }
         }

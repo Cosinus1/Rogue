@@ -3,8 +3,8 @@ package com.mygdx.game.Back.Item;
 public class Potion extends Item{
         private int pvSoigner;
 
-        public Potion(ItemType t, int soin){
-            super(t);
+        public Potion(int soin){
+            super(ItemType.POTION);
             this.pvSoigner=soin;
         }
         

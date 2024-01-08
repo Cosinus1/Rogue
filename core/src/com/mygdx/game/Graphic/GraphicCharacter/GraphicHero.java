@@ -92,10 +92,7 @@ public class GraphicHero extends GraphicCharacter {
         float deltaX = Math.abs(newX - tileX*tileWidth);
         float deltaY = Math.abs(newY - tileY*tileWidth);
 
-        System.out.println(" float position : " + newX + " / " + newY);
-        System.out.println("int position : " + tileX + " / " + tileY);
-
-        System.out.println("deltaX : " + deltaX + " / deltaY : " + deltaY);
+        
         boolean HeroNPC_collision;
 
         if(Gdx.input.isTouched()) {

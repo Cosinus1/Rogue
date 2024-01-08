@@ -8,8 +8,8 @@ public class Weapon extends Item {
     protected int power;
     protected int range;
 
-    public Weapon(ItemType t, String name, int power, int range){
-        super(t);
+    public Weapon(String name, int power, int range){
+        super(ItemType.WEAPON);
         this.name=name;
         this.power=power;
         this.range=range;
