@@ -33,7 +33,6 @@ public class Arc extends Weapon {
         region.flip(boolX, boolY);
         TextureMapObject object = new TextureMapObject(region);
         object.setRotation(1.5f);
-        System.out.println(object.getRotation());
         return object;
     }
     /*------------------------------ATTACK------------------------------------- */

@@ -130,7 +130,7 @@ public class GraphicEnnemie extends GraphicCharacter{
             if (isValidTrajectory((int) X/tileWidth, (int) Y/tileWidth, endX, endY, (int) moveX/tileWidth, (int) moveY/tileWidth, map)) {
                 
                 switchtorandom = false;
-                if(!(Hitbox.overlaps(hero.getHitbox()) || inRange(hero, map))){
+                if(!(inRange(hero, map))){
                     setPosition(X+moveX/speed, Y+moveY/speed);
                     //Get the appropriate sprite for movement
                     int y;
@@ -216,8 +216,8 @@ public class GraphicEnnemie extends GraphicCharacter{
         //float offsetY=0;
         TextureRegion textureRegion = Object.getTextureRegion();
         // Render the object texture based on its position and properties
-        float objectX = getX() - Hitbox.width/2;
-        float objectY = getY() - Hitbox.height/2;
+        float objectX = getX();
+        float objectY = getY();
 
         //Render bigger for boss
         if (Object.getProperties().get("boss")=="boss"){

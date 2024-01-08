@@ -1,9 +1,9 @@
 {
     "activeFile": "TSX/warrior.tsx",
     "expandedProjectPaths": [
-        "TMX",
         ".",
-        "TSX"
+        "TSX",
+        "TMX"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -28,8 +28,8 @@
             "scale": 1.5,
             "selectedLayer": 9,
             "viewCenter": {
-                "x": 475.3333333333333,
-                "y": 315.3333333333333
+                "x": 480,
+                "y": 319.6666666666667
             }
         },
         "TMX/Home.tmx#PathAndObjects": {
@@ -113,15 +113,15 @@
     "project": "Rogue_project.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "TSX/Arrow.tsx",
-        "TSX/arrow.tsx",
-        "TSX/Arrow_impact_pack.tsx",
         "TMX/Dungeon.tmx",
         "TSX/tavern.tsx",
         "TMX/Home.tmx",
         "TSX/houses.tsx",
         "TSX/archer.tsx",
         "TSX/warrior.tsx",
+        "TSX/Arrow.tsx",
+        "TSX/arrow.tsx",
+        "TSX/Arrow_impact_pack.tsx",
         "TSX/hero.tsx"
     ],
     "tileset.embedInMap": false,

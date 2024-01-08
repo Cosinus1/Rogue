@@ -159,7 +159,7 @@ public class MapFactory {
     
         int i = 0;
     
-        while (i < 2) { // You can adjust the number of chains (5 is just an example)
+        while (i < 5) { // You can adjust the number of chains (5 is just an example)
             // Choose a random starting point along the border
             int startX;
             int startY;

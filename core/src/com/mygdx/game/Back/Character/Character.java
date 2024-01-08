@@ -59,7 +59,8 @@ public abstract class Character {
         return power;
     }
     public int getDetecRange(){
-        return 0;
+        System.out.println("not found");
+        return 10;
     }
     /*----------------------------------------- SETTERS -------------------------------------- */
     public void setName(String name){

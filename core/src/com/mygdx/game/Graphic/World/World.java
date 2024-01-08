@@ -33,7 +33,7 @@ public class World {
     private Boss boss;
     private GraphicHero graphicHero;
 
-    private int numberOfMaps = 2;
+    private int numberOfMaps = 5;
     private int Dungeonlevel;
 
     //constructor

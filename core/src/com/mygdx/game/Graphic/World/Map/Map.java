@@ -358,8 +358,8 @@ public class Map {
             
             int buffer = 0;
             do {
-                randomX = random.nextInt(mapWidth-5);
-                randomY = random.nextInt(mapHeight-5);
+                randomX = 5+random.nextInt(mapWidth-10);
+                randomY = 5+random.nextInt(mapHeight-10);
     
                 // Check distance from walls
                 withinDistance = checkDistancefromWall(randomX, randomY);

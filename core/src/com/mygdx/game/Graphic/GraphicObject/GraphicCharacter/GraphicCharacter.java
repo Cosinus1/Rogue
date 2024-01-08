@@ -159,39 +159,41 @@ public class GraphicCharacter extends GraphicObject{
         double distanceX = x - character.getX();
         double distanceY = y - character.getY();
 
-        int distance = (int) Math.sqrt(Math.pow(distanceY, 2) + Math.pow(distanceX, 2))/32;
+        int distance = (int) Math.sqrt(Math.pow(distanceY, 2) + Math.pow(distanceX, 2));
 
-        int X = (int) x/32;
-        int Y = (int) y/32;
-        int endX = (int) (x-distanceX)/32;
-        int endY = (int) (y-distanceY)/32;
+        int X = (int) x/tilewidth;
+        int Y = (int) y/tilewidth;
+        int endX = (int) (x-distanceX)/tilewidth;
+        int endY = (int) (y-distanceY)/tilewidth;
 
         int signX = (int) Math.signum(-distanceX);
         int signY = (int) Math.signum(-distanceY);
 
         //System.out.println(" signX : " + signX + "signY : " + signY);
+        System.out.println(Name + " : " + getRange()*tilewidth + " distance : " + distance);
 
-        if(distance <= (int) character.getRange()*tilewidth && isValidTrajectory(X, Y, endX, endY, signX, signY, map)) return true;
+        if(distance <= getRange()*tilewidth && isValidTrajectory(X, Y, endX, endY, signX, signY, map)) return true;
         else return false;
     }
     public boolean inRange(float x2, float y2, Map map){
+        int tilewidth = map.getcollisionLayer().getTileWidth();
         float x = getX();
         float y = getY();
         double distanceX = x - x2;
         double distanceY = y - y2;
 
-        int distance = (int) Math.sqrt(Math.pow(distanceY, 2) + Math.pow(distanceX, 2))/32;
+        int distance = (int) Math.sqrt(Math.pow(distanceY, 2) + Math.pow(distanceX, 2))/tilewidth;
 
-        int X = (int) x/32;
-        int Y = (int) y/32;
-        int endX = (int) (x-distanceX)/32;
-        int endY = (int) (y-distanceY)/32;
+        int X = (int) x/tilewidth;
+        int Y = (int) y/tilewidth;
+        int endX = (int) (x-distanceX)/tilewidth;
+        int endY = (int) (y-distanceY)/tilewidth;
 
         int signX = (int) Math.signum(-distanceX);
         int signY = (int) Math.signum(-distanceY);
 
         //System.out.println(" signX : " + signX + "signY : " + signY);
-
+        System.out.println(Name + " : " + character.getRange());
         if(distance <= (int) character.getRange() && isValidTrajectory(X, Y, endX, endY, signX, signY, map)) return true;
         else return false;
     }

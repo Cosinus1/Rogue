@@ -10,11 +10,11 @@ public class EnnemieFactory {
         Ennemie ennemie = null;
         if("gobelin".equals(request)){
             Massue massue = new Massue(null,"massue", 3, 4);
-            ennemie = new Gobelin(50,0,10,5, 10,null,"gobelin",massue);
+            ennemie = new Gobelin(50,0,10,2, 5,null,"gobelin",massue);
         }
         if("sorciere".equals(request)){
             Staff staff = new Staff(null,"staff", 3);
-            ennemie = new Sorciere(50,0,10,7, 10,null,"sorciere", staff);
+            ennemie = new Sorciere(50,0,10,5, 10,null,"sorciere", staff);
         }
         return ennemie;
     }

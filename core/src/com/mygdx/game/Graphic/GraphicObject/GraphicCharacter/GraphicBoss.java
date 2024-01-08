@@ -7,5 +7,7 @@ public class GraphicBoss extends GraphicEnnemie{
     public GraphicBoss(Ennemie character,float x, float y, TiledMapTileSets Tilesets){
         super(character,x,y, Tilesets);
         this.Object.getProperties().put("boss", "boss");
+        this.Hitbox.width = 128;
+        this.Hitbox.height = 128;
     }
 }

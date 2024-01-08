@@ -5,7 +5,6 @@ import java.util.Iterator;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -164,7 +163,7 @@ public class GraphicObject {
         int mapWidth = map.getmapWidth();
         int mapHeight = map.getmapHeight();
         //Check Map boundaries
-        if(X<1 || X>(mapWidth-2) || Y<1 || Y>(mapHeight-2)) return false;
+        if(X<1 || X>(mapWidth) || Y<1 || Y>(mapHeight-2)) return false;
         // Check distance from walls
         return map.checkDistancefromWall(X, Y);
     }

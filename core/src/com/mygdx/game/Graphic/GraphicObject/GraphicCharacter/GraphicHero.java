@@ -79,7 +79,7 @@ public class GraphicHero extends GraphicCharacter {
     public void move(OrthographicCamera camera, Map map){
 
         //reset orientation if movement
-        if(Gdx.input.isKeyJustPressed(Keys.ANY_KEY) && !(Gdx.input.isKeyPressed(Keys.SPACE)) ) setOrientation(0, 0);
+        if(!(Gdx.input.isKeyJustPressed(Keys.SPACE)) && Gdx.input.isKeyJustPressed(Keys.ANY_KEY) ) setOrientation(0, 0);
         
 
         int tileWidth = 32;
