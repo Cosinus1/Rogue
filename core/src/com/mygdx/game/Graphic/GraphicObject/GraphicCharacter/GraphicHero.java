@@ -93,7 +93,7 @@ public class GraphicHero extends GraphicCharacter {
         int tileY = (int) getY() / tileHeight;
 
         //Delta defines the shortest distance the Hero can have with a wall
-        float delta = 10;
+        float delta = 20;
         float deltaX = Math.abs(newX - tileX*tileWidth);
         float deltaY = Math.abs(newY - tileY*tileWidth);
 
@@ -113,7 +113,7 @@ public class GraphicHero extends GraphicCharacter {
 
         //map.sortObjects();
         HeroNPC_collision = map.PNJcollision(this);
-
+        
         // LEFT
 
         if(Gdx.input.isKeyPressed(Keys.LEFT)){
@@ -130,7 +130,7 @@ public class GraphicHero extends GraphicCharacter {
 
         // RIGHT 
 
-        if(Gdx.input.isKeyPressed(Keys.RIGHT)){
+        else if(Gdx.input.isKeyPressed(Keys.RIGHT)){
             if ((!HeroNPC_collision || angle!=3) && (isValidPosition(tileX+1, tileY, map) || deltaX > delta || isValidPosition(tileX+1, tileY+1, map) && deltaY>(delta-5))){
                 newX += 200 * Gdx.graphics.getDeltaTime();
             }
@@ -144,7 +144,7 @@ public class GraphicHero extends GraphicCharacter {
 
         // UP
 
-        if(Gdx.input.isKeyPressed(Keys.UP)){  
+        else if(Gdx.input.isKeyPressed(Keys.UP)){  
             if ((!HeroNPC_collision || angle!=1) && (isValidPosition(tileX, tileY+1, map) || deltaY>delta || isValidPosition(tileX+1, tileY+1, map) && deltaX>(delta-5))){
                 newY += 200 * Gdx.graphics.getDeltaTime();
             }
@@ -158,7 +158,7 @@ public class GraphicHero extends GraphicCharacter {
 
         // DOWN 
 
-        if(Gdx.input.isKeyPressed(Keys.DOWN)){
+        else if(Gdx.input.isKeyPressed(Keys.DOWN)){
             if((!HeroNPC_collision || angle!=0) && (isValidPosition(tileX, tileY, map) || deltaY>delta+5 || isValidPosition(tileX+1, tileY, map) && deltaX>(delta-5))){
                 newY -= 200 * Gdx.graphics.getDeltaTime();
             }

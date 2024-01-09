@@ -189,8 +189,6 @@ public class GraphicCharacter extends GraphicObject{
         int signX = (int) Math.signum(-distanceX);
         int signY = (int) Math.signum(-distanceY);
 
-        //System.out.println(" signX : " + signX + "signY : " + signY);
-        System.out.println(Name + " : " + character.getRange());
         if(distance <= (int) character.getRange() && isValidTrajectory(X, Y, endX, endY, signX, signY, map)) return true;
         else return false;
     }

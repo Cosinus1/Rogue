@@ -1,9 +1,9 @@
 {
-    "activeFile": "TSX/warrior.tsx",
+    "activeFile": "TMX/Home.tmx",
     "expandedProjectPaths": [
-        ".",
+        "TMX",
         "TSX",
-        "TMX"
+        "."
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -26,10 +26,10 @@
         },
         "TMX/Home.tmx": {
             "scale": 1.5,
-            "selectedLayer": 9,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 480,
-                "y": 319.6666666666667
+                "x": 553,
+                "y": 349
             }
         },
         "TMX/Home.tmx#PathAndObjects": {
@@ -115,10 +115,10 @@
     "recentFiles": [
         "TMX/Dungeon.tmx",
         "TSX/tavern.tsx",
-        "TMX/Home.tmx",
-        "TSX/houses.tsx",
-        "TSX/archer.tsx",
         "TSX/warrior.tsx",
+        "TSX/archer.tsx",
+        "TSX/houses.tsx",
+        "TMX/Home.tmx",
         "TSX/Arrow.tsx",
         "TSX/arrow.tsx",
         "TSX/Arrow_impact_pack.tsx",

@@ -5,7 +5,9 @@ import java.util.Comparator;
 import java.util.Collections;
 
 import com.badlogic.gdx.maps.*;
+import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
@@ -21,6 +23,7 @@ import java.util.Random;
 import com.mygdx.game.Graphic.GraphicObject.GraphicObject;
 import com.mygdx.game.Graphic.GraphicObject.Elements.Door;
 import com.mygdx.game.Graphic.GraphicObject.Elements.Element;
+import com.mygdx.game.Graphic.GraphicObject.Elements.Wall;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.*;
 
 import com.mygdx.game.Back.Character.Ennemie.Ennemie;
@@ -48,6 +51,7 @@ public class Map {
     private ArrayList<Door> Door_list;
     private ArrayList<GraphicEnnemie> NPCs, DeadNPCs;
     private ArrayList<Element> Elements;
+    private ArrayList<GraphicObject> Walls;
     private ArrayList<GraphicObject> Objects;
 
     private GraphicHero hero;
@@ -82,6 +86,7 @@ public class Map {
         //Init the List of Objects
         this.Objects = new ArrayList<>();
         this.Elements = new ArrayList<>();
+        this.Walls = new ArrayList<>();
         this.NPCs = NPCs;
         this.DeadNPCs = new ArrayList<>();
         this.music = music;
@@ -198,6 +203,27 @@ public class Map {
     public void addElement(Element element){
         Elements.add(element);
     }
+    public void addWalls(){
+        TiledMapTileLayer Base = (TiledMapTileLayer) tiledmap.getLayers().get("Base");
+        TiledMapTileLayer Middle = (TiledMapTileLayer) tiledmap.getLayers().get("Middle");
+        TiledMapTileLayer Top = (TiledMapTileLayer) tiledmap.getLayers().get("Top");
+        ArrayList<TiledMapTileLayer> Layers = new ArrayList<>();
+        Layers.add(Base); Layers.add(Middle); Layers.add(Top);
+        for(int X = 0; X<mapWidth; X++){
+            for(int Y = 0; Y<mapHeight-1; Y++){
+                for(TiledMapTileLayer layer : Layers){
+                    Cell cell = layer.getCell(X, Y);
+                    if(cell!=null && cell.getTile()!=null){
+                        Wall wall = new Wall(X*tilewidth, Y*tileheight, 32, 32);
+                        wall.setObject(new TextureMapObject(cell.getTile().getTextureRegion()));
+                        Walls.add(wall);
+                    }
+                }
+            }
+        }
+        System.out.println(Walls.size());
+
+    }
 
     /*--------------------------------------------------------------LIST SORTING------------------------------------------------------------------- */
     public void sortObjects(){
@@ -205,8 +231,16 @@ public class Map {
         Comparator<GraphicObject> yComparator = new Comparator<GraphicObject>() {
             @Override
             public int compare(GraphicObject object1, GraphicObject object2) {
+                boolean object1IsWall = object1 instanceof Wall;
+                boolean object2IsWall = object2 instanceof Wall;
+
+                // If one object is a Wall and the other isn't, prioritize the Wall
+                if (object1IsWall || object2IsWall) {
+                    return Float.compare(object1.getX(), object2.getX()); // Place object2 (Wall) before object1
+                }
                 // Comparaison des valeurs de y
                 return Float.compare(object2.getY(), object1.getY());
+                
             }
         };
 
@@ -222,6 +256,7 @@ public class Map {
         updateElements();
         if(Elements!=null) List.addAll(Elements);
         List.add(hero);
+        List.addAll(Walls);
         Objects = List;
         sortObjects();
         for(GraphicObject object : Objects){
@@ -383,12 +418,10 @@ public class Map {
 
     public boolean checkDistancefromWall(int X, int Y){
         TiledMapTileLayer Layer = (TiledMapTileLayer) this.getTiledMap().getLayers().get("Base");
-        if (Layer == null) System.out.println(Layer);
+        if (Layer == null) System.out.println("Layer is null");
         Cell cell = Layer.getCell(X, Y);
-        if (cell != null) {
-            //System.out.println("cell not null");
+        if (cell != null && cell.getTile()!=null) {
             if(cell.getTile().getProperties().containsKey("blocked")){
-                //System.out.println("blocked");
                 return false;  
             }
         }

@@ -163,7 +163,7 @@ public class GraphicObject {
         int mapWidth = map.getmapWidth();
         int mapHeight = map.getmapHeight();
         //Check Map boundaries
-        if(X<1 || X>(mapWidth) || Y<1 || Y>(mapHeight-2)) return false;
+        if(X<1 || X>(mapWidth) || Y<0 || Y>(mapHeight-2)) return false;
         // Check distance from walls
         return map.checkDistancefromWall(X, Y);
     }

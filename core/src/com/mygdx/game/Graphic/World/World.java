@@ -195,6 +195,7 @@ public class World {
 
                 //Add the Generated TiledMap into the Map
                 previousMap.updateTiledmap(mapFactory.createRandomTiledMap(DungeonHubMap.getTiledMap().getTileSets(), TileX, TileY));
+                previousMap.addWalls();
                 
                 //Spawn Hero in the new map (This can be done in respawn)
                 graphicHero.spawn(previousMap);
