@@ -1,7 +1,7 @@
 package com.mygdx.game.Graphic.World;
 
 import com.mygdx.game.Back.Character.Ennemie.*;
-import com.mygdx.game.Back.Character.Hero.Hero;
+import com.mygdx.game.Back.Character.Hero.*;
 import com.mygdx.game.Graphic.GraphicObject.Elements.Door;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.*;
 import com.mygdx.game.Graphic.World.Map.*;
@@ -29,15 +29,15 @@ public class World {
 
     private TiledMapTileLayer CurrentcollisionLayer;
 
-    private Hero hero;
+    private Hero Hero;
     private Boss boss;
     private GraphicHero graphicHero;
 
-    private int numberOfMaps = 2;
+    private int numberOfMaps = 5;
     private int Dungeonlevel;
 
     //constructor
-    public World(){
+    public World(Hero hero){
         //Create Lists of NPCs
         ArrayList<GraphicEnnemie> PNJs = new ArrayList<>();
         ArrayList<Door> Door_list = new ArrayList<>();
@@ -69,8 +69,8 @@ public class World {
             this.CurrentcollisionLayer = Home.getcollisionLayer();
 
             //Initialize the Hero
-            hero = new Hero(this, 100, 200, 1000, 1, null, "Champion", 0);
-            graphicHero = new GraphicHero(this,hero,CurrentMap.getX(), CurrentMap.getY());
+            this.Hero = hero;
+            graphicHero = new GraphicHero(this,Hero,CurrentMap.getX(), CurrentMap.getY());
         
 
             //Initialize Dungeon
@@ -108,7 +108,7 @@ public class World {
     }
 
 /* --------------------------------------------- UPDATE ------------------------------------- */
-    public void update(Map map){
+    public Map update(Map map){
         ArrayList<Door> Doors = map.getDoors();
 
         if(Doors!=null){
@@ -133,6 +133,7 @@ public class World {
         }
         //Check for Dungeon reset
         IsDungeonFinished();
+    return map;
     }
 
     public Map updateCurrentMap(Map map){
@@ -144,7 +145,7 @@ public class World {
             }*/
             this.CurrentMap = map;
             this.CurrentcollisionLayer = map.getcollisionLayer();
-            if((map.getPVP() == "ON") && map.getPNJ_list().size()==0){
+            if((map.getPVP() == "ON") && map.getNPCs().size()==0){
                 System.out.println("Spawning  Map...");
                 respawn(map);
                 System.err.println("Map Spawned");
@@ -166,7 +167,7 @@ public class World {
     }
 
     public void initializeDungeon(int numberOfMaps) {
-        boss = new Boss(100, 0, 50,3,null,"Boss",null);
+        boss = new Boss(100, 0, 50,3, 10, null,"Boss",null);
         GraphicBoss graphicboss = new GraphicBoss(boss,525,400, this.Tilesets);
         System.out.println("              /////////////Initializing Dungeon//////////////");
         Map DungeonHubMap = getDungeonHub();
@@ -196,9 +197,9 @@ public class World {
                 previousMap.updateTiledmap(mapFactory.createRandomTiledMap(DungeonHubMap.getTiledMap().getTileSets(), TileX, TileY));
                 
                 //Spawn Hero in the new map (This can be done in respawn)
-                graphicHero.spawn(previousMap,DungeonHubMap.getTiledMap().getTileSets(),this.graphicHero, "hero",false);
+                graphicHero.spawn(previousMap);
                 //Spawn Boss in the last Map
-                if(i == numberOfMaps) graphicboss.spawn(previousMap, DungeonHubMap.getTiledMap().getTileSets(), graphicboss, graphicboss.getCharacter().getName());
+                if(i == numberOfMaps) graphicboss.spawn(previousMap);
             }
             //Add the map into the Dungeon
             Dungeon.add(previousMap);

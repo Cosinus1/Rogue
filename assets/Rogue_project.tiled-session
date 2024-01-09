@@ -1,9 +1,9 @@
 {
-    "activeFile": "TMX/Home.tmx",
+    "activeFile": "TSX/warrior.tsx",
     "expandedProjectPaths": [
-        "TMX",
+        ".",
         "TSX",
-        "."
+        "TMX"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -14,8 +14,8 @@
             "scale": 0.92328125,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 277.2719580301235,
-                "y": 349.29768150279233
+                "x": 497.1399559993231,
+                "y": 320.05415467930277
             }
         },
         "TMX/Dungeon.tmx#gobelinEmbed": {
@@ -26,14 +26,17 @@
         },
         "TMX/Home.tmx": {
             "scale": 1.5,
-            "selectedLayer": 8,
+            "selectedLayer": 9,
             "viewCenter": {
-                "x": 226,
-                "y": 477.66666666666663
+                "x": 480,
+                "y": 319.6666666666667
             }
         },
         "TMX/Home.tmx#PathAndObjects": {
             "scaleInDock": 1
+        },
+        "TMX/Home.tmx#archer": {
+            "scaleInEditor": 1
         },
         "TMX/Home.tmx#dgn1": {
             "scaleInDock": 1
@@ -41,8 +44,24 @@
         "TMX/Home.tmx#houses": {
             "scaleInDock": 0.33
         },
+        "TSX/Arrow.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "TSX/Arrow_impact_pack.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "TSX/PathAndObjects.tsx": {
             "scaleInDock": 1
+        },
+        "TSX/archer.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 0.75
+        },
+        "TSX/arrow.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "TSX/dungeon.tsx": {
             "scaleInDock": 1
@@ -51,7 +70,8 @@
             "scaleInDock": 1
         },
         "TSX/hero.tsx": {
-            "scaleInDock": 1
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "TSX/houses.tsx": {
             "scaleInDock": 1,
@@ -75,29 +95,41 @@
         },
         "TSX/vampire.tsx": {
             "scaleInDock": 1
+        },
+        "TSX/warrior.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         }
     },
-    "last.imagePath": "/home/paul/Documents/Projet JAVA/Morgar-master_remastered/assets/PNG",
+    "last.imagePath": "/home/paul/Documents/Projet JAVA/Rogue/assets/PNG",
     "openFiles": [
         "TMX/Dungeon.tmx",
         "TSX/tavern.tsx",
         "TMX/Home.tmx",
-        "TSX/tavern.tsx",
-        "TSX/tavern.tsx",
-        "TSX/houses.tsx"
+        "TSX/houses.tsx",
+        "TSX/archer.tsx",
+        "TSX/warrior.tsx"
     ],
     "project": "Rogue_project.tiled-project",
+    "property.type": "string",
     "recentFiles": [
         "TMX/Dungeon.tmx",
         "TSX/tavern.tsx",
+        "TMX/Home.tmx",
         "TSX/houses.tsx",
-        "TMX/Home.tmx"
+        "TSX/archer.tsx",
+        "TSX/warrior.tsx",
+        "TSX/Arrow.tsx",
+        "TSX/arrow.tsx",
+        "TSX/Arrow_impact_pack.tsx",
+        "TSX/hero.tsx"
     ],
-    "tileset.embedInMap": true,
+    "tileset.embedInMap": false,
     "tileset.lastUsedFormat": "tsx",
+    "tileset.margin": 384,
     "tileset.tileSize": {
-        "height": 32,
-        "width": 32
+        "height": 728,
+        "width": 728
     },
     "tileset.transparentColor": "#000000",
     "tileset.useTransparentColor": false

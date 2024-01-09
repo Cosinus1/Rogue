@@ -6,13 +6,20 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.*;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+
+
 import com.mygdx.game.Graphic.GraphicObject.Elements.Door;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicEnnemie;
 
 import java.util.ArrayList;
 import java.util.Random;
 
+
 public class MapFactory {
+
+    int mapWidth = 30;
+    int mapHeight = 20;
+    int tilewidth = 32;
 
     public Map createMap(float x, float y, TiledMap tiledmap, Music music, Map previousMap) {
         ArrayList<Door> doorList = new ArrayList<>();
@@ -31,14 +38,13 @@ public class MapFactory {
         int mapWidth = previousMap.getmapWidth();
         int mapHeight = previousMap.getmapHeight();
         int[] doorCoordinates = generateRandomDoorCoordinates(mapWidth, mapHeight);
-        Door doorToNextMap = new Door((float) doorCoordinates[0]*32, (float) doorCoordinates[1]*32, nextMap);
+        Door doorToNextMap = new Door((float) doorCoordinates[0]*tilewidth, (float) doorCoordinates[1]*tilewidth, nextMap);
         previousMap.addDoor(doorToNextMap);
     }
+    /*------------------------------------------CREATE / GENERATE--------------------------------------------------------- */
 
     public TiledMap createRandomTiledMap(TiledMapTileSets tileSets, int EndX, int EndY) {
         System.out.println("////////////////////////// CREATING RANDOM MAP..... ////////////////////////////");
-        int mapWidth = 30;
-        int mapHeight = 20;
         int StartX = 0;
         int StartY = 3;
     
@@ -46,10 +52,10 @@ public class MapFactory {
         TiledMap tiledMap = new TiledMap();
     
         // Create TiledMapTileLayers for ground, base, middle, and top parts of walls
-        TiledMapTileLayer groundLayer = new TiledMapTileLayer(mapWidth, mapHeight, 32, 32);
-        TiledMapTileLayer baseLayer = new TiledMapTileLayer(mapWidth, mapHeight, 32, 32);
-        TiledMapTileLayer middleLayer = new TiledMapTileLayer(mapWidth, mapHeight, 32, 32);
-        TiledMapTileLayer topLayer = new TiledMapTileLayer(mapWidth, mapHeight, 32, 32);
+        TiledMapTileLayer groundLayer = new TiledMapTileLayer(mapWidth, mapHeight, tilewidth, tilewidth);
+        TiledMapTileLayer baseLayer = new TiledMapTileLayer(mapWidth, mapHeight, tilewidth, tilewidth);
+        TiledMapTileLayer middleLayer = new TiledMapTileLayer(mapWidth, mapHeight, tilewidth, tilewidth);
+        TiledMapTileLayer topLayer = new TiledMapTileLayer(mapWidth, mapHeight, tilewidth, tilewidth);
         groundLayer.setName("Ground");
         baseLayer.setName("Base");
         middleLayer.setName("Middle");
@@ -65,13 +71,16 @@ public class MapFactory {
         // Add wall tiles on all borders (only for baseLayer)
         for (int i = 1; i < mapWidth-1; i++) {
             baseLayer.setCell(i, 0, createCell(createWallTile(tileSets, "base", "horizontal")));
+            baseLayer.getCell(i, 0).getTile().getProperties().put("border", "border");
             baseLayer.setCell(i, mapHeight - 2, createCell(createWallTile(tileSets, "base", "horizontal")));
+            baseLayer.getCell(i, mapHeight - 2).getTile().getProperties().put("border", "border");
         }
         for (int i = 1; i < mapHeight-1; i++) {
             baseLayer.setCell(0, i, createCell(createWallTile(tileSets, "base", "vertical")));
+            baseLayer.getCell(0, i).getTile().getProperties().put("border", "border");
             baseLayer.setCell(mapWidth-1, i, createCell(createWallTile(tileSets, "base", "vertical")));
+            baseLayer.getCell(mapWidth-1, i).getTile().getProperties().put("border", "border");
         }
-        System.out.println("base walls added on borders");
         // Add openings for doors (specify the positions and tiles for openings)
         for(int i=0; i<3; i++){
             for(int j=0; j<3; j++){
@@ -79,7 +88,6 @@ public class MapFactory {
                 baseLayer.setCell(EndX+i-1, EndY+j-1, createCell(createOpeningTile(tileSets)));
             }
         }
-        System.out.println("door openings added");
         //Add base walls inside the baseLayer
         generateRandomWalls(baseLayer, tileSets);
     
@@ -143,203 +151,152 @@ public class MapFactory {
         tiledMap.getLayers().add(groundLayer);
         tiledMap.getLayers().add(baseLayer);
         tiledMap.getLayers().add(middleLayer);
-        tiledMap.getLayers().add(topLayer);
-        System.out.println("layers added");
-    
+        tiledMap.getLayers().add(topLayer);    
         // Return the new map
         System.out.println("////////////////////////////RANDOM MAP CREATED/////////////////////////////////");
         return tiledMap;
     }
     
     public void generateRandomWalls(TiledMapTileLayer baseLayer, TiledMapTileSets tileSets) {
-        int mapWidth = baseLayer.getWidth();
-        int mapHeight = baseLayer.getHeight();
     
-        Random random = new Random();
+        Random randomStart = new Random();
+        Random randomEnd = new Random();
     
         int i = 0;
+        TiledMapTileLayer newBase;
+        TiledMapTileLayer backupBase = cloneLayer(baseLayer);//Back up the baseLayer to avoid chain<3 to be added (ugly)
+
     
-        while (i < 2) { // You can adjust the number of chains (5 is just an example)
+        while (i < 5) { // You can adjust the number of chains (5 is just an example)
             // Choose a random starting point along the border
-            int startX;
-            int startY;
+            int startX, startY;
+            //Choose a random ending point
+            int endX, endY;
+
+            newBase = cloneLayer(baseLayer);
+
             
             System.out.println("CHAIN No : " + i);
 
-            // Ensure starting point is not too close to the corners
+            // Ensure starting point is  on borders if i< 3 else not too close to the corners 
             int breakwhile = 0;
+            if(i<4){
+                    startX = randomStart.nextInt(mapWidth-3)+2;
+                    startY = randomStart.nextInt(2)*(mapHeight-4)+1;
+            }else{
             do {
                 breakwhile++;
-                startX = random.nextInt(mapWidth - 10) + 5; 
-                startY = random.nextInt(mapHeight - 10) + 5; 
+                startX = randomEnd.nextInt(mapWidth - 10) + 5; 
+                startY = randomEnd.nextInt(mapHeight - 10) + 5; 
     
-            } while (isNearAnotherChain(baseLayer, startX, startY) && breakwhile<200);
-
-            int chainLength = 0; // Initialize chainLength variable
+            } while (isNearAnotherChain(baseLayer, startX, startY) && breakwhile<2000);
+            System.out.println(breakwhile);
+            }
             // Set the initial coordinates
             int currentX = startX;
             int currentY = startY;
-            //int lastX, lastY; //store last X,Y to rewind in case no moves are possible
-            int direction; //Set the direction and stores the last one
-            int lastdirection = -1;
-            int directionChanges = 0; // Initialize directionChanges variable
-            int maxChanges = 2; // Set the MAX changes for the chain
-            int breakcondition = 0;//Set a break timer if walls cant be added
-            double constanteDirectionchance = 0.9;
-            double chance;
-
-            int nb_message = 0; //for MAX REACHED message to be printed only once
+            int distanceX, distanceY;
             
+            breakwhile = 0;
+            do {
+                breakwhile++;
+                endX = randomEnd.nextInt(mapWidth - 10) + 5; 
+                endY = randomEnd.nextInt(mapHeight - 10) + 5; 
+                distanceX = (endX-currentX)*(endX-currentX);    
+                distanceY = (endY-currentY)*(endY-currentY);
+                
     
+            } while ((distanceX+distanceY<9) && !isValidTrajectory(startX, startY, endX, endY, baseLayer) && !isNearAnotherChain(baseLayer, endX, endY) && breakwhile<2000);
+            System.out.println("startX : " + startX + "/ startY : " + startY);
+            System.out.println("endX : " + endX + " / endY : " + endY);
+            if(breakwhile>=2000) System.out.println(" //BREAK//  isValidTraj : " + isValidTrajectory(startX, startY, endX, endY, baseLayer) + " isNearChain : " + isNearAnotherChain(baseLayer, endX, endY));
+
+            int chainLength = 0; // Initialize chainLength variable
+            
+            int delta = 1;
+
+            int direction = -1;
+            int orientation = -1;
             while (chainLength < 20) { //Desired chainlength
+                //get the distance between Current Position and End & orientation
+                distanceX = (endX-currentX)*(endX-currentX);
+                distanceY = (endY-currentY)*(endY-currentY);
+                int signX = (int) Math.signum(endX-currentX);
+                int signY = (int) Math.signum(endY-currentY);
+                delta = randomEnd.nextInt(4);
 
-                //if too many changes were made, keep the last direction
-                if(directionChanges <= maxChanges){
+                if(0<delta && !isNearAnotherChain(newBase, currentX+signX, currentY)){
+                    chainLength++;
+                    switch (signY) {
+                        case -1:
+                            if(direction == 0){
+                                if (orientation == -1)baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "down right")));
+                                else baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "left down")));
+
+                            }
+                            else baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "vertical")));
+                            currentY--;
+                            orientation = -1;
+                            direction = 1;
+                            break;
                     
-                    // Randomly select the next direction to extend the wall chain
+                        case 1:
+                            if(direction == 0){
+                                if (orientation == -1)baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "up right")));
+                                else baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "left up")));
+
+                            }
+                            else baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "vertical")));
+                            currentY++;
+                            orientation = 1;
+                            direction = 1;
+                            break;
+                        
+                    }
                     
-                    // Check if UP direction is valid (same as down)
-                    boolean upValid = (currentX > 2) && (currentX < mapWidth-2);
-                    // Check if RIGHT direction is valid (same as left)
-                    boolean rightValid = (currentY > 2) && (currentY < mapHeight-1);
-        
-                    // If UP direction is valid and not close to a map wall, set the direction
-                    if (upValid) {
-                        //Same for RIGHT
-                        if(rightValid)
-                            do{
-                                chance = Math.random();
-                                direction = random.nextInt(4); // 0: up, 1: right, 2: left, 3: down
-                            }while (chance<constanteDirectionchance && direction!=lastdirection && lastdirection!=-1);
-                        else{
-                            do{
-                                direction = random.nextInt(4);
-                            }while (direction == 1); // 0: up, 1: right, 2: left, 3: down
-                        }
-                    } else {// we take as supposition that both valid bools cant be false at the same time (corner situation)
-                        // If not, choose any direction except UP
-                        do {
-                            direction = random.nextInt(4); // 0: up, 1: right, 2: left, 3: down
-                        } while (direction == 0);
-                    }
-                    // Check if the direction might create a "dead end" or if walls are too close
-                    boolean wallsTooClose = false;
-                    switch (direction) {
-                        case 0: // Up
-                            if (currentY >= mapHeight || baseLayer.getCell(currentX, currentY) != null || baseLayer.getCell(currentX-1, currentY+1) != null || baseLayer.getCell(currentX+1, currentY+1) != null) {
-                                wallsTooClose = true;
-                            }
-                            break;
-                        case 1: // Right
-                            if (currentX >= mapWidth || baseLayer.getCell(currentX, currentY) != null || baseLayer.getCell(currentX+1, currentY-1) != null || baseLayer.getCell(currentX+1, currentY+1) != null) {
-                                wallsTooClose = true;
-                            }
-                            break;
-                        case 2: // Left
-                            if (currentX < 0 || baseLayer.getCell(currentX, currentY) != null || baseLayer.getCell(currentX-1, currentY-1) != null || baseLayer.getCell(currentX-1, currentY+1) != null) {
-                                wallsTooClose = true;
-                            }
-                            break;
-                        case 3: // Down
-                            if (currentY < 0 || baseLayer.getCell(currentX, currentY) != null || baseLayer.getCell(currentX-1, currentY-1) != null || baseLayer.getCell(currentX+1, currentY-1) != null) {
-                                wallsTooClose = true;
-                            }
-                            break;
-                    }
+                }else if(!isNearAnotherChain(newBase, currentX, currentY+signY)){
+                    chainLength++;
+                    switch (signX) {
+                        case -1:
+                            if(direction == 1){
+                                if (orientation == -1)baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "left up")));
+                                else baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "left down")));
 
-                    // If walls are too close dont move
-                    if (wallsTooClose) {
-                        direction = -1;
-                        breakcondition++;
-                    }
-                    //increase direction changes count if change and update lastdirection
-                    else {
-                        if(direction != lastdirection && direction!=-1) directionChanges++;
-                        //store last direction here (avoid storing -1 when no move)
-                        //lastdirection = direction;
-                        // Increment chain length
-                        chainLength ++;
-                        // Reset breakcondition
-                        breakcondition = 0;
-                    }
+                            }
+                            else baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "horizontal")));
+                            currentX--;
+                            orientation = -1;
+                            direction = 0;
+                            break;
+                    
+                        case 1:
+                            if(direction == 1){
+                                if (orientation == -1)baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "up right")));
+                                else baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "down right")));
 
-                }else {
-                    nb_message++;
-                    if (nb_message<2) System.out.println("MAX REACHED :" + lastdirection);
-                    direction = lastdirection; // MAX changes reached
-                    // Increment chain length
-                    chainLength ++;
+                            }
+                            else baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "horizontal")));
+                            currentX++;
+                            orientation = 1;
+                            direction = 0;
+                            break;
+                            
+                        
+                    }
+                    
                 }
-                // Move in the selected direction
-                switch (direction) {
-                    case 0: // Up
-                        if (lastdirection==1){
-                            baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "left up")));
-                        }
-                        else if (lastdirection==2){
-                            baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "up right")));
-                        }
-                        else baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "vertical")));
-                        currentY++;
-                        break;
-                    case 1: // Right
-                        if (lastdirection==0){
-                            baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "down right")));
-                        }
-                        else if (lastdirection==3){
-                            baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "up right")));
-                        }
-                        else baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "horizontal")));
-                        currentX++;
-                        break;
-                    case 2: // Left
-                        if (lastdirection==0){
-                            baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "left down")));
-                        }
-                        else if (lastdirection==3){
-                            baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "left up")));
-                        }
-                        else baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "horizontal")));
-                        currentX--;
-                        break;
-                    case 3: // Down
-                        if (lastdirection==1){
-                            baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "left down")));
-                        }
-                        else if (lastdirection==2){
-                            baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "down right")));
-                        }
-                        else baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "vertical")));
-                        currentY--;
-                        break;
+                else{
+                    endX -= signX;
+                    endY -= signY;
                 }
-                if (direction!=-1) lastdirection = direction;
-                // Reset chain if it gets too close to the border
-                if (currentX <= 0 || currentX >= mapWidth+1 || currentY <= 0 || currentY >= mapHeight+1|| breakcondition>100) {
-                    System.err.println("break condition : " + breakcondition);
-                    break;
-                }
+                if (distanceX + distanceY == 0) break;
+               
             }
-    
+            //Backup the base if the chain is too short
+            //if(chainLength<3) baseLayer = backupBase;    
             i++; // Increment the chain count
         }
-    }
-    
-    private boolean isNearAnotherChain(TiledMapTileLayer baseLayer, int startX, int startY) {
-        int searchRange = 4; // Define the range to search for existing chains
-    
-        for (int x = startX - searchRange; x <= startX + searchRange; x++) {
-            for (int y = startY - searchRange; y <= startY + searchRange; y++) {
-                if (x >= 0 && x < baseLayer.getWidth() && y >= 0 && y < baseLayer.getHeight()) {
-                    if (baseLayer.getCell(x, y) != null) {
-                        return true; // Found an existing chain nearby
-                    }
-                }
-            }
-        }
-        return false; // No existing chain found nearby
-    }
-    
+    }    
     
     private TiledMapTile createWallTile(TiledMapTileSets tileSets, String level, String orientation) {
         TiledMapTile wallTile = null;
@@ -388,7 +345,7 @@ public class MapFactory {
         Random random = new Random();
         int[] doorCoordinates = new int[2];
 
-        int border = random.nextInt(3);
+        int border = 1;//random.nextInt(3);
         
         switch (border) {
             case 0: // North border
@@ -407,5 +364,80 @@ public class MapFactory {
         
         return doorCoordinates;
     }
+    /*------------------------------------------------- CLONE LAYER---------------------------------------------------------- */
+    public TiledMapTileLayer cloneLayer(TiledMapTileLayer Layer) {
+        TiledMapTileLayer clonedLayer = new TiledMapTileLayer(Layer.getWidth(), Layer.getHeight(), Layer.getTileWidth(), Layer.getTileHeight());
+
+        // Copy cell information from Layer to clonedLayer
+        for (int x = 0; x < Layer.getWidth(); x++) {
+            for (int y = 0; y < Layer.getHeight(); y++) {
+                clonedLayer.setCell(x, y, Layer.getCell(x, y));
+            }
+        }
+
+        return clonedLayer;
+    }
+    /*---------------------------------------------------CHECKERS-------------------------------------------------------------- */
+    
+    public boolean isValidTrajectory(int X, int Y, int endX, int endY, TiledMapTileLayer Base){
+        int moveX = (int) Math.signum(endX-X);
+        int moveY = (int) Math.signum(endY-Y);
+        int newX = X + moveX;
+        int newY = Y + moveY;
+        //Check if we arrived at target
+        if (X==endX && Y==endY) return true;
+
+        //Otherwise check if the next step is valid
+            //Check if we are at the same X than the target
+            boolean isValidX;
+            if(endX==X){
+                //No move on X needed so it's a valid position on X
+                isValidX = true;
+                newX -= moveX;
+            }else isValidX = isValidPosition(X+moveX, Y, Base);
+            //Check if we are at the same Y than the target
+            boolean isValidY;
+            if(endY==Y){
+                //No move on Y needed so it's a valid position on Y
+                isValidY = true;
+                newY -= moveY;
+            }else isValidY = isValidPosition(X, Y+moveY, Base);
+
+        if(isValidX && isValidY){
+            return isValidTrajectory(newX, newY, endX, endY, Base);
+        }else return false;// A wall is in the trajectory
+    }
+    public boolean isValidPosition(int X, int Y, TiledMapTileLayer Base) {
+        //Check Map boundaries
+        if(X<1 || X>(mapWidth) || Y<1 || Y>(mapHeight-2)) return false;
+        // Check distance from walls
+        return checkDistancefromWall(X, Y, Base);
+    }
+    public boolean checkDistancefromWall(int X, int Y, TiledMapTileLayer Base){
+        if (Base == null) System.out.println(Base);
+        Cell cell = Base.getCell(X, Y);
+        if (cell != null) {
+            if(cell.getTile().getProperties().containsKey("blocked")){
+                return false;  
+            }
+        }
+        return true;
+    }
+
+    private boolean isNearAnotherChain(TiledMapTileLayer baseLayer, int startX, int startY) {
+        int searchRange = 2; // Define the range to search for existing chains
+    
+        for (int x = startX - searchRange; x <= startX + searchRange; x++) {
+            for (int y = startY - searchRange; y <= startY + searchRange; y++) {
+                if (x > 1 && x < mapWidth && y > 1 && y < mapHeight) {
+                    if (baseLayer.getCell(x, y) != null && !baseLayer.getCell(x, y).getTile().getProperties().containsKey("border")) {
+                        return true; // Found an existing chain nearby
+                    }
+                }
+            }
+        }
+        return false; // No existing chain found nearby
+    }
+
 
 }

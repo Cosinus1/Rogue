@@ -11,14 +11,15 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 
-import com.badlogic.gdx.math.Vector2;
-
 import com.mygdx.game.Back.Character.Character;
 import com.mygdx.game.Graphic.GraphicObject.GraphicObject;
 import com.mygdx.game.Graphic.GraphicObject.Elements.*;
+import com.mygdx.game.Graphic.World.Map.Map;
 
 public class GraphicCharacter extends GraphicObject{
     protected Character character;
+
+    protected String Name;
 
     protected ArrayList<TextureRegion> moveTexture_list;
     protected ArrayList<TextureRegion> battleTexture_list;
@@ -33,6 +34,7 @@ public class GraphicCharacter extends GraphicObject{
     public GraphicCharacter(Character character2, float x, float y){
         super(x, y, 32, 32);
         this.character = character2;
+        this.Name = character.Class();
         //Init Texture lists
         moveTexture_list = new ArrayList<>();
         battleTexture_list = new ArrayList<>();
@@ -42,12 +44,6 @@ public class GraphicCharacter extends GraphicObject{
 
 /*----------------------------------------- GETTERS -------------------------------------- */
 
-    public float getX(){
-        return this.Hitbox.x;
-    }
-    public float getY(){
-        return this.Hitbox.y;
-    }
     public ArrayList<TextureRegion> getMoveTexture_List(){
         return moveTexture_list;
     }
@@ -85,6 +81,9 @@ public class GraphicCharacter extends GraphicObject{
     public boolean overlaps(GraphicCharacter character){
         return Hitbox.overlaps(character.getHitbox());
     }
+    public int getRange(){
+        return character.getRange();
+    }
 /*----------------------------------------- SETTERS -------------------------------------- */  
     
     public void setX(float x){
@@ -93,16 +92,6 @@ public class GraphicCharacter extends GraphicObject{
     public void setY(float y){
         Hitbox.y = y;
     }
-    public void setPosition(float x, float y){
-        this.Hitbox.x = x;
-        this.Hitbox.y = y;
-        this.Object.getProperties().put("x",x);
-        this.Object.getProperties().put("y",y);
-        //System.out.println("position set");
-    }
-    public void setPosition (Vector2 position) {
-		setPosition(position.x, position.y);
-	}
     public void setlastX(float x){
         this.lastX = x;
     }
@@ -162,12 +151,63 @@ public class GraphicCharacter extends GraphicObject{
 
     }  
 
-/*----------------------------------------- SPAWN -------------------------------------- */  
+/*------------------------------------------------------------------CHECKERS------------------------------------------------------------ */
+    public boolean inRange(GraphicCharacter character, Map map){
+        int tilewidth = map.getcollisionLayer().getTileWidth();
+        float x = getX();
+        float y = getY();
+        double distanceX = x - character.getX();
+        double distanceY = y - character.getY();
 
+        int distance = (int) Math.sqrt(Math.pow(distanceY, 2) + Math.pow(distanceX, 2));
+
+        int X = (int) x/tilewidth;
+        int Y = (int) y/tilewidth;
+        int endX = (int) (x-distanceX)/tilewidth;
+        int endY = (int) (y-distanceY)/tilewidth;
+
+        int signX = (int) Math.signum(-distanceX);
+        int signY = (int) Math.signum(-distanceY);
+
+        if(distance <= getRange()*tilewidth && isValidTrajectory(X, Y, endX, endY, signX, signY, map)) return true;
+        else return false;
+    }
+    public boolean inRange(float x2, float y2, Map map){
+        int tilewidth = map.getcollisionLayer().getTileWidth();
+        float x = getX();
+        float y = getY();
+        double distanceX = x - x2;
+        double distanceY = y - y2;
+
+        int distance = (int) Math.sqrt(Math.pow(distanceY, 2) + Math.pow(distanceX, 2))/tilewidth;
+
+        int X = (int) x/tilewidth;
+        int Y = (int) y/tilewidth;
+        int endX = (int) (x-distanceX)/tilewidth;
+        int endY = (int) (y-distanceY)/tilewidth;
+
+        int signX = (int) Math.signum(-distanceX);
+        int signY = (int) Math.signum(-distanceY);
+
+        //System.out.println(" signX : " + signX + "signY : " + signY);
+        System.out.println(Name + " : " + character.getRange());
+        if(distance <= (int) character.getRange() && isValidTrajectory(X, Y, endX, endY, signX, signY, map)) return true;
+        else return false;
+    }
+
+/*------------------------------------------------------------ SPAWN ------------------------------------------------------------------ */  
+
+    public void spawn(Map map) {
+    }
+    
+
+/*---------------------------------------------------------------------------------------------------------------------------------------- */
     public TextureRegion getTexturefromTileset(TiledMapTileSets Tilesets, String Tileset_name, String property, String value, int index){
+        //System.out.println("                      SEARCHING TILESET :" + Tileset_name);
         // Search for the tileset in the map
         TiledMapTileSet tileSet = null;
         for (TiledMapTileSet tileset : Tilesets) {
+            //System.out.println("TILESET NAME : " + tileset.getName());
             if (tileset.getName().equals(Tileset_name)) {
                 tileSet = tileset;
                 break;
@@ -193,11 +233,13 @@ public class GraphicCharacter extends GraphicObject{
         
             if (tile != null) {
                 TextureRegion textureRegion = tile.getTextureRegion();
-                if (property.equals("battle")) {
+                if (property.equals("battle") && tile.getProperties().containsKey("melee")) {
                     // Create a new TextureRegion with modified size for the battle animation
-                    TextureRegion modifiedRegion = new TextureRegion(textureRegion);
-                    modifiedRegion.setRegionWidth(128);
+                    tile = tileSet.getTile(tile.getId()-1);
+                    TextureRegion modifiedRegion = tile.getTextureRegion();
                     modifiedRegion.setRegionHeight(128);
+                    modifiedRegion.setRegionWidth(192);
+                    
                     
                     return modifiedRegion;
                 }
@@ -209,24 +251,7 @@ public class GraphicCharacter extends GraphicObject{
         return null;
     }
 
-/*----------------------------------------- FIGHT --------------------------------------
-    
-    public boolean PNJAttack(Map map){
-        ArrayList<GraphicEnnemie> PNJinRange = map.lookforPNJinRange(this);
-        if(PNJinRange != null){
-            int size = PNJinRange.size();
-            for(int index = 0; index<size; index++){
-                GraphicCharacter ennemie = PNJinRange.get(index);
-                if(this.getCharacter().recevoirDegats(ennemie.getCharacter().getPower())){
-                    this.getCharacter().killHero(map);
-                    return true;
-                }else System.out.println("hero has been hit : PV =" + this.getCharacter().getPV());
-            }
-        }
-        return false;
-    }
-    
-*/
+    /*-------------------------------------------RENDER---------------------------------------------- */
 
   public void render(SpriteBatch batch, OrthographicCamera camera){
 

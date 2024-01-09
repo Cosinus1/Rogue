@@ -8,6 +8,7 @@ import com.mygdx.game.Graphic.World.Map.Map;
 
 public abstract class Character {
     
+    protected String Class;
     protected int PV;
     protected int PV_max;
     protected int defense;
@@ -33,6 +34,9 @@ public abstract class Character {
     }
 
 /*----------------------------------------- GETTERS -------------------------------------- */
+    public String Class(){
+        return Class;
+    }
     public int getDefense(){
         return defense;
     }
@@ -53,6 +57,10 @@ public abstract class Character {
     }
     public int getPower(){
         return power;
+    }
+    public int getDetecRange(){
+        System.out.println("not found");
+        return 10;
     }
     /*----------------------------------------- SETTERS -------------------------------------- */
     public void setName(String name){
@@ -80,6 +88,9 @@ public abstract class Character {
     }
     
 /*----------------------------------------- FIGHT -------------------------------------- */  
+    public void Attack(float X, float Y, int OrX, int OrY, Map map){
+        
+    }
 
     public void recevoirDegats(int degats) {
         double mitigationFactor = 1 / (1 + Math.log(1+defense)); // Adjust the exponent value as needed
@@ -88,6 +99,7 @@ public abstract class Character {
         int mitigatedDamage = (int) (degats * mitigationFactor);
     
         PV -= mitigatedDamage;
+        if(PV<0) PV = 0;
     }
 
      public void killHero(Map map){

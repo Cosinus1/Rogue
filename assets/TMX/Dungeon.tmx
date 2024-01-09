@@ -2,7 +2,7 @@
 <map version="1.10" tiledversion="git" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="11" nextobjectid="35">
  <tileset firstgid="1" source="../TSX/PathAndObjects.tsx"/>
  <tileset firstgid="257" source="../TSX/perspective_walls.tsx"/>
- <tileset firstgid="321" source="../TSX/hero.tsx"/>
+ <tileset firstgid="321" source="../TSX/warrior.tsx"/>
  <tileset firstgid="1689" source="../TSX/gobelin.tsx"/>
  <tileset firstgid="2283" name="sorciereEmbed" tilewidth="64" tileheight="64" tilecount="792" columns="24">
   <image source="../PNG/sorciere.png" width="1536" height="2112"/>

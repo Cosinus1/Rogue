@@ -2,7 +2,6 @@
 <map version="1.10" tiledversion="git" orientation="orthogonal" renderorder="right-down" width="15" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="20" nextobjectid="2">
  <tileset firstgid="1" source="../TSX/PathAndObjects.tsx"/>
  <tileset firstgid="257" source="../TSX/perspective_walls.tsx"/>
- <tileset firstgid="321" source="../TSX/hero.tsx"/>
  <layer id="1" name="Tile Layer 1" width="15" height="10">
   <data encoding="csv">
 78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,

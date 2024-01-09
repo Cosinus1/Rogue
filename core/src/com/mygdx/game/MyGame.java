@@ -1,18 +1,22 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
+
+import com.mygdx.game.Back.Character.Hero.Hero;
+
 import com.mygdx.game.Graphic.Screen.Assets;
+import com.mygdx.game.Graphic.Screen.ChooseClassScreen;
 import com.mygdx.game.Graphic.Screen.GameScreen;
 import com.mygdx.game.Graphic.Screen.MainMenuScreen;
-import com.mygdx.game.Graphic.Screen.PauseScreen;
 
 public class MyGame extends Game {
 
     public MainMenuScreen mainMenuScreen;
+    public ChooseClassScreen chooseClassScreen;
     public GameScreen gameScreen;
-    public PauseScreen pauseScreen;
     public Assets assets;
 
+    private Hero hero;
 
     @Override
     public void create(){
@@ -23,7 +27,7 @@ public class MyGame extends Game {
         assets.getAssetManager().finishLoading();
         
         mainMenuScreen = new MainMenuScreen(this, assets.getAssetManager());
-        gameScreen = new GameScreen(this);
+        chooseClassScreen = new ChooseClassScreen(this, assets.getAssetManager());
   
         //Set the Main screen
         //setScreen(gameScreen);
@@ -31,7 +35,13 @@ public class MyGame extends Game {
 
 
     } 
-    //je rajoute un commentaire
     
+    public Hero getHero(){
+        return this.hero;
+    }
+    
+    public void setHero(Hero hero){
+        this.hero = hero;
+    }
     
 }
