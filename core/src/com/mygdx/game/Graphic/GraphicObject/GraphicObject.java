@@ -119,14 +119,14 @@ public class GraphicObject {
             while(Iterator.hasNext()){
                 Force force = Iterator.next();
             
-                aX += 10*force.valueX/mass;
-                aY += 10*force.valueY/mass;
-                //Reduce Force values if friction
-                force.valueX = force.valueX/friction;
-                force.valueY = force.valueY/friction;
+                aX += force.ForceX/mass;
+                aY += force.ForceY/mass;
+                //Reduce Force Forces if friction
+                force.ForceX /= friction;
+                force.ForceY /= friction;
 
                 //Neglect Force when null
-                if(force.valueX==0 && force.valueY==0){
+                if(force.ForceX==0 && force.ForceY==0){
                     Iterator.remove();
                 }
             }

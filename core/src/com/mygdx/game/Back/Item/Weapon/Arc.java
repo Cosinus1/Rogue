@@ -38,7 +38,7 @@ public class Arc extends Weapon {
     /*------------------------------ATTACK------------------------------------- */
     public void Attack(float X, float Y, int OrX, int OrY, Map map){
         Element arrow = factory.createProjectile(X, Y);
-        arrow.applyForce(new Force(OrX*2000, OrY*2000));
+        arrow.applyForce(new Force(20000, OrX, OrY));
         arrow.setObject(Arrow(OrX, OrY));
         map.addElement(arrow);
     }

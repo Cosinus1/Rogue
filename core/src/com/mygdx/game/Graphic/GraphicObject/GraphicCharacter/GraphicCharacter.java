@@ -169,9 +169,6 @@ public class GraphicCharacter extends GraphicObject{
         int signX = (int) Math.signum(-distanceX);
         int signY = (int) Math.signum(-distanceY);
 
-        //System.out.println(" signX : " + signX + "signY : " + signY);
-        System.out.println(Name + " : " + getRange()*tilewidth + " distance : " + distance);
-
         if(distance <= getRange()*tilewidth && isValidTrajectory(X, Y, endX, endY, signX, signY, map)) return true;
         else return false;
     }
@@ -238,9 +235,11 @@ public class GraphicCharacter extends GraphicObject{
                 TextureRegion textureRegion = tile.getTextureRegion();
                 if (property.equals("battle") && tile.getProperties().containsKey("melee")) {
                     // Create a new TextureRegion with modified size for the battle animation
-                    TextureRegion modifiedRegion = new TextureRegion(textureRegion);
-                    modifiedRegion.setRegionWidth(128);
+                    tile = tileSet.getTile(tile.getId()-1);
+                    TextureRegion modifiedRegion = tile.getTextureRegion();
                     modifiedRegion.setRegionHeight(128);
+                    modifiedRegion.setRegionWidth(192);
+                    
                     
                     return modifiedRegion;
                 }

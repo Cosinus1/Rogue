@@ -205,8 +205,9 @@ public class GraphicHero extends GraphicCharacter {
             spriteBatch.setProjectionMatrix(camera.combined);
 
             // Adjust position if it's the battle animation texture
-            if (textureRegion.getRegionWidth() == 128 && textureRegion.getRegionHeight() == 128) {
+            if (textureRegion.getRegionWidth() == 192 && textureRegion.getRegionHeight() == 128) {
                 // Adjust the position to properly center the larger texture
+                objectX -= 64*scaleFactor;
                 objectY -= 64*scaleFactor;
             }
 

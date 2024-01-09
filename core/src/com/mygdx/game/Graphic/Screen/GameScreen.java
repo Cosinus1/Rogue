@@ -79,7 +79,7 @@ public class GameScreen implements Screen {
 
          //F input : apply force to Hero (testing implementation)
          if(Gdx.input.isKeyJustPressed(Keys.F)){
-            hero.applyForce(new Force(-2000*hero.getorX(), -2000*hero.getorY()));
+            hero.applyForce(new Force(2000, -hero.getorX(), -hero.getorY()));
             
             
          }
