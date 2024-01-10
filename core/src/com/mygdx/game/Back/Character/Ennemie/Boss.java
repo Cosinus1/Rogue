@@ -9,11 +9,9 @@ import com.mygdx.game.Graphic.World.Map.Map;
 
 public class Boss extends Ennemie{
     ArrayList<String> Names = new ArrayList<>();
-    private Weapon weapon;
     
     public Boss(int pv, int defense, int power,int combatRange, int detectionRange, Inventory bag,String name , Weapon weapon){
-        super(pv, defense, power, combatRange, detectionRange, bag, name);
-        this.weapon = weapon;
+        super(pv, defense, power, combatRange, detectionRange, bag, name, weapon);
         this.Names.add("vampire");
         this.Names.add("jack");
         this.Names.add("minotaure");

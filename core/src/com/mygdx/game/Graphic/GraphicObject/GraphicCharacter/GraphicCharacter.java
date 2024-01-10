@@ -72,7 +72,33 @@ public class GraphicCharacter extends GraphicObject{
         return index;
     }
     public int getAngle(){
+        switch (OrX) {
+            case -1://Character going left
+                angle = 2;
+                break;
+
+            case 0://Character not horizontaly moving
+                break;
+
+            case 1://Character going right
+                angle = 3;
+                break;
+        }
+        //Check vertical movement
+        switch (OrY){
+            case -1://Character going down
+                angle = 0;
+                break;
+
+            case 0://Character not verticaly moving
+                break;
+
+            case 1://Character going up
+                angle = 1;
+                break;
+        }
         return angle;
+
     }
     public BarLife getBarlife(){
         return barlife;
@@ -114,41 +140,11 @@ public class GraphicCharacter extends GraphicObject{
 
     public void setMoveTexture(int x, int y){
         int size = moveTexture_list.size();
-        //Check horizontal movement
-        switch (x) {
-            case -1://Character going left
-                angle = 2;
-                this.Object.setTextureRegion(moveTexture_list.get((angle+index%size)));
-                this.index+=4;
-                break;
-
-            case 0://Character not horizontaly moving
-                break;
-
-            case 1://Character going right
-                angle = 3;
-                this.Object.setTextureRegion(moveTexture_list.get((angle+index%size)));
-                this.index+=4;
-                break;
-        }
-        //Check vertical movement
-        switch (y){
-            case -1://Character going down
-                angle = 0;
-                this.Object.setTextureRegion(moveTexture_list.get((angle+index%size)));
-                this.index+=4;
-                break;
-
-            case 0://Character not verticaly moving
-                break;
-
-            case 1://Character going up
-                angle = 1;
-                this.Object.setTextureRegion(moveTexture_list.get((angle+index%size)));
-                this.index+=4;
-                break;
-        }
-
+        //Get angle 
+        int angle = getAngle();
+        //Set texture according to index & angle
+        this.Object.setTextureRegion(moveTexture_list.get((angle+index%size)));
+        this.index+=4;
     }  
 
 /*------------------------------------------------------------------CHECKERS------------------------------------------------------------ */

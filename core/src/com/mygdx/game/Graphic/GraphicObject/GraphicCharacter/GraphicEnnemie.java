@@ -207,7 +207,9 @@ public class GraphicEnnemie extends GraphicCharacter{
         else orX = (int) signX;
 
         character.Attack(X, Y, orX, orY, map);
-        //hero.getCharacter().recevoirDegats(this.getCharacter().getPower());
+
+        //Graphic attack
+        //setBattleTexture();
     }
 /*------------------------------------------------------RENDER----------------------------------------------------------- */
      public void render(SpriteBatch spriteBatch, OrthographicCamera camera){

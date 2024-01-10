@@ -7,7 +7,6 @@ import java.util.Collections;
 import com.badlogic.gdx.maps.*;
 import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
@@ -158,6 +157,9 @@ public class Map {
     public int getmapHeight(){
         return this.mapHeight;
     }
+    public int getTilewidth(){
+        return this.tilewidth;
+    }
     //Check for collision with an ennemie
     //Return true if there is a collision
     public boolean PNJcollision(GraphicHero hero){
@@ -233,13 +235,14 @@ public class Map {
             public int compare(GraphicObject object1, GraphicObject object2) {
                 boolean object1IsWall = object1 instanceof Wall;
                 boolean object2IsWall = object2 instanceof Wall;
+                //float distanceX = Math.abs(object1.getX()-object2.getY());
 
                 // If one object is a Wall and the other isn't, prioritize the Wall
                 if (object1IsWall || object2IsWall) {
-                    return Float.compare(object1.getX(), object2.getX()); // Place object2 (Wall) before object1
+                        return Float.compare(object1.getX(), object2.getX()); // Place object2 (Wall) before object1
                 }
                 // Comparaison des valeurs de y
-                return Float.compare(object2.getY(), object1.getY());
+                else return Float.compare(object2.getY(), object1.getY());
                 
             }
         };

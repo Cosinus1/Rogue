@@ -20,7 +20,7 @@ public class Massue extends Weapon{
         return this.range;
     }
     /*---------------------------ATTACK-------------------------- */
-    public void Attack(float X, float Y, Map map){
+    public void Attack(float X, float Y, int OrX, int OrY, Map map){
         
         GraphicHero graphicHero = map.getHero();
         float Xh = graphicHero.getX();
@@ -28,7 +28,7 @@ public class Massue extends Weapon{
         float distanceX = Math.abs(Xh-X);
         float distanceY = Math.abs(Yh-Y);
         float distance = distanceX + distanceY;
-        if(distance<= range){
+        if(distance<= (range+1)*map.getTilewidth()){
             graphicHero.getCharacter().recevoirDegats(this.power);
         }
 

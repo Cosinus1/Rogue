@@ -2,6 +2,8 @@ package com.mygdx.game.Graphic.World;
 
 import com.mygdx.game.Back.Character.Ennemie.*;
 import com.mygdx.game.Back.Character.Hero.*;
+import com.mygdx.game.Back.Item.ItemType;
+import com.mygdx.game.Back.Item.Weapon.Massue;
 import com.mygdx.game.Graphic.GraphicObject.Elements.Door;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.*;
 import com.mygdx.game.Graphic.World.Map.*;
@@ -167,7 +169,7 @@ public class World {
     }
 
     public void initializeDungeon(int numberOfMaps) {
-        boss = new Boss(100, 0, 50,3, 10, null,"Boss",null);
+        boss = new Boss(100, 0, 50,3, 10, null,"Boss",new Massue(ItemType.WEAPON, "massue", 50, 2));
         GraphicBoss graphicboss = new GraphicBoss(boss,525,400, this.Tilesets);
         System.out.println("              /////////////Initializing Dungeon//////////////");
         Map DungeonHubMap = getDungeonHub();

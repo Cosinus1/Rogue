@@ -5,11 +5,9 @@ import com.mygdx.game.Back.Item.Weapon.*;
 import com.mygdx.game.Graphic.World.Map.Map;
 
 public class Sorciere extends Ennemie{
-    private Weapon weapon;
 
     public Sorciere(int pv, int defense, int power,int combatRange, int detectionRange, Inventory bag, String name, Weapon weapon){
-        super(pv, defense, power, combatRange, detectionRange, bag, name);
-        this.weapon = weapon;
+        super(pv, defense, power, combatRange, detectionRange, bag, name, weapon);
         this.setName("sorciere");
         this.Class = "sorciere";
         
