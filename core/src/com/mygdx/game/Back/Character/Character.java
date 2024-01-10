@@ -61,23 +61,8 @@ public abstract class Character {
 
 /*----------------------------------------- ITEM -------------------------------------- */  
 
-    public void usePotion(Potion potion){
-        //test de la présencce dans le sac 
 
-        PV = potion.getPvSoigner();
-        if(PV > PV_max){
-            PV = PV_max;
-        }
-        // Remove potion du sac
-    }
 
-    public void useBooster(Booster boost){
-        //test de la présence dans le sac
-        defense += boost.getBoostDef();
-        power += boost.getBoostDam();
-        //range += boost.getBoostRange();
-        //remove booster du sac;
-    }
     
 /*----------------------------------------- FIGHT -------------------------------------- */  
 

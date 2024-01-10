@@ -39,4 +39,9 @@ public class Inventory {
     // public InventoryIterator getIterator(){
 
     // }
+
+    public void removeItem(Item item){
+        inventory.remove(item);
+    }
+ 
 }
