@@ -1,9 +1,9 @@
 package com.mygdx.game.Graphic.World;
 
-import com.mygdx.game.Back.Character.Ennemie.*;
-import com.mygdx.game.Back.Character.Hero.*;
 import com.mygdx.game.Back.Item.ItemType;
 import com.mygdx.game.Back.Item.Weapon.Massue;
+import com.mygdx.game.Back.Object.Character.Ennemie.*;
+import com.mygdx.game.Back.Object.Character.Hero.*;
 import com.mygdx.game.Graphic.GraphicObject.Elements.Door;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.*;
 import com.mygdx.game.Graphic.World.Map.*;

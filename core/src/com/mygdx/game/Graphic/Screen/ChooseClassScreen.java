@@ -16,8 +16,8 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import com.mygdx.game.MyGame;
-import com.mygdx.game.Back.Character.Hero.Archer;
-import com.mygdx.game.Back.Character.Hero.Warrior;
+import com.mygdx.game.Back.Object.Character.Hero.Archer;
+import com.mygdx.game.Back.Object.Character.Hero.Warrior;
 
 public class ChooseClassScreen implements Screen {
 

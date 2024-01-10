@@ -1,4 +1,4 @@
-package com.mygdx.game.Back.Character;
+package com.mygdx.game.Back.Object.Character;
 
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Item.Booster;

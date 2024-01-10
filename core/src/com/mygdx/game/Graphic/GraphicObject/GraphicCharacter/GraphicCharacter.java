@@ -11,7 +11,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 
-import com.mygdx.game.Back.Character.Character;
+import com.mygdx.game.Back.Object.Character.Character;
+
 import com.mygdx.game.Graphic.GraphicObject.GraphicObject;
 import com.mygdx.game.Graphic.GraphicObject.Elements.*;
 import com.mygdx.game.Graphic.World.Map.Map;

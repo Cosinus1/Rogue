@@ -1,4 +1,4 @@
-package com.mygdx.game.Back.Character.Ennemie;
+package com.mygdx.game.Back.Object.Character.Ennemie;
 
 import java.util.ArrayList;
 import java.util.Random;

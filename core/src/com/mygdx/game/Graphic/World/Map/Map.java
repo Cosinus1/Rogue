@@ -19,13 +19,12 @@ import com.badlogic.gdx.audio.Music;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.mygdx.game.Back.Object.Character.Ennemie.Ennemie;
 import com.mygdx.game.Graphic.GraphicObject.GraphicObject;
 import com.mygdx.game.Graphic.GraphicObject.Elements.Door;
 import com.mygdx.game.Graphic.GraphicObject.Elements.Element;
 import com.mygdx.game.Graphic.GraphicObject.Elements.Wall;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.*;
-
-import com.mygdx.game.Back.Character.Ennemie.Ennemie;
 
 public class Map {
 

@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
-
-import com.mygdx.game.Back.Character.Ennemie.EnnemieFactory;
+import com.mygdx.game.Back.Object.Character.Ennemie.EnnemieFactory;
 
 
 public class GraphicEnnemieFactory {

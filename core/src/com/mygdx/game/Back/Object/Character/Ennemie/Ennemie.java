@@ -1,10 +1,9 @@
-package com.mygdx.game.Back.Character.Ennemie;
+package com.mygdx.game.Back.Object.Character.Ennemie;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
-
-import com.mygdx.game.Back.Character.Character;
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Item.Weapon.Weapon;
+import com.mygdx.game.Back.Object.Character.Character;
 import com.mygdx.game.Graphic.World.Map.*;
 
 public class Ennemie extends Character {

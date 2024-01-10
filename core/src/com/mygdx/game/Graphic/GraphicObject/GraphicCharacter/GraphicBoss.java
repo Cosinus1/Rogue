@@ -1,7 +1,7 @@
 package com.mygdx.game.Graphic.GraphicObject.GraphicCharacter;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
-import com.mygdx.game.Back.Character.Ennemie.Ennemie;
+import com.mygdx.game.Back.Object.Character.Ennemie.*;
 
 public class GraphicBoss extends GraphicEnnemie{
     public GraphicBoss(Ennemie character,float x, float y, TiledMapTileSets Tilesets){

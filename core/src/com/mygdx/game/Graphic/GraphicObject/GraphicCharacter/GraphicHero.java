@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.Back.Character.Character;
-import com.mygdx.game.Back.Character.Hero.Hero;
+import com.mygdx.game.Back.Object.Character.Character;
+import com.mygdx.game.Back.Object.Character.Hero.Hero;
 import com.mygdx.game.Graphic.World.World;
 import com.mygdx.game.Graphic.World.Map.Map;
 
