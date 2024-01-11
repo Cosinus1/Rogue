@@ -26,10 +26,10 @@
         },
         "TMX/Home.tmx": {
             "scale": 1.5,
-            "selectedLayer": 4,
+            "selectedLayer": 9,
             "viewCenter": {
-                "x": 553,
-                "y": 349
+                "x": 734.3333333333333,
+                "y": 391
             }
         },
         "TMX/Home.tmx#PathAndObjects": {

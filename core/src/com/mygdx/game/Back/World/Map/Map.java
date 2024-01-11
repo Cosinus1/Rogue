@@ -197,14 +197,29 @@ public class Map {
                 float distanceX = wall.getX()-object.getX();
                 float distanceY = wall.getY()-object.getY();
                 if(Math.abs(distanceX)<16 && Math.abs(distanceY)<16){
+                    //Apply force to object (we ignore force(Object->wall))
+                    object.applyInstantForce(new Force(10000, 10000, -object.getorX(), -object.getorY()));
+                }
+            }
+        }
+    }
+    public void Objectcollision(Object object1){
+        ArrayList<Object> List = new ArrayList<>();
+        if(NPCs!=null) List.addAll(NPCs); if(Walls!=null) List.addAll(Walls); List.add(hero);
+        if (List!=null){
+            for (Object object2 : List){
+
+                float distanceX = object2.getX()-object1.getX();
+                float distanceY = object2.getY()-object1.getY();
+                if(Math.abs(distanceX)<16 && Math.abs(distanceY)<16){
                     
                     float signX = 0;
                     float signY = 0;
                     if (Math.abs(distanceX)>Math.abs(distanceY)) signX = Math.signum(distanceX);
                     else signY = Math.signum(distanceY);
                     
-                    object.applyInstantForce(new Force(10000, 10000, -signX, -signY));
-                    wall.applyInstantForce(new Force(10000, 10000, signX, signY));
+                    object1.applyInstantForce(new Force(10000, 10000, -signX, -signY));
+                    object2.applyInstantForce(new Force(10000, 10000, signX, signY));
                 }
             }
         }
@@ -272,13 +287,7 @@ public class Map {
             public int compare(Object object1, Object object2) {
                 float y1 = object1.getY();
                 float y2 = object2.getY();
-                boolean object1IsWall = object1 instanceof Wall;
-                boolean object2IsWall = object2 instanceof Wall;
-                float distanceX = Math.abs(object1.getX()-object2.getX());
-                if(distanceX>64){
-                    if (object1IsWall) y2 += 32;
-                    if (object2IsWall) y1 += 32;
-                }
+                
                 // Comparaison des valeurs de y
                 return Float.compare(y2, y1);
                 
@@ -292,32 +301,39 @@ public class Map {
 
     public void update(float deltaTime){
         ArrayList<Object> List = new ArrayList<>();
-        updateNPCs();
-        if(NPCs!=null) List.addAll(NPCs);
-        updateElements();
-        if(Elements!=null) List.addAll(Elements);
-        List.add(hero);
-        List.addAll(Walls);
+        // Udate & add remaining Objects
+            //NPCs
+            updateNPCs(deltaTime);
+            if(NPCs!=null) List.addAll(NPCs);
+            //Elements
+            updateElements(deltaTime);
+            if(Elements!=null) List.addAll(Elements);
+            //Hero
+            hero.update(deltaTime);
+            List.add(hero);
+            //Walls (no update necessary because they dont move)
+            List.addAll(Walls);
         Objects = List;
         sortObjects();
-        for(Object object : Objects){
-            object.update(deltaTime);
-        }
     }
-    public void updateElements(){ 
+    public void updateElements(float deltaTime){ 
         if(Elements!=null){
             ArrayList<Element> List = new ArrayList<>();
             for(Element element : Elements){
-                if(element.isValidPosition((int) element.getX()/tilewidth, (int) element.getY()/tileheight, this)) List.add(element);
+                element.update(deltaTime);
+                Objectcollision(element);
+                System.out.println("speedX : " + element.getSpeedX() + " speedY : " + element.getSpeedY());
+                if(element.getSpeedX()!=0 || element.getSpeedY()!=0) List.add(element);
             }
             Elements.clear();
             Elements = List;
         }
     }
-    public void updateNPCs(){
+    public void updateNPCs(float deltaTime){
         if (NPCs!=null){
             ArrayList<Ennemie> List = new ArrayList<>();
             for(Ennemie enemy : NPCs){
+                enemy.update(deltaTime);
                 if(enemy.getPV()<=0) DeadNPCs.add(enemy);
                 else List.add(enemy);
             }
