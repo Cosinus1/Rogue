@@ -2,12 +2,12 @@ package com.mygdx.game.Back.Object.Character.Ennemie;
 
 import com.mygdx.game.Back.Inventory.*;
 import com.mygdx.game.Back.Item.Weapon.*;
-import com.mygdx.game.Graphic.World.Map.Map;
+import com.mygdx.game.Back.World.Map.Map;
 
 public class Gobelin extends Ennemie{
 
-    public Gobelin(int pv, int defense, int power,int combatRange, int detectionRange, Inventory bag, String name, Weapon weapon){
-        super(pv, defense, power, combatRange, detectionRange, bag, name, weapon);
+    public Gobelin(float x, float y, int pv, int defense, int power,int combatRange, int detectionRange, Inventory bag, Weapon weapon){
+        super(x, y, pv, defense, power, combatRange, detectionRange, bag, weapon);
         this.setName("gobelin");
         this.Class = "gobelin";
     }
@@ -17,8 +17,8 @@ public class Gobelin extends Ennemie{
         return power + weapon.getPower();
     }
 
-    public void Attack(float X, float Y, int OrX, int OrY, Map map){
-        weapon.Attack(X, Y, OrX, OrY, map);
+    public void Attack(Map map){
+        weapon.Attack(this, map);
     }
     
 }

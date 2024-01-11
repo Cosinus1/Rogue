@@ -2,7 +2,8 @@ package com.mygdx.game.Back.Item.Weapon;
 
 import com.mygdx.game.Back.Item.Item;
 import com.mygdx.game.Back.Item.ItemType;
-import com.mygdx.game.Graphic.World.Map.Map;
+import com.mygdx.game.Back.World.Map.Map;
+import com.mygdx.game.Back.Object.Object;
 
 public class Weapon extends Item {
     protected String name;
@@ -27,7 +28,7 @@ public class Weapon extends Item {
     }
 
     /*----------------------------------------ATTACK-------------------------------- */
-    public void Attack(float X, float Y, int OrX, int OrY, Map map){
+    public void Attack(Object object, Map map){
         
     }
 }

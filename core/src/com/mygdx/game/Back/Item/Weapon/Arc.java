@@ -5,9 +5,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.mygdx.game.Back.Force;
 import com.mygdx.game.Back.Item.ItemType;
-import com.mygdx.game.Graphic.GraphicObject.Elements.ElementFactory;
-import com.mygdx.game.Graphic.World.Map.Map;
-import com.mygdx.game.Graphic.GraphicObject.Elements.Element;
+import com.mygdx.game.Back.Object.Object;
+import com.mygdx.game.Back.Object.Element.Element;
+import com.mygdx.game.Back.Object.Element.ElementFactory;
+import com.mygdx.game.Back.World.Map.Map;
+import com.mygdx.game.Graphic.GraphicObject.GraphicElement.GraphicElement;
 
 public class Arc extends Weapon {
     private ElementFactory factory;
@@ -36,10 +38,11 @@ public class Arc extends Weapon {
         return object;
     }
     /*------------------------------ATTACK------------------------------------- */
-    public void Attack(float X, float Y, int OrX, int OrY, Map map){
-        Element arrow = factory.createProjectile(X, Y);
-        arrow.applyForce(new Force(20000, OrX, OrY));
-        arrow.setObject(Arrow(OrX, OrY));
+    public void Attack(Object object, Map map){
+        Element arrow = factory.createProjectile(object.getX(), object.getY());
+        arrow.applyForce(new Force(20000, object.getorX(), object.getorY()));
+        arrow.setGraphicObject(new GraphicElement(16, 16));
+        arrow.setTextureObject(Arrow(object.getorX(), object.getorY()));
         map.addElement(arrow);
     }
 }

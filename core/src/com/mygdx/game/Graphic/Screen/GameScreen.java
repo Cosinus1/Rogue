@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.Back.Force;
+import com.mygdx.game.Back.Object.Character.Hero.Hero;
+import com.mygdx.game.Back.World.World;
+import com.mygdx.game.Back.World.Map.Map;
 import com.mygdx.game.Graphic.*;
-import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.*;
-import com.mygdx.game.Graphic.World.World;
-import com.mygdx.game.Graphic.World.Map.Map;
 
 public class GameScreen implements Screen {
     MyGame game;
@@ -18,7 +18,7 @@ public class GameScreen implements Screen {
     
     private Map map;
     private World world;
-    private GraphicHero hero;
+    private Hero hero;
     private OrthographicCamera camera;
     private Renderer renderer;
     private RendererBW rendererBW;
@@ -69,7 +69,7 @@ public class GameScreen implements Screen {
          hero.move(camera, map);
 
          //Space Input
-         hero.GraphicHeroAttack(map);
+         if(Gdx.input.isKeyPressed(Keys.SPACE)) hero.Attack(map);
 
          //Enter input : change color
          if(Gdx.input.isKeyJustPressed(Keys.ENTER))BlacknWhite = !BlacknWhite;

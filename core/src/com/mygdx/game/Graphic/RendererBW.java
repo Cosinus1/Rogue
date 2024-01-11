@@ -1,11 +1,5 @@
 package com.mygdx.game.Graphic;
 
-//import java.util.ArrayList;
-//import java.util.Iterator;
-
-//import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicCharacter;
-//import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicEnnemie;
-import com.mygdx.game.Graphic.World.Map.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -16,6 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 //import com.badlogic.gdx.maps.MapObjects;
 //import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.mygdx.game.Back.World.Map.Map;
 
 public class RendererBW {
 

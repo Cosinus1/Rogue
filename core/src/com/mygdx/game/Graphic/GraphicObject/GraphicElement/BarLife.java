@@ -1,4 +1,4 @@
-package com.mygdx.game.Graphic.GraphicObject.Elements;
+package com.mygdx.game.Graphic.GraphicObject.GraphicElement;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -30,13 +30,11 @@ public class BarLife {
         font.draw(batch, hero.getPV() + " / " + hero.getPV_max(), 185, 630);
     }
 
-    public void drawPNJLifeBar(SpriteBatch batch, GraphicEnnemie ennemie){
-        TextureRegion textureRegion = ennemie.getObject().getTextureRegion();
-        float objectX = (float) ennemie.getX();
-        float objectY = (float) ennemie.getY();
+    public void drawPNJLifeBar(float objectX, float objectY, int PV, SpriteBatch batch, GraphicEnnemie ennemie){
+        TextureRegion textureRegion = ennemie.getTextureObject().getTextureRegion();
         float objectWidth = textureRegion.getRegionWidth();
         float objectHeight = textureRegion.getRegionHeight();
-        int lifeBarWidth = ennemie.getCharacter().getPV();
+        int lifeBarWidth = PV;
         int lifeBarHeight = 1;
         float lifeBarX = objectX + (objectWidth - lifeBarWidth) / 2; 
         float lifeBarY = objectY + objectHeight + 5; // Place the life bar above the character

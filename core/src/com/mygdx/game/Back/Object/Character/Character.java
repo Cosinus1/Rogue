@@ -3,10 +3,11 @@ package com.mygdx.game.Back.Object.Character;
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Item.Booster;
 import com.mygdx.game.Back.Item.Potion;
-import com.mygdx.game.Graphic.World.Map.Map;
+import com.mygdx.game.Back.World.Map.Map;
+import com.mygdx.game.Graphic.GraphicObject.GraphicObject;
+import com.mygdx.game.Back.Object.Object;
 
-
-public abstract class Character {
+public abstract class Character extends Object{
     
     protected String Class;
     protected int PV;
@@ -23,17 +24,34 @@ public abstract class Character {
 
 
     //constructeur
-    public Character(int pv, int defense, int power,int range, Inventory bag, String name){
+    public Character(float x, float y, int pv, int defense, int power,int range, Inventory bag){
+        super(x, y, 32, 32);
         this.PV = pv;
         this.PV_max = pv;
         this.defense = defense;
         this.power = power;
         this.range = range;
         this.bag = bag;
-        this.name = name;
     }
 
 /*----------------------------------------- GETTERS -------------------------------------- */
+        /*POSITION */
+    
+    public float getlastX(){
+        return this.lastX;
+    }
+    public float getlastY(){
+        return this.lastY;
+    }
+
+    public boolean overlaps(Character character){
+        return Hitbox.overlaps(character.getHitbox());
+    }
+        /*GRAPHIC */
+    public GraphicObject getGraphicObject(){
+        return graphicObject;
+    }
+        /*COMBAT */
     public String Class(){
         return Class;
     }
@@ -63,11 +81,73 @@ public abstract class Character {
         return 10;
     }
     /*----------------------------------------- SETTERS -------------------------------------- */
+    public void setX(float x){
+        Hitbox.x = x;
+    }
+    public void setY(float y){
+        Hitbox.y = y;
+    }
+    public void setlastX(float x){
+        this.lastX = x;
+    }
+    public void setlastY(float y){
+        this.lastY = y;
+    }
     public void setName(String name){
         this.name = name;
     }
+    public void setAngle(){
+        graphicObject.setAngle(OrX, OrY);
+    }
+    
+    /*-----------------------------------------CHECKERS-------------------------------------- */
+    public boolean inRange(Character character, Map map){
+        int tilewidth = map.getcollisionLayer().getTileWidth();
+        float x = getX();
+        float y = getY();
+        double distanceX = x - character.getX();
+        double distanceY = y - character.getY();
 
-/*----------------------------------------- ITEM -------------------------------------- */  
+        int distance = (int) Math.sqrt(Math.pow(distanceY, 2) + Math.pow(distanceX, 2));
+
+        int X = (int) x/tilewidth;
+        int Y = (int) y/tilewidth;
+        int endX = (int) (x-distanceX)/tilewidth;
+        int endY = (int) (y-distanceY)/tilewidth;
+
+        int signX = (int) Math.signum(-distanceX);
+        int signY = (int) Math.signum(-distanceY);
+
+        if(distance <= getRange()*tilewidth && isValidTrajectory(X, Y, endX, endY, signX, signY, map)) return true;
+        else return false;
+    }
+    public boolean inRange(float x2, float y2, Map map){
+        int tilewidth = map.getcollisionLayer().getTileWidth();
+        float x = getX();
+        float y = getY();
+        double distanceX = x - x2;
+        double distanceY = y - y2;
+
+        int distance = (int) Math.sqrt(Math.pow(distanceY, 2) + Math.pow(distanceX, 2))/tilewidth;
+
+        int X = (int) x/tilewidth;
+        int Y = (int) y/tilewidth;
+        int endX = (int) (x-distanceX)/tilewidth;
+        int endY = (int) (y-distanceY)/tilewidth;
+
+        int signX = (int) Math.signum(-distanceX);
+        int signY = (int) Math.signum(-distanceY);
+
+        if(distance <= range && isValidTrajectory(X, Y, endX, endY, signX, signY, map)) return true;
+        else return false;
+    }
+    /*------------------------------------------------------------ SPAWN ------------------------------------------------------------------ */  
+
+    public void spawn(Map map) {
+    }
+    
+
+    /*----------------------------------------- ITEM -------------------------------------- */  
 
     public void usePotion(Potion potion){
         //test de la présencce dans le sac 
@@ -88,7 +168,7 @@ public abstract class Character {
     }
     
 /*----------------------------------------- FIGHT -------------------------------------- */  
-    public void Attack(float X, float Y, int OrX, int OrY, Map map){
+    public void Attack(Object object, Map map){
         
     }
 

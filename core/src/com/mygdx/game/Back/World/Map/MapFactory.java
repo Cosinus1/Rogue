@@ -1,4 +1,4 @@
-package com.mygdx.game.Graphic.World.Map;
+package com.mygdx.game.Back.World.Map;
 
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -7,9 +7,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.*;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
-
-import com.mygdx.game.Graphic.GraphicObject.Elements.Door;
-import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicEnnemie;
+import com.mygdx.game.Back.Object.Character.Ennemie.Ennemie;
+import com.mygdx.game.Back.Object.Element.Door;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -28,7 +27,7 @@ public class MapFactory {
 
     public Map createMap(float x, float y, TiledMap tiledmap, Music music, Map previousMap) {
         ArrayList<Door> doorList = new ArrayList<>();
-        ArrayList<GraphicEnnemie> PNJ_list = new ArrayList<>();
+        ArrayList<Ennemie> PNJ_list = new ArrayList<>();
         // Door to go back to the previous map
         Door backDoor = new Door(x-100, y, previousMap);
         doorList.add(backDoor);

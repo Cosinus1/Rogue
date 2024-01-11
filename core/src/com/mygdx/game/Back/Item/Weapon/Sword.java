@@ -3,10 +3,10 @@ package com.mygdx.game.Back.Item.Weapon;
 import java.util.ArrayList;
 
 import com.mygdx.game.Back.Item.ItemType;
+import com.mygdx.game.Back.Object.Object;
+import com.mygdx.game.Back.Object.Character.Character;
 import com.mygdx.game.Back.Object.Character.Ennemie.Ennemie;
-
-import com.mygdx.game.Graphic.World.Map.Map;
-import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.*;
+import com.mygdx.game.Back.World.Map.Map;
 
 public class Sword extends Weapon{
     private int range;
@@ -23,14 +23,13 @@ public class Sword extends Weapon{
         return this.range;
     }
     /*---------------------------ATTACK-------------------------- */
-    public void Attack(float X, float Y, Map map){
+    public void Attack(Object object, Map map){
         
-        ArrayList<GraphicEnnemie> PNJinRange = map.lookforEnemyinRange(X, Y);
+        ArrayList<Ennemie> PNJinRange = map.lookforEnemyinRange((Character) object);
         if(PNJinRange != null){
             int size = PNJinRange.size();
             for(int index = 0; index<size; index++){
-                GraphicEnnemie Graphic_ennemie = PNJinRange.get(index);
-                Ennemie ennemie = Graphic_ennemie.getCharacter();
+                Ennemie ennemie = PNJinRange.get(index);
                 ennemie.recevoirDegats(this.power);
             }
         }
