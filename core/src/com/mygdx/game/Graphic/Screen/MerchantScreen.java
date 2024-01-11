@@ -59,9 +59,9 @@ public class MerchantScreen implements Screen {
         showtext = true; //On affiche le texte direct
 
         InventoryIteratorInterface<Item> iterator = merchant.getInventory().getIterator(ItemType.WEAPON);
-        buttonEditor.createMerchantButton(iterator, mySkin, table1, stage, buttonList, merchant.getInventory(),ItemType.ANY, hero, 400, 110);
+        buttonEditor.createMerchantButton(iterator, mySkin, table1, stage, buttonList, merchant.getInventory(),400, 110);
         InventoryIteratorInterface<Item> iterator2 = merchant.getInventory().getIterator(ItemType.POTION);
-        buttonEditor.createMerchantButton(iterator2, mySkin, table2, stage, buttonList, merchant.getInventory(), ItemType.POTION, hero, 800, 110); 
+        buttonEditor.createMerchantButton(iterator2, mySkin, table2, stage, buttonList, merchant.getInventory(),800, 110); 
      }
 
 

@@ -3,6 +3,7 @@ package com.mygdx.game.Graphic.GraphicObject.GraphicElement;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -41,10 +42,10 @@ public class ButtonEditor {
     }
 
     /*------------------------- Merchant Button --------------------------*/
-    public void createMerchantButton(InventoryIteratorInterface<Item> iterator, MySkin mySkin, Table table, Stage stage, ArrayList<MyMerchantButton> list, Inventory inventory, ItemType type, Hero hero, float x, float y){
+    public void createMerchantButton(InventoryIteratorInterface<Item> iterator, MySkin mySkin, Table table, Stage stage, ArrayList<MyMerchantButton> list, Inventory inventory, float x, float y){
         while(iterator.hasnext()){
             Item item = iterator.next();            
-            MyMerchantButton button = new MyMerchantButton(item.getName(), mySkin.createMerchantSkin() ,table, stage, list,type, inventory,hero); 
+            MyMerchantButton button = new MyMerchantButton(item.getName(), mySkin.createMerchantSkin() ,table, stage); 
             //On associe un objet a chaque bouton
             button.setassociatedItem(inventory.getItem(iterator.getPosition()));
             list.add(button);
@@ -54,4 +55,6 @@ public class ButtonEditor {
         stage.addActor(table);
         table.setPosition( x,y);
     }
+
+
 }
