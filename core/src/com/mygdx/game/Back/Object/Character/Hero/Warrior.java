@@ -2,7 +2,7 @@ package com.mygdx.game.Back.Object.Character.Hero;
 
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Item.Weapon.*;
-import com.mygdx.game.Back.World.Map.*;;
+import com.mygdx.game.Back.World.Map.Map;
 
 
 public class Warrior extends Hero{
@@ -21,15 +21,19 @@ public class Warrior extends Hero{
         this.sword = sword;
     }
 
-    public void Attack(Map map){
-        sword.Attack(this, map);
-        graphicObject.setBattleTexture();
-    }
 
     public void changeWeapon(Sword newSword){
         bag.addItem(sword);
         this.sword = newSword;
         bag.removeItem(newSword);
     }
+    public void Attack(Map map){
+        if(attackTimer > attackCooldown){
+            sword.Attack(this, map);
+            graphicObject.setBattleTexture();
+            attackTimer = 0;
+        }
+    }
+
 
 }

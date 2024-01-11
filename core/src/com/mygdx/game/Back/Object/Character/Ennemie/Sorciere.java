@@ -2,7 +2,6 @@ package com.mygdx.game.Back.Object.Character.Ennemie;
 
 import com.mygdx.game.Back.Inventory.*;
 import com.mygdx.game.Back.Item.Weapon.*;
-import com.mygdx.game.Back.World.Map.Map;
 
 public class Sorciere extends Ennemie{
 
@@ -17,11 +16,5 @@ public class Sorciere extends Ennemie{
         System.out.println("Abracadabra");
         return power + weapon.getPower();
     }
-
-    public void Attack(Map map){
-        weapon.Attack(this, map);
-    }
-
-
     
 }

@@ -192,7 +192,7 @@ public class Object {
         int mapWidth = map.getmapWidth();
         int mapHeight = map.getmapHeight();
         //Check Map boundaries
-        if(X<1 || X>(mapWidth) || Y<0 || Y>(mapHeight-2)) return false;
+        if(X<2 || X>(mapWidth-2) || Y<2 || Y>(mapHeight-2)) return false;
         // Check distance from walls
         return map.checkDistancefromWall(X, Y);
     }

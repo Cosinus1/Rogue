@@ -32,7 +32,9 @@ public class Merchant extends Object{
     public Inventory getInventory(){
         return inventory;
     }
-    
+
+
+
     public void spawn(Map map){
         map.setMerchant(this);
     }
@@ -63,7 +65,6 @@ public class Merchant extends Object{
     //Init Sword to send
     public void setWarriorWeapon(){
         Sword sword1 = new Sword("Dagger of Fading Shadows", 30,1);
-
         Sword sword2 = new Sword("Mystic Gladeblade",40,6);
         Sword sword3 = new Sword("Thunderstrike Longsword",60,3);
         Sword sword4 = new Sword("Blade of the Eternal Dawn",100,6);

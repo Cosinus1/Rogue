@@ -22,8 +22,11 @@ public class Archer extends Hero{
     }
 
     public void Attack(Map map){
-        arc.Attack(this, map);
-        graphicObject.setBattleTexture();
+        if(attackTimer > attackCooldown){
+            arc.Attack(this, map);
+            graphicObject.setBattleTexture();
+            attackTimer = 0;
+        }
     }
 
     public void changeWeapon(Arc newArc){

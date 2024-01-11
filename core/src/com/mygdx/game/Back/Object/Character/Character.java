@@ -3,7 +3,6 @@ package com.mygdx.game.Back.Object.Character;
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Item.Booster;
 import com.mygdx.game.Back.Item.Potion;
-import com.mygdx.game.Back.Item.Weapon.Weapon;
 import com.mygdx.game.Back.World.Map.Map;
 import com.mygdx.game.Graphic.GraphicObject.GraphicObject;
 import com.mygdx.game.Back.Object.Object;
@@ -36,6 +35,10 @@ public abstract class Character extends Object{
     }
 
 /*----------------------------------------- GETTERS -------------------------------------- */
+
+    public String getName(){
+        return name;
+    }
         /*POSITION */
     
     public float getlastX(){
@@ -68,20 +71,27 @@ public abstract class Character extends Object{
     public int getRange(){
         return this.range;
     }
-    public Inventory getBag(){
-        return bag;
+    public float getAttackTimer(){
+        return this.attackTimer;
     }
-    public String getName(){
-        return name;
+    public float getAttackCooldown(){
+        return this.attackCooldown;
     }
     public int getPower(){
         return power;
     }
-    public int getDetecRange(){
-        System.out.println("not found");
-        return 10;
+    /*ITEM */
+    public Inventory getBag(){
+        return bag;
     }
+    
+    
     /*----------------------------------------- SETTERS -------------------------------------- */
+
+    public void setName(String name){
+        this.name = name;
+    }
+    /*POSITION */
     public void setX(float x){
         Hitbox.x = x;
     }
@@ -94,17 +104,26 @@ public abstract class Character extends Object{
     public void setlastY(float y){
         this.lastY = y;
     }
-    public void setName(String name){
-        this.name = name;
-    }
+    
     public void setAngle(){
         graphicObject.setAngle(OrX, OrY);
     }
     public void setBag(Inventory inventory){
         this.bag = inventory;
     }
+    /*COMBAT */
+    public void IncrementAttackTimer(float deltaTime){
+        this.attackTimer += deltaTime;
+    }
+    public void toggle_Attack(){
+        this.attack_charged = !attack_charged;
+    }
     
     /*-----------------------------------------CHECKERS-------------------------------------- */
+
+    public boolean isAttack_Charged(){
+        return this.attack_charged;
+    }
     public boolean inRange(Character character, Map map){
         int tilewidth = map.getcollisionLayer().getTileWidth();
         float x = getX();

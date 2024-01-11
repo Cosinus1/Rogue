@@ -81,7 +81,7 @@ public class ChooseClassScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Play pour jouer
-                Warrior warrior = new Warrior(0,0, 100, 200, 1000, 1, new Inventory());
+                Warrior warrior = new Warrior(0,0, 100, 200, 20, 1, new Inventory());
                 game.setHero(warrior);
                 game.gameScreen = new GameScreen(game);
                 game.setScreen(game.gameScreen);
@@ -91,7 +91,7 @@ public class ChooseClassScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Play pour jouer
-                Archer archer = new Archer(0,0, 100, 200, 1000, 1, new Inventory());
+                Archer archer = new Archer(0,0, 100, 200, 20, 1, new Inventory());
                 game.setHero(archer);
                 game.gameScreen = new GameScreen(game);
                 game.setScreen(game.gameScreen);

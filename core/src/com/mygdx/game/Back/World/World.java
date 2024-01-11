@@ -10,6 +10,7 @@ import com.mygdx.game.Back.Object.Character.Ennemie.*;
 import com.mygdx.game.Back.Object.Character.Hero.*;
 import com.mygdx.game.Back.Object.Element.Door;
 import com.mygdx.game.Back.World.Map.*;
+import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicBoss;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicHero;
 
 import java.util.ArrayList;
@@ -62,9 +63,10 @@ public class World {
         this.Tilesets = DungeonHub.getTiledMap().getTileSets();
 
         //Set up the Doors
-        this.Tavern.addDoor(new Door(480, 120, Home));
-        this.Home.addDoor(new Door(860, 415, DungeonHub));
-        this.Home.addDoor(new Door(0, 400, Tavern));
+        DungeonHub.addDoor(new Door(-40, 100, Home));
+        Tavern.addDoor(new Door(480, 120, Home));
+        Home.addDoor(new Door(860, 415, DungeonHub));
+        Home.addDoor(new Door(0, 400, Tavern));
 
         //Align TavernMap
         this.Tavern.centerTavernMap();
@@ -72,7 +74,6 @@ public class World {
         //Initialization
             this.CurrentMap = Home;
             this.CurrentcollisionLayer = Home.getcollisionLayer();
-
 
             //Init inventory for debugging
             Potion potion1 = new Potion(10,"petite potion");
@@ -87,10 +88,12 @@ public class World {
             bag.addItem(potion3);
             bag.addItem(sword);
 
+
             //Initialize the Hero
             this.Hero = hero;
             Hero.setX(CurrentMap.getX());
             Hero.setY(CurrentMap.getY());
+
 
             Hero.setBag(bag);
 
@@ -99,9 +102,10 @@ public class World {
             Hero.spawn(Home);
             Hero.spawn(Tavern);  
             Merchant merchant = new Merchant(Hero,320,270,Tavern);
-            merchant.spawn(Tavern);        
+            merchant.spawn(Tavern);          
             //Initialize the Boss
             boss = new Boss(0,0,100, 0, 50,3, 10, null,new Massue("massue", 50, 2));
+            boss.setGraphicObject(new GraphicBoss(boss.getName(), DungeonHub.getTiledMap().getTileSets()));
             //Initialize Dungeon
             this.Dungeon = new ArrayList<>();
             this.Dungeonlevel = 1;
@@ -186,7 +190,7 @@ public class World {
 /* ---------------------------------------------------------------------------------------- */
 
     public void respawn(Map map) {
-        int EnemyCount = Dungeonlevel; // Increase enemy count
+        int EnemyCount = Dungeonlevel + 5; // Increase enemy count
         
         // Create new, more powerful enemies
         System.out.println("creating ennemies ...");
@@ -212,8 +216,8 @@ public class World {
             newMap.setName("Dungeon " + i);
             newMap.setPVP("ON");
             // Add a door between the previous map and the new map
-            if(i==0)this.DungeonHub.addDoor(new Door(470, 350, newMap));//Home is linked to first map
-            else if(i==numberOfMaps)mapFactory.addDoorBetweenMaps(previousMap, Home);//Last map is linked back to Home
+            if(i==0)this.DungeonHub.addDoor(new Door(470, 350, newMap));//DungeonHub is linked to Home
+            else if(i==numberOfMaps)mapFactory.addDoorBetweenMaps(previousMap, DungeonHub);//Last map is linked back to DungegonHub
             else mapFactory.addDoorBetweenMaps(previousMap, newMap);
 
             //Track last door position for returning to last map at last position
@@ -251,11 +255,24 @@ public class World {
         System.out.println("             /////////////////Dungeon Initialized/////////////");
     }
     public void IsDungeonFinished(){
-        if(CurrentMap==Home){
+        if(CurrentMap==DungeonHub){
             if(boss.getPV()<=0){
                 System.out.println("boss killed");
                 Dungeonlevel++;
                 disposeDungeon();
+                boss = new Boss(0,0,100, 0, 50,3, 10, null,new Massue("massue", 50, 2));
+                boss.setGraphicObject(new GraphicBoss(boss.getName(), DungeonHub.getTiledMap().getTileSets()));
+                
+                int bossX,bossY;
+                Random randomX = new Random();
+                Random randomY = new Random();
+                do{
+                        bossX = randomX.nextInt(CurrentMap.getmapWidth());
+                        bossY = randomY.nextInt(CurrentMap.getmapHeight());
+                    } while (!boss.isValidPosition(bossX,bossY, CurrentMap));
+                boss.setX(bossX);
+                boss.setY(bossY);
+
                 initializeDungeon(numberOfMaps);
             }else for(Map map : Dungeon) map.updatelastposition(map.getX(), map.getY());;
         }
@@ -264,6 +281,7 @@ public class World {
 
         for(Map map : Dungeon){
             ArrayList<Door> Doors = map.getDoors();
+            if(map!=DungeonHub) disposeTiledmaps(map);
             if(Doors != null){
                 int size = Doors.size();
                 for(int i=0; i<size; i++){
@@ -272,6 +290,7 @@ public class World {
                 System.out.println("Door list : " + Doors + "  for : " + map.getName());
             }else System.out.println("No doors");
         }
+        DungeonHub.addDoor(new Door(-40, 100, Home));
         DungeonHub.updatelastposition(DungeonHub.getX(), DungeonHub.getY());
     }
 

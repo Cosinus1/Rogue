@@ -21,8 +21,9 @@ public class Hero extends Character{
     }
 
     public int getMoney(){
-        return money;
+        return money; 
     }
+
     /*--------------------------------------------------------------SPAWN----------------------------------------------------------------- */
     public void spawn(Map map){
         System.out.println("Spawning : " + name);
@@ -118,7 +119,7 @@ public class Hero extends Character{
          }
         
     }
-
+    /*--------------------------------ATTACK----------------------------------- */
     public void Attack(Map map){
     }
 
