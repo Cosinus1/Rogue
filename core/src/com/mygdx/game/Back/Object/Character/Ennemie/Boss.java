@@ -20,7 +20,7 @@ public class Boss extends Ennemie{
         Random random = new Random();
         String chosen = (Names.get(random.nextInt(Names.size())));
         this.Class = chosen;   
-        setName(chosen);     
+        setName(chosen);
     }
         public void Attack(Map map){
         weapon.Attack(this, map);

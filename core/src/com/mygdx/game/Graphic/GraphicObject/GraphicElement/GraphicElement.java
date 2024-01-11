@@ -29,10 +29,8 @@ public class GraphicElement extends GraphicObject{
     /*--------------------------------------------------RENDER------------------------------------------------------------- */
     public void render(Object object, SpriteBatch spriteBatch, OrthographicCamera camera){
     int scaleFactor = 1;
-    //float offsetX=0;
-    //float offsetY=0;
-    float objectX = object.getX();
-    float objectY = object.getY();
+    float objectX = object.getX() - 8;
+    float objectY = object.getY() - 8;
     TextureRegion textureRegion = TextureObject.getTextureRegion();
 
     float objectWidth = textureRegion.getRegionWidth()*scaleFactor;

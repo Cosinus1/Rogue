@@ -21,9 +21,13 @@ public class Staff extends Weapon {
     }
     /*------------------------------ATTACK------------------------------------- */
     public void Attack(Object object, Map map){
-        Element fireball = factory.createProjectile(object.getX(), object.getY());
+        float X1 = object.getX();
+        float Y1 = object.getY();
+        float X2 = map.getHero().getX();
+        float Y2 = map.getHero().getY();
+        Element fireball = factory.createProjectile(X1, Y1);
         fireball.setTarget("hero");
-        fireball.applyForce(new Force(20000,20000, object.getorX(), object.getorY()));
+        fireball.applyForce(new Force(200,200, X2-X1, Y2-Y1));
         map.addElement(fireball);
     }
 }

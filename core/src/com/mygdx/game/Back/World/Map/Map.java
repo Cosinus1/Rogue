@@ -84,6 +84,7 @@ public class Map {
             this.mapWidth = Layer.getWidth();
         }
 
+        
         //Init Doors
         this.Door_list = Door_list;
         //Init the List of Objects
@@ -164,68 +165,7 @@ public class Map {
     public int getTilewidth(){
         return this.tilewidth;
     }
-    //Check for collision with an ennemie
-    //Return true if there is a collision
-    public boolean PNJcollision(Object object){
-        if(NPCs != null){
-            for (Ennemie ennemie : NPCs){
-                
-                float distanceX = ennemie.getX()-object.getX();
-                float distanceY = ennemie.getY()-object.getY();
 
-                if(Math.abs(distanceX)<25 && Math.abs(distanceY)<20){
-                    float signX;
-                    float signY;
-                    if (Math.abs(distanceX)<20) signX = 0;
-                    else signX = Math.signum(distanceX);
-                    if (Math.abs(distanceY)<10) signY = 0;
-                    else signY = Math.signum(distanceY);
-
-                    object.applyInstantForce(new Force(10000, 10000, -signX, -signY));
-                    ennemie.applyInstantForce(new Force(10000, 10000, signX, signY));
-                
-
-                }
-                
-            }
-        }
-        return false;
-    }
-    public void Wallcollision(Object object){
-        if (Walls!=null){
-            object.PFD();
-            for (Wall wall : Walls){
-
-                float distanceX = wall.getX()-object.getX();
-                float distanceY = wall.getY()-object.getY();
-                if(Math.abs(distanceX)<16 && Math.abs(distanceY)<16){
-                    //Apply force to object (we ignore force(Object->wall))
-                    object.applyInstantForce(new Force(10000, 10000, -object.getorX(), -object.getorY()));
-                }
-            }
-        }
-    }
-    public void Objectcollision(Object object1){
-        ArrayList<Object> List = new ArrayList<>();
-        if(NPCs!=null) List.addAll(NPCs); if(Walls!=null) List.addAll(Walls); List.add(hero);
-        if (List!=null){
-            for (Object object2 : List){
-
-                float distanceX = object2.getX()-object1.getX();
-                float distanceY = object2.getY()-object1.getY();
-                if(Math.abs(distanceX)<16 && Math.abs(distanceY)<16){
-                    
-                    float signX = 0;
-                    float signY = 0;
-                    if (Math.abs(distanceX)>Math.abs(distanceY)) signX = Math.signum(distanceX);
-                    else signY = Math.signum(distanceY);
-                    
-                    object1.applyInstantForce(new Force(10000, 10000, -signX, -signY));
-                    object2.applyInstantForce(new Force(10000, 10000, signX, signY));
-                }
-            }
-        }
-    }
 /* --------------------------------------------- SETTERS ------------------------------------- */
     public void setName(String name){
         Name = name;
@@ -250,6 +190,13 @@ public class Map {
         this.merchant = merchant;
     }
 
+/*------------------------------------------CHECKERS-------------------------------------------- */
+    public boolean insideMap(Object object){
+        float X = object.getX();
+        float Y = object.getY();
+        if( X<0 || X> mapWidth*tilewidth || Y<0 || Y>mapHeight*tileheight) return false;
+        return true;
+    }
 /* --------------------------------------LIST UPDATE ------------------------------------- */
     public void addDoor(Door door){;
         if(this.Door_list==null) this.Door_list = new ArrayList<>();
@@ -327,8 +274,7 @@ public class Map {
             for(Element element : Elements){
                 element.update(deltaTime);
                 Objectcollision(element);
-                System.out.println("speedX : " + element.getSpeedX() + " speedY : " + element.getSpeedY());
-                if(element.getSpeedX()!=0 || element.getSpeedY()!=0) List.add(element);
+                if((element.getSpeedX()!=0 || element.getSpeedY()!=0) && (insideMap(element))) List.add(element);
             }
             Elements.clear();
             Elements = List;
@@ -357,6 +303,72 @@ public class Map {
     public void updatelastposition(float x, float y){
         lastposition.set(x, y);
     }
+/*-------------------------------------------COLLISION--------------------------------------------- */
+    //Check for collision with an ennemie
+    //Return true if there is a collision
+    public boolean PNJcollision(Object object){
+        if(NPCs != null){
+            for (Ennemie ennemie : NPCs){
+                
+                float distanceX = ennemie.getX()-object.getX();
+                float distanceY = ennemie.getY()-object.getY();
+
+                if(Math.abs(distanceX)<25 && Math.abs(distanceY)<20){
+                    float signX;
+                    float signY;
+                    if (Math.abs(distanceX)<20) signX = 0;
+                    else signX = Math.signum(distanceX);
+                    if (Math.abs(distanceY)<10) signY = 0;
+                    else signY = Math.signum(distanceY);
+
+                    object.applyInstantForce(new Force(10000, 10000, -signX, -signY));
+                    ennemie.applyInstantForce(new Force(10000, 10000, signX, signY));
+                
+
+                }
+                
+            }
+        }
+        return false;
+    }
+    public void Wallcollision(Object object){
+        if (Walls!=null){
+            for (Wall wall : Walls){
+
+                float distanceX = wall.getX()-object.getX();
+                float distanceY = wall.getY()-object.getY();
+                if(Math.abs(distanceX)<17 && Math.abs(distanceY)<17){
+                    float signX = 0;
+                    float signY = 0;
+                    if (Math.abs(distanceX)>Math.abs(distanceY)) signX = Math.signum(-distanceX);
+                    else signY = Math.signum(-distanceY);
+                    //Apply force to object (we ignore force(Object->wall))
+                    object.applyForce(new Force(1000, 1000, signX, signY));
+                }
+            }
+        }
+    }
+    public void Objectcollision(Object object1){
+        ArrayList<Object> List = new ArrayList<>();
+        if(NPCs!=null) List.addAll(NPCs); if(Walls!=null) List.addAll(Walls); List.add(hero);
+        if (List!=null){
+            for (Object object2 : List){
+
+                float distanceX = object2.getX()-object1.getX();
+                float distanceY = object2.getY()-object1.getY();
+                if(Math.abs(distanceX)<16 && Math.abs(distanceY)<16){
+                    
+                    float signX = 0;
+                    float signY = 0;
+                    if (Math.abs(distanceX)>Math.abs(distanceY)) signX = Math.signum(distanceX);
+                    else signY = Math.signum(distanceY);
+                    
+                    object1.applyForce(new Force(10000, 10000, -signX, -signY));
+                    object2.applyForce(new Force(10000, 10000, signX, signY));
+                }
+            }
+        }
+    }
 /* -----------------------------------------MOVE ENNEMIES----------------------------------------- */
     public void moveEnnemies(Hero hero){
         for (Ennemie Ennemie : NPCs){
@@ -376,18 +388,7 @@ public class Map {
         }
         return EnnemiesinRange;
     }
-    /*public ArrayList<Ennemie> lookforEnemyinRange(float X, float Y){
-        ArrayList<Ennemie> Ennemies = getNPCs();
-        ArrayList<Ennemie> EnnemiesinRange = new ArrayList<>();
-        if(Ennemies != null){
-            for(Ennemie ennemie : Ennemies){
-                if(ennemie.inRange(X, Y, this)){
-                    EnnemiesinRange.add(ennemie);
-                }
-            }
-        }
-        return EnnemiesinRange;
-    }*/
+    
     //Apply damage to NPC from Element
     public void ElementAttack(){
         if(Elements!=null) for (Element element : Elements){
@@ -400,36 +401,15 @@ public class Map {
         ArrayList<Ennemie> PNJinRange = lookforEnemyinRange(hero);
         //Ennemies in range attack the Hero
         if(PNJinRange != null){
-            int size = PNJinRange.size();
-            for(int index = 0; index<size; index++){
-                Ennemie ennemie = PNJinRange.get(index);
-
-                //get its attack timer and cooldown
-                float attackTimer = ennemie.getAttackTimer();
-                float attackCooldown = ennemie.getAttackCooldown();
-
-                //Check cooldown
-                if(attackTimer >= attackCooldown){
-                    //Reset Timer and toggle Attack mode (on/off)
-                    ennemie.setAttackTimer(0);
-                    ennemie.toggle_Attack();
-                    ennemie.getGraphicObject().resetIndex();
-
-                    //Perform the Attack
-                    ennemie.Attack(this);
-
-                    //Kill the Hero if its HP are 0
+            for(Ennemie ennemie : PNJinRange){
+                //Attack
+                ennemie.Attack(this);
+                //Kill the Hero if its HP are 0
                     if(hero.getPV() <= 0){
                         hero.killHero(this);
                         return true;
                     }
-                }else ennemie.setAttackTimer(attackTimer + Gdx.graphics.getDeltaTime());//Increment Timer for CD
-
-                //Attack animation if cooldown is up
-                if (ennemie.isAttack_Charged()){
-                    //Get battle sprite
-                    ennemie.getGraphicObject().setBattleTexture();
-                }
+                ennemie.IncrementAttackTimer(Gdx.graphics.getDeltaTime());//Increment Timer for CD
             }
         }
         return false;
