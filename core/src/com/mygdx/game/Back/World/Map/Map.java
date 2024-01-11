@@ -1,10 +1,11 @@
-package com.mygdx.game.Graphic.World.Map;
+package com.mygdx.game.Back.World.Map;
 
 
 import java.util.Comparator;
 import java.util.Collections;
 
 import com.badlogic.gdx.maps.*;
+import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
@@ -18,12 +19,14 @@ import com.badlogic.gdx.audio.Music;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.mygdx.game.Graphic.GraphicObject.GraphicObject;
-import com.mygdx.game.Graphic.GraphicObject.Elements.Door;
-import com.mygdx.game.Graphic.GraphicObject.Elements.Element;
-import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.*;
-
-import com.mygdx.game.Back.Character.Ennemie.Ennemie;
+import com.mygdx.game.Back.Object.Character.Ennemie.Ennemie;
+import com.mygdx.game.Back.Object.Character.Ennemie.EnnemieFactory;
+import com.mygdx.game.Back.Object.Character.Hero.Hero;
+import com.mygdx.game.Back.Object.Element.Door;
+import com.mygdx.game.Back.Object.Element.Element;
+import com.mygdx.game.Back.Object.Element.Wall;
+import com.mygdx.game.Back.Object.Object;
+import com.mygdx.game.Back.Object.Character.Character;
 
 public class Map {
 
@@ -46,16 +49,17 @@ public class Map {
     private String PVP;
 
     private ArrayList<Door> Door_list;
-    private ArrayList<GraphicEnnemie> NPCs, DeadNPCs;
+    private ArrayList<Ennemie> NPCs, DeadNPCs;
     private ArrayList<Element> Elements;
-    private ArrayList<GraphicObject> Objects;
+    private ArrayList<Wall> Walls;
+    private ArrayList<Object> Objects;
 
-    private GraphicHero hero;
+    private Hero hero;
 
     private Music music;
 
     //constructeur
-    public Map(float x, float y, TiledMap tiledmap, ArrayList<Door> Door_list, ArrayList<GraphicEnnemie> NPCs, Music music){
+    public Map(float x, float y, TiledMap tiledmap, ArrayList<Door> Door_list, ArrayList<Ennemie> NPCs, Music music){
         this.isOpen = false;
         this.x = x;
         this.y = y;
@@ -82,6 +86,7 @@ public class Map {
         //Init the List of Objects
         this.Objects = new ArrayList<>();
         this.Elements = new ArrayList<>();
+        this.Walls = new ArrayList<>();
         this.NPCs = NPCs;
         this.DeadNPCs = new ArrayList<>();
         this.music = music;
@@ -102,16 +107,16 @@ public class Map {
     public String getPVP(){
         return PVP;
     }
-    public ArrayList<GraphicObject> getObjects(){
+    public ArrayList<Object> getObjects(){
         return Objects;
     }
     public ArrayList<Element> getElements(){
         return Elements;
     }
-    public ArrayList<GraphicEnnemie> getNPCs(){
+    public ArrayList<Ennemie> getNPCs(){
         return NPCs;
     }
-    public ArrayList<GraphicEnnemie> getDeadNPCs(){
+    public ArrayList<Ennemie> getDeadNPCs(){
         return DeadNPCs;
     }
     public TiledMap getTiledMap(){
@@ -123,7 +128,7 @@ public class Map {
     public MapLayer getobjectLayer(){
         return this.getTiledMap().getLayers().get("Object Layer 1");
     }
-    public GraphicHero getHero(){
+    public Hero getHero(){
         return this.hero;
     }
     public Music getMusic(){
@@ -153,11 +158,14 @@ public class Map {
     public int getmapHeight(){
         return this.mapHeight;
     }
+    public int getTilewidth(){
+        return this.tilewidth;
+    }
     //Check for collision with an ennemie
     //Return true if there is a collision
-    public boolean PNJcollision(GraphicHero hero){
+    public boolean PNJcollision(Hero hero){
         if(NPCs != null){
-            for (GraphicEnnemie ennemie : NPCs){
+            for (Ennemie ennemie : NPCs){
                 
                 if(Math.abs(ennemie.getX()-hero.getX())<20 && Math.abs(ennemie.getY()-hero.getY())<20) return true;
                 
@@ -182,7 +190,7 @@ public class Map {
     public void setPVP(String pvp){
         this.PVP = pvp;
     }
-    public void setHero(GraphicHero hero){
+    public void setHero(Hero hero){
         this.hero = hero;
     }
 
@@ -191,22 +199,52 @@ public class Map {
         if(this.Door_list==null) this.Door_list = new ArrayList<>();
         this.Door_list.add(door);
     }
-    public void addPNJ(GraphicEnnemie PNJ){
-        if(this.NPCs==null) this.NPCs = new ArrayList<GraphicEnnemie>();
+    public void addPNJ(Ennemie PNJ){
+        if(this.NPCs==null) this.NPCs = new ArrayList<Ennemie>();
         this.NPCs.add(PNJ);
     }
     public void addElement(Element element){
         Elements.add(element);
     }
+    public void addWalls(){
+        TiledMapTileLayer Base = (TiledMapTileLayer) tiledmap.getLayers().get("Base");
+        TiledMapTileLayer Middle = (TiledMapTileLayer) tiledmap.getLayers().get("Middle");
+        TiledMapTileLayer Top = (TiledMapTileLayer) tiledmap.getLayers().get("Top");
+        ArrayList<TiledMapTileLayer> Layers = new ArrayList<>();
+        Layers.add(Base); Layers.add(Middle); Layers.add(Top);
+        for(int X = 0; X<mapWidth; X++){
+            for(int Y = 0; Y<mapHeight-1; Y++){
+                for(TiledMapTileLayer layer : Layers){
+                    Cell cell = layer.getCell(X, Y);
+                    if(cell!=null && cell.getTile()!=null){
+                        Wall wall = new Wall(X*tilewidth, Y*tileheight, 32, 32);
+                        wall.setTextureObject(new TextureMapObject(cell.getTile().getTextureRegion()));
+                        Walls.add(wall);
+                    }
+                }
+            }
+        }
+        System.out.println(Walls.size());
+
+    }
 
     /*--------------------------------------------------------------LIST SORTING------------------------------------------------------------------- */
     public void sortObjects(){
         // Définition du Comparator pour trier en fonction de l'attribut y
-        Comparator<GraphicObject> yComparator = new Comparator<GraphicObject>() {
+        Comparator<Object> yComparator = new Comparator<Object>() {
             @Override
-            public int compare(GraphicObject object1, GraphicObject object2) {
+            public int compare(Object object1, Object object2) {
+                boolean object1IsWall = object1 instanceof Wall;
+                boolean object2IsWall = object2 instanceof Wall;
+                //float distanceX = Math.abs(object1.getX()-object2.getY());
+
+                // If one object is a Wall and the other isn't, prioritize the Wall
+                if (object1IsWall || object2IsWall) {
+                        return Float.compare(object1.getX(), object2.getX()); // Place object2 (Wall) before object1
+                }
                 // Comparaison des valeurs de y
-                return Float.compare(object2.getY(), object1.getY());
+                else return Float.compare(object2.getY(), object1.getY());
+                
             }
         };
 
@@ -216,15 +254,16 @@ public class Map {
 /*-------------------------------------------------------------------UPDATE------------------------------------------------------------------------ */
 
     public void update(float deltaTime){
-        ArrayList<GraphicObject> List = new ArrayList<>();
+        ArrayList<Object> List = new ArrayList<>();
         updateNPCs();
         if(NPCs!=null) List.addAll(NPCs);
         updateElements();
         if(Elements!=null) List.addAll(Elements);
         List.add(hero);
+        List.addAll(Walls);
         Objects = List;
         sortObjects();
-        for(GraphicObject object : Objects){
+        for(Object object : Objects){
             object.update(deltaTime);
         }
     }
@@ -240,9 +279,9 @@ public class Map {
     }
     public void updateNPCs(){
         if (NPCs!=null){
-            ArrayList<GraphicEnnemie> List = new ArrayList<>();
-            for(GraphicEnnemie enemy : NPCs){
-                if(enemy.getCharacter().getPV()<=0) DeadNPCs.add(enemy);
+            ArrayList<Ennemie> List = new ArrayList<>();
+            for(Ennemie enemy : NPCs){
+                if(enemy.getPV()<=0) DeadNPCs.add(enemy);
                 else List.add(enemy);
             }
             NPCs.clear();
@@ -261,17 +300,17 @@ public class Map {
         lastposition.set(x, y);
     }
 /* -----------------------------------------MOVE ENNEMIES----------------------------------------- */
-    public void moveEnnemies(GraphicHero hero){
-        for (GraphicEnnemie Ennemie : NPCs){
+    public void moveEnnemies(Hero hero){
+        for (Ennemie Ennemie : NPCs){
             Ennemie.move(hero, this);
         }
     }
 /* -----------------------------------------ENNEMY ATTACK ---------------------------------------- */
-    public ArrayList<GraphicEnnemie> lookforEnemyinRange(GraphicCharacter character){
-        ArrayList<GraphicEnnemie> Ennemies = getNPCs();
-        ArrayList<GraphicEnnemie> EnnemiesinRange = new ArrayList<>();
+    public ArrayList<Ennemie> lookforEnemyinRange(Character character){
+        ArrayList<Ennemie> Ennemies = getNPCs();
+        ArrayList<Ennemie> EnnemiesinRange = new ArrayList<>();
         if(Ennemies != null){
-            for(GraphicEnnemie ennemie : Ennemies){
+            for(Ennemie ennemie : Ennemies){
                 if(ennemie.inRange(character, this)){
                     EnnemiesinRange.add(ennemie);
                 }
@@ -279,18 +318,18 @@ public class Map {
         }
         return EnnemiesinRange;
     }
-    public ArrayList<GraphicEnnemie> lookforEnemyinRange(float X, float Y){
-        ArrayList<GraphicEnnemie> Ennemies = getNPCs();
-        ArrayList<GraphicEnnemie> EnnemiesinRange = new ArrayList<>();
+    /*public ArrayList<Ennemie> lookforEnemyinRange(float X, float Y){
+        ArrayList<Ennemie> Ennemies = getNPCs();
+        ArrayList<Ennemie> EnnemiesinRange = new ArrayList<>();
         if(Ennemies != null){
-            for(GraphicEnnemie ennemie : Ennemies){
+            for(Ennemie ennemie : Ennemies){
                 if(ennemie.inRange(X, Y, this)){
                     EnnemiesinRange.add(ennemie);
                 }
             }
         }
         return EnnemiesinRange;
-    }
+    }*/
     //Apply damage to NPC from Element
     public void ElementAttack(){
         if(Elements!=null) for (Element element : Elements){
@@ -300,13 +339,12 @@ public class Map {
     //Apply damage to hero and return true if the hero is dead, false if not
     public boolean PNJAttack(){
         
-        ArrayList<GraphicEnnemie> PNJinRange = lookforEnemyinRange(hero);
+        ArrayList<Ennemie> PNJinRange = lookforEnemyinRange(hero);
         //Ennemies in range attack the Hero
         if(PNJinRange != null){
             int size = PNJinRange.size();
             for(int index = 0; index<size; index++){
-                GraphicEnnemie Graphic_ennemie = PNJinRange.get(index);
-                Ennemie ennemie = Graphic_ennemie.getCharacter();
+                Ennemie ennemie = PNJinRange.get(index);
 
                 //get its attack timer and cooldown
                 float attackTimer = ennemie.getAttackTimer();
@@ -317,14 +355,14 @@ public class Map {
                     //Reset Timer and toggle Attack mode (on/off)
                     ennemie.setAttackTimer(0);
                     ennemie.toggle_Attack();
-                    Graphic_ennemie.resetIndex();
+                    ennemie.getGraphicObject().resetIndex();
 
                     //Perform the Attack
-                    Graphic_ennemie.Attack(this);
+                    ennemie.Attack(this);
 
                     //Kill the Hero if its HP are 0
-                    if(hero.getCharacter().getPV() <= 0){
-                        hero.getCharacter().killHero(this);
+                    if(hero.getPV() <= 0){
+                        hero.killHero(this);
                         return true;
                     }
                 }else ennemie.setAttackTimer(attackTimer + Gdx.graphics.getDeltaTime());//Increment Timer for CD
@@ -332,7 +370,7 @@ public class Map {
                 //Attack animation if cooldown is up
                 if (ennemie.isAttack_Charged()){
                     //Get battle sprite
-                    Graphic_ennemie.setBattleTexture();
+                    ennemie.getGraphicObject().setBattleTexture();
                 }
             }
         }
@@ -342,7 +380,7 @@ public class Map {
     /*-----------------------------------------------------------------SPAWN ENNEMIES----------------------------------------------------------------------- */
 
     public void createRandomEnnemies(TiledMapTileSets Tilesets, int n) {
-        GraphicEnnemieFactory ennemieFactory = new GraphicEnnemieFactory(Tilesets);
+        EnnemieFactory ennemieFactory = new EnnemieFactory(Tilesets);
         TiledMapTileLayer collisionLayer = getcollisionLayer();
     
         // Get the dimensions of the map
@@ -374,7 +412,7 @@ public class Map {
             float x = randomX * collisionLayer.getTileWidth();
             float y = randomY * collisionLayer.getTileHeight();
     
-            GraphicEnnemie newEnnemie = ennemieFactory.createRandomGraphicEnnemie(x, y);
+            Ennemie newEnnemie = ennemieFactory.createRandomEnnemie(x, y);
             if (newEnnemie != null) {
                 newEnnemie.spawn(this);
             }
@@ -383,12 +421,10 @@ public class Map {
 
     public boolean checkDistancefromWall(int X, int Y){
         TiledMapTileLayer Layer = (TiledMapTileLayer) this.getTiledMap().getLayers().get("Base");
-        if (Layer == null) System.out.println(Layer);
+        if (Layer == null) System.out.println("Layer is null");
         Cell cell = Layer.getCell(X, Y);
-        if (cell != null) {
-            //System.out.println("cell not null");
+        if (cell != null && cell.getTile()!=null) {
             if(cell.getTile().getProperties().containsKey("blocked")){
-                //System.out.println("blocked");
                 return false;  
             }
         }
@@ -396,10 +432,10 @@ public class Map {
 
     }
 
-    public boolean checkDistancefromEnnemie(float X, float Y, ArrayList<GraphicEnnemie> NPCs){
+    public boolean checkDistancefromEnnemie(float X, float Y, ArrayList<Ennemie> NPCs){
         int pnj_distance = 50;
         if (!NPCs.isEmpty()) {
-            for (GraphicEnnemie enemy : NPCs) {
+            for (Ennemie enemy : NPCs) {
                 float enemyX = enemy.getX();
                 float enemyY = enemy.getY();
                 double distanceSquared = (enemyX - X) * (enemyX - X) + (enemyY - Y) * (enemyY - Y);

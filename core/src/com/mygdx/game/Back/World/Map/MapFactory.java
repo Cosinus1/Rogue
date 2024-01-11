@@ -1,4 +1,4 @@
-package com.mygdx.game.Graphic.World.Map;
+package com.mygdx.game.Back.World.Map;
 
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -7,23 +7,27 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.*;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
-
-import com.mygdx.game.Graphic.GraphicObject.Elements.Door;
-import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicEnnemie;
+import com.mygdx.game.Back.Object.Character.Ennemie.Ennemie;
+import com.mygdx.game.Back.Object.Element.Door;
 
 import java.util.ArrayList;
 import java.util.Random;
-
+import java.util.PriorityQueue;
+import java.util.Comparator;
 
 public class MapFactory {
 
-    int mapWidth = 30;
-    int mapHeight = 20;
-    int tilewidth = 32;
+    private static int mapWidth = 30;
+    private static int mapHeight = 20;
+    private static int tilewidth = 32;
+
+    private static int StartX = 0;
+    private static int StartY = 3;
+
 
     public Map createMap(float x, float y, TiledMap tiledmap, Music music, Map previousMap) {
         ArrayList<Door> doorList = new ArrayList<>();
-        ArrayList<GraphicEnnemie> PNJ_list = new ArrayList<>();
+        ArrayList<Ennemie> PNJ_list = new ArrayList<>();
         // Door to go back to the previous map
         Door backDoor = new Door(x-100, y, previousMap);
         doorList.add(backDoor);
@@ -89,7 +93,7 @@ public class MapFactory {
             }
         }
         //Add base walls inside the baseLayer
-        generateRandomWalls(baseLayer, tileSets);
+        generateRandomWalls(baseLayer, tileSets, EndX, EndY);
     
         // Add the Top tiles to the topLayer
         // Iterate through the baseLayer to add top walls to the topLayer
@@ -146,6 +150,7 @@ public class MapFactory {
             }
         }
 
+        
         // Add the base, middle, and top layers to the tiled map
 
         tiledMap.getLayers().add(groundLayer);
@@ -157,143 +162,169 @@ public class MapFactory {
         return tiledMap;
     }
     
-    public void generateRandomWalls(TiledMapTileLayer baseLayer, TiledMapTileSets tileSets) {
-    
-        Random randomStart = new Random();
-        Random randomEnd = new Random();
+    public void generateRandomWalls(TiledMapTileLayer baseLayer, TiledMapTileSets tileSets, int endX, int endY) {
+
+        Random randomWallstart = new Random();
+        Random randomWallend = new Random();
     
         int i = 0;
-        TiledMapTileLayer newBase;
-        TiledMapTileLayer backupBase = cloneLayer(baseLayer);//Back up the baseLayer to avoid chain<3 to be added (ugly)
+        TiledMapTileLayer backupLayer;
+        TiledMapTileLayer newLayer;
 
     
-        while (i < 5) { // You can adjust the number of chains (5 is just an example)
-            // Choose a random starting point along the border
-            int startX, startY;
-            //Choose a random ending point
-            int endX, endY;
+        while (i < 20) { //Number of chains
+            boolean breakcondition = false;//Break if no position is found
+            // Choose a random Wallstarting point along the border
+            int WallstartX, WallstartY;
+            //Choose a random Wallstarting point
+            int WallendX, WallendY;
 
-            newBase = cloneLayer(baseLayer);
+            //Get an independant copy of baseLayer to check for near walls (we dont want to check walls from current chain)
+            backupLayer = cloneLayer(baseLayer);
+            //Clone baseLayer (delete too short chains)
+            newLayer = cloneLayer(baseLayer);
 
-            
-            System.out.println("CHAIN No : " + i);
-
-            // Ensure starting point is  on borders if i< 3 else not too close to the corners 
+            // Ensure Wallstarting point is  on borders if i< 3 else not too close to the corners 
             int breakwhile = 0;
-            if(i<4){
-                    startX = randomStart.nextInt(mapWidth-3)+2;
-                    startY = randomStart.nextInt(2)*(mapHeight-4)+1;
+            if(i<8){
+                    WallstartX = randomWallstart.nextInt(mapWidth-3)+2;
+                    WallstartY = randomWallstart.nextInt(2)*(mapHeight-4)+1;
             }else{
             do {
                 breakwhile++;
-                startX = randomEnd.nextInt(mapWidth - 10) + 5; 
-                startY = randomEnd.nextInt(mapHeight - 10) + 5; 
+                WallstartX = randomWallend.nextInt(mapWidth - 10) + 5; 
+                WallstartY = randomWallend.nextInt(mapHeight - 10) + 5; 
     
-            } while (isNearAnotherChain(baseLayer, startX, startY) && breakwhile<2000);
-            System.out.println(breakwhile);
+            } while (isNearAnotherChain(baseLayer, WallstartX, WallstartY) && breakwhile<2000);
+            if(breakwhile>=2000) breakcondition = true;
             }
             // Set the initial coordinates
-            int currentX = startX;
-            int currentY = startY;
+            int currentX = WallstartX;
+            int currentY = WallstartY;
             int distanceX, distanceY;
             
             breakwhile = 0;
             do {
                 breakwhile++;
-                endX = randomEnd.nextInt(mapWidth - 10) + 5; 
-                endY = randomEnd.nextInt(mapHeight - 10) + 5; 
-                distanceX = (endX-currentX)*(endX-currentX);    
-                distanceY = (endY-currentY)*(endY-currentY);
+                WallendX = randomWallend.nextInt(mapWidth - 10) + 5; 
+                WallendY = randomWallend.nextInt(mapHeight - 10) + 5; 
+                distanceX = (WallendX-currentX)*(WallendX-currentX);    
+                distanceY = (WallendY-currentY)*(WallendY-currentY);
                 
     
-            } while ((distanceX+distanceY<9) && !isValidTrajectory(startX, startY, endX, endY, baseLayer) && !isNearAnotherChain(baseLayer, endX, endY) && breakwhile<2000);
-            System.out.println("startX : " + startX + "/ startY : " + startY);
-            System.out.println("endX : " + endX + " / endY : " + endY);
-            if(breakwhile>=2000) System.out.println(" //BREAK//  isValidTraj : " + isValidTrajectory(startX, startY, endX, endY, baseLayer) + " isNearChain : " + isNearAnotherChain(baseLayer, endX, endY));
+            } while ((distanceX+distanceY<2) && isNearAnotherChain(baseLayer, WallendX, WallendY) && breakwhile<2000);
+            if(breakwhile>=2000) breakcondition = true;
 
-            int chainLength = 0; // Initialize chainLength variable
-            
-            int delta = 1;
+            if(breakcondition == false){//Build the Chain if positions are OK
 
-            int direction = -1;
-            int orientation = -1;
-            while (chainLength < 20) { //Desired chainlength
-                //get the distance between Current Position and End & orientation
-                distanceX = (endX-currentX)*(endX-currentX);
-                distanceY = (endY-currentY)*(endY-currentY);
-                int signX = (int) Math.signum(endX-currentX);
-                int signY = (int) Math.signum(endY-currentY);
-                delta = randomEnd.nextInt(4);
+                int chainLength = 0; // Initialize chainLength variable
+                //Init newCells 
+                int[][] newCellPosition = new int[2][20];
+                ArrayList<Cell> newCells = new ArrayList<>();
+                
+                int delta = 1;
+                int direction = -1;
+                int orientation = -1;
 
-                if(0<delta && !isNearAnotherChain(newBase, currentX+signX, currentY)){
-                    chainLength++;
-                    switch (signY) {
-                        case -1:
-                            if(direction == 0){
-                                if (orientation == -1)baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "down right")));
-                                else baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "left down")));
+                while (chainLength < 20) { //Desired chainlength
 
-                            }
-                            else baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "vertical")));
-                            currentY--;
-                            orientation = -1;
-                            direction = 1;
-                            break;
-                    
-                        case 1:
-                            if(direction == 0){
-                                if (orientation == -1)baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "up right")));
-                                else baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "left up")));
+                    //get the distance between Current Position and Wallend & orientation
+                    distanceX = (WallendX-currentX)*(WallendX-currentX);
+                    distanceY = (WallendY-currentY)*(WallendY-currentY);
+                    int signX = (int) Math.signum(WallendX-currentX);
+                    int signY = (int) Math.signum(WallendY-currentY);
+                    int moveX = 0;
+                    int moveY = 0;
 
-                            }
-                            else baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "vertical")));
-                            currentY++;
-                            orientation = 1;
-                            direction = 1;
-                            break;
+                    Cell newCell = new Cell();
+
+                    //Get appropriate wall sprite based on move
+                    if(0<delta){
+                        switch (signY) {
+                            case -1:
+                                if(direction == 0){
+                                    if (orientation == -1) newCell = createCell(createWallTile(tileSets, "base", "down right"));
+                                    else newCell = createCell(createWallTile(tileSets, "base", "left down"));
+
+                                }
+                                else newCell = createCell(createWallTile(tileSets, "base", "vertical"));
+                                moveY--;
+                                orientation = -1;
+                                direction = 1;
+                                break;
                         
-                    }
-                    
-                }else if(!isNearAnotherChain(newBase, currentX, currentY+signY)){
-                    chainLength++;
-                    switch (signX) {
-                        case -1:
-                            if(direction == 1){
-                                if (orientation == -1)baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "left up")));
-                                else baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "left down")));
+                            case 1:
+                                if(direction == 0){
+                                    if (orientation == -1)newCell = createCell(createWallTile(tileSets, "base", "up right"));
+                                    else newCell = createCell(createWallTile(tileSets, "base", "left up"));
 
-                            }
-                            else baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "horizontal")));
-                            currentX--;
-                            orientation = -1;
-                            direction = 0;
-                            break;
-                    
-                        case 1:
-                            if(direction == 1){
-                                if (orientation == -1)baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "up right")));
-                                else baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "down right")));
-
-                            }
-                            else baseLayer.setCell(currentX, currentY, createCell(createWallTile(tileSets, "base", "horizontal")));
-                            currentX++;
-                            orientation = 1;
-                            direction = 0;
-                            break;
-                            
+                                }
+                                else newCell = createCell(createWallTile(tileSets, "base", "vertical"));
+                                moveY++;
+                                orientation = 1;
+                                direction = 1;
+                                break; 
+                        }
                         
+                    }else{
+                        switch (signX) {
+                            case -1:
+                                if(direction == 1){
+                                    if (orientation == -1)newCell = createCell(createWallTile(tileSets, "base", "left up"));
+                                    else newCell = createCell(createWallTile(tileSets, "base", "left down"));
+
+                                }
+                                else newCell = createCell(createWallTile(tileSets, "base", "horizontal"));
+                                moveX--;
+                                orientation = -1;
+                                direction = 0;
+                                break;
+                        
+                            case 1:
+                                if(direction == 1){
+                                    if (orientation == -1)newCell = createCell(createWallTile(tileSets, "base", "up right"));
+                                    else newCell = createCell(createWallTile(tileSets, "base", "down right"));
+
+                                }
+                                else newCell = createCell(createWallTile(tileSets, "base", "horizontal"));
+                                moveX++;
+                                orientation = 1;
+                                direction = 0;
+                                break;
+                        }
                     }
+
+                    //Add newCell to newLayer
+                    newLayer.setCell(currentX, currentY, newCell);
+                    //Check if the newCell doesnt block the way to the exit
+                    if(isValidTrajectory(StartX, StartY, endX, endY, newLayer) && isValidPosition(currentX, currentY, baseLayer)){
+                        //Store Cell and position
+                            newCells.add(newCell);
+                            newCellPosition[0][chainLength] = currentX;
+                            newCellPosition[1][chainLength] = currentY;
+                            chainLength++;
+                        //Make a move
+                            currentX += moveX;
+                            currentY += moveY;
+                    }else break;
                     
+                    //Check if we reached Wallend or if we are too close from another chain
+                    if (distanceX + distanceY == 0 || isNearAnotherChain(backupLayer, currentX, currentY)) break;
+
+                    delta = randomWallend.nextInt(4);
+                
                 }
-                else{
-                    endX -= signX;
-                    endY -= signY;
+                //Update baseLayer if the chain isnt too short
+                if(chainLength>2){
+                    int j = 0;
+                    for(Cell newCell : newCells){
+                        baseLayer.setCell(newCellPosition[0][j], newCellPosition[1][j], newCell);
+                        j++;
+                    }
+                    newCells.clear();
                 }
-                if (distanceX + distanceY == 0) break;
-               
+                
             }
-            //Backup the base if the chain is too short
-            //if(chainLength<3) baseLayer = backupBase;    
             i++; // Increment the chain count
         }
     }    
@@ -379,45 +410,19 @@ public class MapFactory {
     }
     /*---------------------------------------------------CHECKERS-------------------------------------------------------------- */
     
-    public boolean isValidTrajectory(int X, int Y, int endX, int endY, TiledMapTileLayer Base){
-        int moveX = (int) Math.signum(endX-X);
-        int moveY = (int) Math.signum(endY-Y);
-        int newX = X + moveX;
-        int newY = Y + moveY;
-        //Check if we arrived at target
-        if (X==endX && Y==endY) return true;
-
-        //Otherwise check if the next step is valid
-            //Check if we are at the same X than the target
-            boolean isValidX;
-            if(endX==X){
-                //No move on X needed so it's a valid position on X
-                isValidX = true;
-                newX -= moveX;
-            }else isValidX = isValidPosition(X+moveX, Y, Base);
-            //Check if we are at the same Y than the target
-            boolean isValidY;
-            if(endY==Y){
-                //No move on Y needed so it's a valid position on Y
-                isValidY = true;
-                newY -= moveY;
-            }else isValidY = isValidPosition(X, Y+moveY, Base);
-
-        if(isValidX && isValidY){
-            return isValidTrajectory(newX, newY, endX, endY, Base);
-        }else return false;// A wall is in the trajectory
-    }
+    
     public boolean isValidPosition(int X, int Y, TiledMapTileLayer Base) {
         //Check Map boundaries
         if(X<1 || X>(mapWidth) || Y<1 || Y>(mapHeight-2)) return false;
         // Check distance from walls
         return checkDistancefromWall(X, Y, Base);
     }
-    public boolean checkDistancefromWall(int X, int Y, TiledMapTileLayer Base){
+    
+    private boolean checkDistancefromWall(int X, int Y, TiledMapTileLayer Base){
         if (Base == null) System.out.println(Base);
         Cell cell = Base.getCell(X, Y);
         if (cell != null) {
-            if(cell.getTile().getProperties().containsKey("blocked")){
+            if(cell.getTile()!=null && cell.getTile().getProperties().containsKey("blocked")){
                 return false;  
             }
         }
@@ -425,19 +430,109 @@ public class MapFactory {
     }
 
     private boolean isNearAnotherChain(TiledMapTileLayer baseLayer, int startX, int startY) {
-        int searchRange = 2; // Define the range to search for existing chains
+        int searchRange = 3; // Define the range to search for existing chains
     
         for (int x = startX - searchRange; x <= startX + searchRange; x++) {
             for (int y = startY - searchRange; y <= startY + searchRange; y++) {
                 if (x > 1 && x < mapWidth && y > 1 && y < mapHeight) {
-                    if (baseLayer.getCell(x, y) != null && !baseLayer.getCell(x, y).getTile().getProperties().containsKey("border")) {
-                        return true; // Found an existing chain nearby
+                    if (baseLayer.getCell(x, y) != null){
+                        if(baseLayer.getCell(x, y).getTile()!=null && !baseLayer.getCell(x, y).getTile().getProperties().containsKey("border")) {
+                            return true; // Found an existing chain 
+                        }
                     }
                 }
             }
         }
         return false; // No existing chain found nearby
     }
+    
+    // Check if a path from Entry to Exit exists using A*
+    private boolean isValidTrajectory(int startX, int startY, int endX, int endY, TiledMapTileLayer baseLayer) {
 
+        // Closed list to keep track of visited nodes
+        boolean[][] closed = new boolean[mapWidth][mapHeight];
+
+        // Priority queue to store nodes with the lowest cost
+        PriorityQueue<Node> queue = new PriorityQueue<>(mapWidth * mapHeight, new Comparator<Node>() {
+            @Override
+            public int compare(Node a, Node b) {
+                return a.cost - b.cost;
+            }
+        });
+
+        // Cost and heuristic arrays to store costs and heuristic values for each node
+        int[][] cost = new int[mapWidth][mapHeight];
+        int[][] heuristic = new int[mapWidth][mapHeight];
+
+        // Initialize cost and heuristic arrays
+        for (int x = 0; x < mapWidth; x++) {
+            for (int y = 0; y < mapHeight; y++) {
+                cost[x][y] = Integer.MAX_VALUE;
+                heuristic[x][y] = Math.abs(endX - x) + Math.abs(endY - y);
+            }
+        }
+
+        // Add the starting node to the queue and set its cost to 0
+        queue.add(new Node(startX, startY, 0));
+        cost[startX][startY] = 0;
+
+        // A* algorithm
+        while (!queue.isEmpty()) {
+            // Retrieve and remove the node with the lowest cost from the queue
+            Node current = queue.poll();
+            int x = current.x;
+            int y = current.y;
+
+            // Mark the current node as visited
+            closed[x][y] = true;
+
+            // Check if reached the exit node
+            if (x == endX && y == endY) {
+                return true;
+            }
+
+            // Explore neighbors
+            for (int i = -1; i <= 1; i++) {
+                for (int j = -1; j <= 1; j++) {
+                    if (i == 0 && j == 0) {
+                        continue;
+                    }
+
+                    int newX = x + i;
+                    int newY = y + j;
+
+                    // Check if the neighbor is within the map boundaries and not visited
+                    if (newX >= 0 && newX < mapWidth && newY >= 0 && newY < mapHeight &&
+                            !closed[newX][newY] && isValidPosition(newX, newY, baseLayer)) {
+                        int newCost = cost[x][y] + 1;
+
+                        // Update the cost if the new cost is lower
+                        if (newCost < cost[newX][newY]) {
+                            cost[newX][newY] = newCost;
+                            int priority = newCost + heuristic[newX][newY];
+
+                            // Add the neighbor to the queue with updated cost and priority
+                            queue.add(new Node(newX, newY, priority));
+                        }
+                    }
+                }
+            }
+        }
+        // If no path found, return false
+        return false;
+    }
+
+    //Adding a node class for A* 
+    private static class Node {
+        int x;
+        int y;
+        int cost;
+
+        public Node(int x, int y, int cost) {
+            this.x = x;
+            this.y = y;
+            this.cost = cost;
+        }
+    }
 
 }
