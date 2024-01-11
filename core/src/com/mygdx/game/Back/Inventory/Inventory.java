@@ -36,7 +36,7 @@ public class Inventory {
     public InventoryIteratorInterface<Item> getIterator(ItemType itemType){
         return new InventoryIterator(this,itemType);
     }
-    // public InventoryIterator getIterator(){
-
-    // }
+    public void removeItem(Item item){
+        inventory.remove(item);
+    }
 }

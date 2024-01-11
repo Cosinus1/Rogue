@@ -6,12 +6,10 @@ import com.mygdx.game.Back.World.Map.Map;
 import com.mygdx.game.Back.Object.Object;
 
 public class Weapon extends Item {
-    protected String name;
     protected int power;
 
-    public Weapon(ItemType t, String name, int power){
-        super(t);
-        this.name=name;
+    public Weapon(String name, int power){
+        super(ItemType.WEAPON,name);
         this.power=power;
     }
 
