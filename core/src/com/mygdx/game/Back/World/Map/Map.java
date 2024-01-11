@@ -25,6 +25,7 @@ import com.mygdx.game.Back.Object.Character.Hero.Hero;
 import com.mygdx.game.Back.Object.Element.Door;
 import com.mygdx.game.Back.Object.Element.Element;
 import com.mygdx.game.Back.Object.Element.Wall;
+import com.mygdx.game.Back.Force;
 import com.mygdx.game.Back.Object.Object;
 import com.mygdx.game.Back.Object.Character.Character;
 
@@ -163,15 +164,50 @@ public class Map {
     }
     //Check for collision with an ennemie
     //Return true if there is a collision
-    public boolean PNJcollision(Hero hero){
+    public boolean PNJcollision(Object object){
         if(NPCs != null){
             for (Ennemie ennemie : NPCs){
                 
-                if(Math.abs(ennemie.getX()-hero.getX())<20 && Math.abs(ennemie.getY()-hero.getY())<20) return true;
+                float distanceX = ennemie.getX()-object.getX();
+                float distanceY = ennemie.getY()-object.getY();
+
+                if(Math.abs(distanceX)<25 && Math.abs(distanceY)<20){
+                    float signX;
+                    float signY;
+                    if (Math.abs(distanceX)<20) signX = 0;
+                    else signX = Math.signum(distanceX);
+                    if (Math.abs(distanceY)<10) signY = 0;
+                    else signY = Math.signum(distanceY);
+
+                    object.applyInstantForce(new Force(10000, 10000, -signX, -signY));
+                    ennemie.applyInstantForce(new Force(10000, 10000, signX, signY));
+                
+
+                }
                 
             }
         }
         return false;
+    }
+    public void Wallcollision(Object object){
+        if (Walls!=null){
+            object.PFD();
+            for (Wall wall : Walls){
+
+                float distanceX = wall.getX()-object.getX();
+                float distanceY = wall.getY()-object.getY();
+                if(Math.abs(distanceX)<16 && Math.abs(distanceY)<16){
+                    
+                    float signX = 0;
+                    float signY = 0;
+                    if (Math.abs(distanceX)>Math.abs(distanceY)) signX = Math.signum(distanceX);
+                    else signY = Math.signum(distanceY);
+                    
+                    object.applyInstantForce(new Force(10000, 10000, -signX, -signY));
+                    wall.applyInstantForce(new Force(10000, 10000, signX, signY));
+                }
+            }
+        }
     }
 /* --------------------------------------------- SETTERS ------------------------------------- */
     public void setName(String name){
@@ -234,16 +270,17 @@ public class Map {
         Comparator<Object> yComparator = new Comparator<Object>() {
             @Override
             public int compare(Object object1, Object object2) {
+                float y1 = object1.getY();
+                float y2 = object2.getY();
                 boolean object1IsWall = object1 instanceof Wall;
                 boolean object2IsWall = object2 instanceof Wall;
-                //float distanceX = Math.abs(object1.getX()-object2.getY());
-
-                // If one object is a Wall and the other isn't, prioritize the Wall
-                if (object1IsWall || object2IsWall) {
-                        return Float.compare(object1.getX(), object2.getX()); // Place object2 (Wall) before object1
+                float distanceX = Math.abs(object1.getX()-object2.getX());
+                if(distanceX>64){
+                    if (object1IsWall) y2 += 32;
+                    if (object2IsWall) y1 += 32;
                 }
                 // Comparaison des valeurs de y
-                else return Float.compare(object2.getY(), object1.getY());
+                return Float.compare(y2, y1);
                 
             }
         };

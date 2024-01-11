@@ -1,9 +1,8 @@
 package com.mygdx.game.Back.Item;
 
 public abstract class Item {
-    protected ItemType type;
+    private ItemType type;
     protected String name;
-    protected int value; //value to be buy
 
     public Item(ItemType t, String name){
         this.type = t;
@@ -13,12 +12,8 @@ public abstract class Item {
     public ItemType getType(){
         return type;
     }
-    public String getName(){
+    public String getname(){
         return name;
-    }
-
-    public void setValue(int value){
-        this.value = value;
     }
 
     public abstract void description();

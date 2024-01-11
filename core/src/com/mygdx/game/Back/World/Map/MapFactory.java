@@ -88,8 +88,8 @@ public class MapFactory {
         // Add openings for doors (specify the positions and tiles for openings)
         for(int i=0; i<3; i++){
             for(int j=0; j<3; j++){
-                baseLayer.setCell(StartX+i-1, StartY+j-1, createCell(createOpeningTile(tileSets)));
-                baseLayer.setCell(EndX+i-1, EndY+j-1, createCell(createOpeningTile(tileSets)));
+                baseLayer.setCell(StartX+i-1, StartY+j-1, null);
+                baseLayer.setCell(EndX+i-1, EndY+j-1, null);
             }
         }
         //Add base walls inside the baseLayer

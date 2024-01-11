@@ -72,23 +72,27 @@ public class World {
             this.CurrentMap = Home;
             this.CurrentcollisionLayer = Home.getcollisionLayer();
 
-            // //Init inventory for debugging
-            // Potion potion1 = new Potion(10,"petite potion");
-            // Potion potion2 = new Potion(20, "moyenne potion");
-            // Potion potion3 = new Potion(20," moyenne potion");
-            // Arc arc = new Arc( "arc", 15 );
-            // Sword sword = new Sword("excalibur",30, 1);
-            // Inventory bag = new Inventory();
-            // bag.addItem(potion1);
-            // bag.addItem(arc);
-            // bag.addItem(potion2);
-            // bag.addItem(potion3);
-            // bag.addItem(sword);
+
+            //Init inventory for debugging
+            Potion potion1 = new Potion(10,"petite potion");
+            Potion potion2 = new Potion(20, "moyenne potion");
+            Potion potion3 = new Potion(20," moyenne potion");
+            Arc arc = new Arc( "arc", 15 );
+            Sword sword = new Sword("excalibur",30, 1);
+            Inventory bag = new Inventory();
+            bag.addItem(potion1);
+            bag.addItem(arc);
+            bag.addItem(potion2);
+            bag.addItem(potion3);
+            bag.addItem(sword);
+
             //Initialize the Hero
             this.Hero = hero;
             Hero.setX(CurrentMap.getX());
             Hero.setY(CurrentMap.getY());
-            //Hero.setBag(bag);
+
+            Hero.setBag(bag);
+
             Hero.setGraphicObject(new GraphicHero(Hero.getName(), Home));
             Hero.spawn(DungeonHub);
             Hero.spawn(Home);
