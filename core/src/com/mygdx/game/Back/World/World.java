@@ -1,10 +1,14 @@
-package com.mygdx.game.Graphic.World;
+package com.mygdx.game.Back.World;
 
-import com.mygdx.game.Back.Character.Ennemie.*;
-import com.mygdx.game.Back.Character.Hero.*;
-import com.mygdx.game.Graphic.GraphicObject.Elements.Door;
-import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.*;
-import com.mygdx.game.Graphic.World.Map.*;
+import java.util.Random;
+
+import com.mygdx.game.Back.Item.ItemType;
+import com.mygdx.game.Back.Item.Weapon.Massue;
+import com.mygdx.game.Back.Object.Character.Ennemie.*;
+import com.mygdx.game.Back.Object.Character.Hero.*;
+import com.mygdx.game.Back.Object.Element.Door;
+import com.mygdx.game.Back.World.Map.*;
+import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicHero;
 
 import java.util.ArrayList;
 
@@ -31,7 +35,6 @@ public class World {
 
     private Hero Hero;
     private Boss boss;
-    private GraphicHero graphicHero;
 
     private int numberOfMaps = 5;
     private int Dungeonlevel;
@@ -39,7 +42,7 @@ public class World {
     //constructor
     public World(Hero hero){
         //Create Lists of NPCs
-        ArrayList<GraphicEnnemie> PNJs = new ArrayList<>();
+        ArrayList<Ennemie> PNJs = new ArrayList<>();
         ArrayList<Door> Door_list = new ArrayList<>();
         //Set up MapFactory
         this.mapFactory = new MapFactory();
@@ -70,9 +73,14 @@ public class World {
 
             //Initialize the Hero
             this.Hero = hero;
-            graphicHero = new GraphicHero(this,Hero,CurrentMap.getX(), CurrentMap.getY());
-        
-
+            Hero.setX(CurrentMap.getX());
+            Hero.setY(CurrentMap.getY());
+            Hero.setGraphicObject(new GraphicHero(Hero.getName(), Home));
+            Hero.spawn(DungeonHub);
+            Hero.spawn(Home);
+            Hero.spawn(Tavern);        
+            //Initialize the Boss
+            boss = new Boss(0,0,100, 0, 50,3, 10, null,new Massue(ItemType.WEAPON, "massue", 50, 2));
             //Initialize Dungeon
             this.Dungeon = new ArrayList<>();
             this.Dungeonlevel = 1;
@@ -82,6 +90,9 @@ public class World {
     }
     
 /* --------------------------------------------- GETTERS ------------------------------------- */
+    public Hero getHero(){
+        return Hero;
+    }
     public Map getDungeonHub(){
         return this.DungeonHub;
     }
@@ -97,9 +108,6 @@ public class World {
     public Map getCurrentMap(){
         return CurrentMap;
     }
-    public GraphicHero getHero(){
-        return this.graphicHero;
-    }
     public TiledMapTileLayer getCurrentcollisionLayer(){
         return CurrentcollisionLayer;
     }
@@ -113,20 +121,20 @@ public class World {
 
         if(Doors!=null){
             for (Door Door : Doors) {  
-                if(Door.getBounds().overlaps(graphicHero.getHitbox())){
+                if(Door.getBounds().overlaps(Hero.getHitbox())){
                     
                     System.out.println(" Door : " + map.getName() + " --> " + Door.getMap().getName() + " is toggled");
-                    //change position of the graphicHero
-                    map.updatelastposition(graphicHero.getlastX(), graphicHero.getlastY());
+                    //change position of the Hero
+                    map.updatelastposition(Hero.getlastX(), Hero.getlastY());
                     //Update map
                     updateCurrentMap(Door.getMap());
                     if (map.isOpen()==false) map.toggle();
                     map = CurrentMap;
                     //get the appropriate position for hero
                     if(Door.getMap().isOpen() || (map.getPVP()!="ON" && map!=Home)){          
-                        graphicHero.setPosition(map.getLastposition());
+                        Hero.setPosition(map.getLastposition());
                     }else{
-                        graphicHero.setPosition(map.getX(), map.getY());
+                        Hero.setPosition(map.getX(), map.getY());
                     }    
                 }
             }
@@ -167,8 +175,10 @@ public class World {
     }
 
     public void initializeDungeon(int numberOfMaps) {
-        boss = new Boss(100, 0, 50,3, 10, null,"Boss",null);
-        GraphicBoss graphicboss = new GraphicBoss(boss,525,400, this.Tilesets);
+        int bossX,bossY;
+        Random randomX = new Random();
+        Random randomY = new Random();
+
         System.out.println("              /////////////Initializing Dungeon//////////////");
         Map DungeonHubMap = getDungeonHub();
         
@@ -198,9 +208,18 @@ public class World {
                 previousMap.addWalls();
                 
                 //Spawn Hero in the new map (This can be done in respawn)
-                graphicHero.spawn(previousMap);
+                Hero.spawn(previousMap);
                 //Spawn Boss in the last Map
-                if(i == numberOfMaps) graphicboss.spawn(previousMap);
+                if(i == numberOfMaps){
+                    do{
+                        bossX = randomX.nextInt(CurrentMap.getmapWidth());
+                        bossY = randomY.nextInt(CurrentMap.getmapHeight());
+                    } while (!boss.isValidPosition(bossX,bossY, CurrentMap));
+                    boss.setX(bossX);
+                    boss.setY(bossY);
+        
+                    boss.spawn(previousMap);
+                }
             }
             //Add the map into the Dungeon
             Dungeon.add(previousMap);

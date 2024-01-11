@@ -1,9 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
-
-import com.mygdx.game.Back.Character.Hero.Hero;
-
+import com.mygdx.game.Back.Object.Character.Hero.Hero;
 import com.mygdx.game.Graphic.Screen.Assets;
 import com.mygdx.game.Graphic.Screen.ChooseClassScreen;
 import com.mygdx.game.Graphic.Screen.GameScreen;

@@ -1,11 +1,11 @@
-package com.mygdx.game.Graphic.GraphicObject.Elements;
+package com.mygdx.game.Back.Object.Element;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.Graphic.World.Map.Map;
+import com.mygdx.game.Back.World.Map.Map;
 
 public class Door {
     private float x;

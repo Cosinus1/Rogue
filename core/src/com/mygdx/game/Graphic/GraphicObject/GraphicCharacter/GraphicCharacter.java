@@ -11,13 +11,11 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 
-import com.mygdx.game.Back.Character.Character;
+
 import com.mygdx.game.Graphic.GraphicObject.GraphicObject;
-import com.mygdx.game.Graphic.GraphicObject.Elements.*;
-import com.mygdx.game.Graphic.World.Map.Map;
+import com.mygdx.game.Graphic.GraphicObject.GraphicElement.BarLife;
 
 public class GraphicCharacter extends GraphicObject{
-    protected Character character;
 
     protected String Name;
 
@@ -31,10 +29,9 @@ public class GraphicCharacter extends GraphicObject{
     protected int index = 0; //to get the appropriate sprite (follow track of movement)
     protected int angle = 0; 
 
-    public GraphicCharacter(Character character2, float x, float y){
-        super(x, y, 32, 32);
-        this.character = character2;
-        this.Name = character.Class();
+    public GraphicCharacter(String Name){
+        super(32, 32);
+        this.Name = Name;
         //Init Texture lists
         moveTexture_list = new ArrayList<>();
         battleTexture_list = new ArrayList<>();
@@ -56,70 +53,24 @@ public class GraphicCharacter extends GraphicObject{
     public int getDeathTimer(){
         return this.death;
     }
-    public float getlastX(){
-        return this.lastX;
-    }
-    public float getlastY(){
-        return this.lastY;
-    }
-    public Character getCharacter(){
-        return character;
-    }
-    public TextureMapObject getObject(){
-        return Object;
+    
+    public TextureMapObject getTextureObject(){
+        return TextureObject;
     }
     public int getIndex(){
         return index;
     }
-    public int getAngle(){
-        return angle;
-    }
+    
     public BarLife getBarlife(){
         return barlife;
     }
 
-    public boolean overlaps(GraphicCharacter character){
-        return Hitbox.overlaps(character.getHitbox());
-    }
-    public int getRange(){
-        return character.getRange();
-    }
 /*----------------------------------------- SETTERS -------------------------------------- */  
     
-    public void setX(float x){
-        Hitbox.x = x;
-    }
-    public void setY(float y){
-        Hitbox.y = y;
-    }
-    public void setlastX(float x){
-        this.lastX = x;
-    }
-    public void setlastY(float y){
-        this.lastY = y;
-    }
-    public void incrementDeathTimer(){
-        death++;
-    }
-    public void setName(){
-        this.Object.setName(character.getName());
-    }
-    public void setObject(String key, float x){
-        Object.getProperties().put(key,x);
-    }
-    public void resetIndex(){
-        this.index = 0;
-    }
-    
-
-    public void setMoveTexture(int x, int y){
-        int size = moveTexture_list.size();
-        //Check horizontal movement
-        switch (x) {
+    public void setAngle(int OrX, int OrY){
+        switch (OrX) {
             case -1://Character going left
                 angle = 2;
-                this.Object.setTextureRegion(moveTexture_list.get((angle+index%size)));
-                this.index+=4;
                 break;
 
             case 0://Character not horizontaly moving
@@ -127,16 +78,12 @@ public class GraphicCharacter extends GraphicObject{
 
             case 1://Character going right
                 angle = 3;
-                this.Object.setTextureRegion(moveTexture_list.get((angle+index%size)));
-                this.index+=4;
                 break;
         }
         //Check vertical movement
-        switch (y){
+        switch (OrY){
             case -1://Character going down
                 angle = 0;
-                this.Object.setTextureRegion(moveTexture_list.get((angle+index%size)));
-                this.index+=4;
                 break;
 
             case 0://Character not verticaly moving
@@ -144,74 +91,62 @@ public class GraphicCharacter extends GraphicObject{
 
             case 1://Character going up
                 angle = 1;
-                this.Object.setTextureRegion(moveTexture_list.get((angle+index%size)));
-                this.index+=4;
                 break;
         }
 
-    }  
-
-/*------------------------------------------------------------------CHECKERS------------------------------------------------------------ */
-    public boolean inRange(GraphicCharacter character, Map map){
-        int tilewidth = map.getcollisionLayer().getTileWidth();
-        float x = getX();
-        float y = getY();
-        double distanceX = x - character.getX();
-        double distanceY = y - character.getY();
-
-        int distance = (int) Math.sqrt(Math.pow(distanceY, 2) + Math.pow(distanceX, 2));
-
-        int X = (int) x/tilewidth;
-        int Y = (int) y/tilewidth;
-        int endX = (int) (x-distanceX)/tilewidth;
-        int endY = (int) (y-distanceY)/tilewidth;
-
-        int signX = (int) Math.signum(-distanceX);
-        int signY = (int) Math.signum(-distanceY);
-
-        if(distance <= getRange()*tilewidth && isValidTrajectory(X, Y, endX, endY, signX, signY, map)) return true;
-        else return false;
-    }
-    public boolean inRange(float x2, float y2, Map map){
-        int tilewidth = map.getcollisionLayer().getTileWidth();
-        float x = getX();
-        float y = getY();
-        double distanceX = x - x2;
-        double distanceY = y - y2;
-
-        int distance = (int) Math.sqrt(Math.pow(distanceY, 2) + Math.pow(distanceX, 2))/tilewidth;
-
-        int X = (int) x/tilewidth;
-        int Y = (int) y/tilewidth;
-        int endX = (int) (x-distanceX)/tilewidth;
-        int endY = (int) (y-distanceY)/tilewidth;
-
-        int signX = (int) Math.signum(-distanceX);
-        int signY = (int) Math.signum(-distanceY);
-
-        if(distance <= (int) character.getRange() && isValidTrajectory(X, Y, endX, endY, signX, signY, map)) return true;
-        else return false;
     }
 
-/*------------------------------------------------------------ SPAWN ------------------------------------------------------------------ */  
-
-    public void spawn(Map map) {
+    public void incrementDeathTimer(){
+        death++;
+    }
+    
+    public void resetIndex(){
+        this.index = 0;
     }
     
 
+    public void setMoveTexture(){
+        int size = moveTexture_list.size();
+
+        //Set texture according to index & angle
+        this.TextureObject.setTextureRegion(moveTexture_list.get((angle+index%size)));
+        this.index+=4;
+    }
+    //Set appropriate Sprite for battle animation
+    public void setBattleTexture(){
+
+        ArrayList<TextureRegion> BattleSprites = getBattleTexture_List();
+        int size = BattleSprites.size();
+    
+        if(index>size){
+            this.index = 4;
+
+        }else this.index +=8;
+        this.TextureObject.setTextureRegion(BattleSprites.get((angle+index%size)));
+    }
+    
+
+
+/*------------------------------------------------------------------CHECKERS------------------------------------------------------------ */
+    
+
+
 /*---------------------------------------------------------------------------------------------------------------------------------------- */
-    public TextureRegion getTexturefromTileset(TiledMapTileSets Tilesets, String Tileset_name, String property, String value, int index){
-        //System.out.println("                      SEARCHING TILESET :" + Tileset_name);
+    public TiledMapTileSet getTileSet(TiledMapTileSets Tilesets, String Tileset_name){
+        System.out.println("                      SEARCHING TILESET :" + Tileset_name);
         // Search for the tileset in the map
         TiledMapTileSet tileSet = null;
         for (TiledMapTileSet tileset : Tilesets) {
-            //System.out.println("TILESET NAME : " + tileset.getName());
+            System.out.println("TILESET NAME : " + tileset.getName());
             if (tileset.getName().equals(Tileset_name)) {
                 tileSet = tileset;
                 break;
             }
         }
-
+        return tileSet;
+    }
+    public TextureRegion getTexturefromTileset(TiledMapTileSet tileSet, String property, String value, int index){
+        
         if (tileSet != null) {
             int GID = 0;
             TiledMapTile tile = null;

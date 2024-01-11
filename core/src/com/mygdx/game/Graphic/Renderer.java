@@ -3,10 +3,12 @@ package com.mygdx.game.Graphic;
 import java.util.Iterator;
 import java.util.ArrayList;
 
-import com.mygdx.game.Graphic.GraphicObject.GraphicObject;
-import com.mygdx.game.Graphic.GraphicObject.Elements.Door;
+import com.mygdx.game.Back.Object.Object;
+import com.mygdx.game.Back.Object.Character.Ennemie.Ennemie;
+import com.mygdx.game.Back.Object.Character.Hero.Hero;
+import com.mygdx.game.Back.Object.Element.Door;
+import com.mygdx.game.Back.World.Map.Map;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.*;
-import com.mygdx.game.Graphic.World.Map.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -24,7 +26,7 @@ public class Renderer {
    }
    
    //Rendering functions
-   public void render(Map map, GraphicHero hero, OrthographicCamera camera){
+   public void render(Map map, Hero hero, OrthographicCamera camera){
 
     // Set the clear color to black
       Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -45,7 +47,7 @@ public class Renderer {
       
    }
 
-   public void renderObjects(Map map, GraphicCharacter hero, OrthographicCamera camera){  
+   public void renderObjects(Map map, Hero hero, OrthographicCamera camera){  
       
       boolean renderDoors = false;
       spriteBatch.begin();
@@ -56,7 +58,7 @@ public class Renderer {
          }
       }
 
-      for(GraphicObject object: map.getObjects()){
+      for(Object object: map.getObjects()){
          object.render(spriteBatch, camera);
       }
       
@@ -66,27 +68,28 @@ public class Renderer {
    
    public void renderDeadObjects(Map map, OrthographicCamera camera){
         // Rendering and destruction of the dead NPCs
-         ArrayList<GraphicEnnemie> DeadNPCs = map.getDeadNPCs();
+         ArrayList<Ennemie> DeadNPCs = map.getDeadNPCs();
 
          int scaleFactor;
 
          if (DeadNPCs != null) {
-            Iterator<GraphicEnnemie> Iterator = DeadNPCs.iterator();
+            Iterator<Ennemie> Iterator = DeadNPCs.iterator();
 
             while (Iterator.hasNext()) {
-               GraphicEnnemie DeadNPC = Iterator.next();
+               Ennemie DeadNPC = Iterator.next();
+               GraphicEnnemie graphicDeadNPC = (GraphicEnnemie) DeadNPC.getGraphicObject();
 
-               if (DeadNPC.getDeathTimer() < 60) { // Render the object if death sequence is not done
-                        int timer = DeadNPC.getDeathTimer();
+               if (graphicDeadNPC.getDeathTimer() < 60) { // Render the object if death sequence is not done
+                        int timer = graphicDeadNPC.getDeathTimer();
                         // Get the appropriate texture
-                        TextureRegion textureRegion = DeadNPC.getDeathTexture_List().get(timer);
+                        TextureRegion textureRegion = graphicDeadNPC.getDeathTexture_List().get(timer);
                         // Increment timer
-                        DeadNPC.incrementDeathTimer();
+                        graphicDeadNPC.incrementDeathTimer();
                         // Render the object texture based on its position and properties
                         float objectX = DeadNPC.getX();
                         float objectY = DeadNPC.getY();
                         //Render bigger for boss
-                        if (DeadNPC.getObject().getProperties().get("boss")=="boss"){
+                        if (graphicDeadNPC.getTextureObject().getProperties().get("boss")=="boss"){
                            scaleFactor = 2;
                         }
                         else scaleFactor = 1;

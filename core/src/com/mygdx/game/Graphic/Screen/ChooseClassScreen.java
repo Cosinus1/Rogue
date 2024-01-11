@@ -16,8 +16,8 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import com.mygdx.game.MyGame;
-import com.mygdx.game.Back.Character.Hero.Archer;
-import com.mygdx.game.Back.Character.Hero.Warrior;
+import com.mygdx.game.Back.Object.Character.Hero.Archer;
+import com.mygdx.game.Back.Object.Character.Hero.Warrior;
 
 public class ChooseClassScreen implements Screen {
 
@@ -80,7 +80,7 @@ public class ChooseClassScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Play pour jouer
-                game.setHero(new Warrior(100, 200, 1000, 1, null, "Champion"));
+                game.setHero(new Warrior(0,0, 100, 200, 1000, 1, null));
                 game.gameScreen = new GameScreen(game);
                 game.setScreen(game.gameScreen);
             }
@@ -89,7 +89,7 @@ public class ChooseClassScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Play pour jouer
-                game.setHero(new Archer(100, 200, 1000, 1, null, "Champion"));
+                game.setHero(new Archer(0,0, 100, 200, 1000, 1, null));
                 game.gameScreen = new GameScreen(game);
                 game.setScreen(game.gameScreen);
             }
