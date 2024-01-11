@@ -12,7 +12,7 @@ public abstract class Item {
     public ItemType getType(){
         return type;
     }
-    public String getname(){
+    public String getName(){
         return name;
     }
 

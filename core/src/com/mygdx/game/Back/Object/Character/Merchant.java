@@ -5,13 +5,18 @@ import com.mygdx.game.Back.Item.*;
 import com.mygdx.game.Back.Item.Weapon.*;
 import com.mygdx.game.Back.Object.Character.Hero.Archer;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
+import com.mygdx.game.Back.World.Map.Map;
+import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicMerchant;
+import com.mygdx.game.Back.Object.Object;
 
-public class Merchant {
+public class Merchant extends Object{
     private Inventory inventory;
     private String dialogue;
 
-    public Merchant(Hero hero){
+    public Merchant(Hero hero, float x, float y, Map map){
+        super(x,y,32,32);
         inventory = new Inventory();
+        setGraphicObject(new GraphicMerchant("merchant", map));
         if(hero instanceof Archer){
             setArcherMerchant();
         }
@@ -19,6 +24,11 @@ public class Merchant {
             setWarriorMerchant();
         }
         this.dialogue = "Ah, welcome adventurer, welcome!\nIn my humble shops, you'll find everything a daring hero like yourself could desire.\n Sharpened swords, magical arc, and of course, the most potent potions to heal your wounds and enhance your powers!";
+    }
+
+
+    public void spawn(Map map){
+        map.setMerchant(this);
     }
 
     public void setWarriorMerchant(){

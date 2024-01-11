@@ -28,6 +28,7 @@ import com.mygdx.game.Back.Object.Element.Wall;
 import com.mygdx.game.Back.Force;
 import com.mygdx.game.Back.Object.Object;
 import com.mygdx.game.Back.Object.Character.Character;
+import com.mygdx.game.Back.Object.Character.Merchant;
 
 public class Map {
 
@@ -49,6 +50,7 @@ public class Map {
 
     private String PVP;
 
+    private Merchant merchant;
     private ArrayList<Door> Door_list;
     private ArrayList<Ennemie> NPCs, DeadNPCs;
     private ArrayList<Element> Elements;
@@ -229,6 +231,9 @@ public class Map {
     public void setHero(Hero hero){
         this.hero = hero;
     }
+    public void setMerchant(Merchant merchant){
+        this.merchant = merchant;
+    }
 
 /* --------------------------------------LIST UPDATE ------------------------------------- */
     public void addDoor(Door door){;
@@ -297,6 +302,7 @@ public class Map {
         updateElements();
         if(Elements!=null) List.addAll(Elements);
         List.add(hero);
+        if(merchant != null) List.add(merchant);
         List.addAll(Walls);
         Objects = List;
         sortObjects();

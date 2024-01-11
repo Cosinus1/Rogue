@@ -84,7 +84,6 @@ public class ChooseClassScreen implements Screen {
                 // Play pour jouer
                 Warrior warrior = new Warrior(0,0, 100, 200, 1000, 1, new Inventory());
                 game.setHero(warrior);
-                game.setMarchant(new Merchant(warrior));
                 game.gameScreen = new GameScreen(game);
                 game.setScreen(game.gameScreen);
             }
@@ -95,7 +94,6 @@ public class ChooseClassScreen implements Screen {
                 // Play pour jouer
                 Archer archer = new Archer(0,0, 100, 200, 1000, 1, new Inventory());
                 game.setHero(archer);
-                game.setMarchant(new Merchant(archer));
                 game.gameScreen = new GameScreen(game);
                 game.setScreen(game.gameScreen);
             }
