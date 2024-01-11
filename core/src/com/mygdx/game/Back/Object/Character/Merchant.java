@@ -1,22 +1,18 @@
 package com.mygdx.game.Back.Object.Character;
 
+import com.badlogic.gdx.maps.Map;
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Item.*;
 import com.mygdx.game.Back.Item.Weapon.*;
 import com.mygdx.game.Back.Object.Character.Hero.Archer;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
-import com.mygdx.game.Back.World.Map.Map;
-import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicMerchant;
-import com.mygdx.game.Back.Object.Object;
 
-public class Merchant extends Object{
+public class Merchant {
     private Inventory inventory;
     private String dialogue;
 
-    public Merchant(Hero hero, float x, float y, Map map){
-        super(x,y,32,32);
+    public Merchant(Hero hero){
         inventory = new Inventory();
-        setGraphicObject(new GraphicMerchant("merchant", map));
         if(hero instanceof Archer){
             setArcherMerchant();
         }
@@ -25,6 +21,7 @@ public class Merchant extends Object{
         }
         this.dialogue = "Ah, welcome adventurer, welcome!\nIn my humble shops, you'll find everything a daring hero like yourself could desire.\nSharpened swords, magical arc, and of course, the most potent potions\nto heal your wounds and enhance your powers!";
     }
+
 
     public String getDialogue(){
         return dialogue;
