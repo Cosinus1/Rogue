@@ -47,21 +47,21 @@ public class MySkin {
 
     }
 
-    public Skin createPotionSkin(){
+    public Skin createMerchantSkin(){
         Skin skin = new Skin();
         BitmapFont font = new BitmapFont();
 
-        font.setColor(Color.GRAY);
+        font.setColor(Color.BLACK);
 
-        Pixmap GrayPixmap = new Pixmap(600, 50, Format.RGBA8888);
-        GrayPixmap.setColor(Color.GRAY); // Couleur bleu marine
+        Pixmap GrayPixmap = new Pixmap(370, 25, Format.RGBA8888);
+        GrayPixmap.setColor(Color.NAVY); // Couleur bleu marine
         GrayPixmap.fill();
-        skin.add("buttonBackground", new Texture(GrayPixmap));
+        skin.add("buttonMerchant", new Texture(GrayPixmap));
 
         TextButton.TextButtonStyle customButtonStyle = new TextButton.TextButtonStyle();
         customButtonStyle.font = font;
-        customButtonStyle.up = skin.newDrawable("buttonBackground", Color.GRAY); // Utiliser le fond bleu marine
-        skin.add("Gray", customButtonStyle);
+        customButtonStyle.up = skin.newDrawable("buttonMerchant", Color.GRAY); // Utiliser le fond bleu marine
+        skin.add("default", customButtonStyle);
 
         return skin;
     }

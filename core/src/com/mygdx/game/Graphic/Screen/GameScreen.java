@@ -15,6 +15,7 @@ public class GameScreen implements Screen {
     MyGame game;
     PauseScreen pauseScreen;
     InventoryScreen inventoryScreen;
+    MerchantScreen MerchantScreen;
     
     private Map map;
     private World world;
@@ -37,7 +38,6 @@ public class GameScreen implements Screen {
         world = new World(game.getHero());
          //Store current map from the world
          map = world.getCurrentMap();
-    
       //   map.getMusic().setLooping(true);
       //   map.getMusic().play();
         // create the camera
@@ -59,6 +59,7 @@ public class GameScreen implements Screen {
         pauseScreen = new PauseScreen(game);
         // Init inventory screen
         inventoryScreen = new InventoryScreen(game, hero);
+        
     }
 
     @Override
@@ -70,16 +71,30 @@ public class GameScreen implements Screen {
          //Arrows Inputs
          hero.move(camera, map);
 
+         if(map.getName().equals("Tavern")){
+            if(Gdx.input.isKeyPressed(Keys.SPACE)){
+               float x = hero.getX();
+               float y = hero.getY();
+               if(x>300 && x<340 && y>200 && y<240 && hero.getorY()==1){
+                  MerchantScreen = new MerchantScreen(game, map.getMerchant(), hero);
+                  game.setScreen(MerchantScreen);
+               }
+               
+            }
+         }
+         else{
          //Space Input
-         if(Gdx.input.isKeyPressed(Keys.SPACE)) hero.Attack(map);
-
+            if(Gdx.input.isKeyPressed(Keys.SPACE)) hero.Attack(map);
+         }
          //Enter input : change color
          if(Gdx.input.isKeyJustPressed(Keys.ENTER))BlacknWhite = !BlacknWhite;
 
          //Escapeinput : menu
-         if(Gdx.input.isKeyPressed(Keys.ESCAPE)) game.setScreen(pauseScreen);
+         if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) game.setScreen(pauseScreen);
 
          if(Gdx.input.isKeyJustPressed(Keys.E)) game.setScreen(inventoryScreen);
+
+          
 
 /*---------------------------------------------NON PLAYER OBJECTS HANDLING--------------------------------------------- */
 
@@ -124,7 +139,7 @@ public class GameScreen implements Screen {
       //In Color or B&W
       if(BlacknWhite) rendererBW.render(map, camera);
       else renderer.render(map, hero, camera);
-
+      
     }
 
     @Override

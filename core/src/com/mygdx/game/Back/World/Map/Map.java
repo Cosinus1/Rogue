@@ -134,6 +134,9 @@ public class Map {
     public Hero getHero(){
         return this.hero;
     }
+    public Merchant getMerchant(){
+        return merchant;
+    }
     public Music getMusic(){
         return music;
     }

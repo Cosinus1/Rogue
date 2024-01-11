@@ -23,10 +23,16 @@ public class Merchant extends Object{
         else{
             setWarriorMerchant();
         }
-        this.dialogue = "Ah, welcome adventurer, welcome!\nIn my humble shops, you'll find everything a daring hero like yourself could desire.\n Sharpened swords, magical arc, and of course, the most potent potions to heal your wounds and enhance your powers!";
+        this.dialogue = "Ah, welcome adventurer, welcome!\nIn my humble shops, you'll find everything a daring hero like yourself could desire.\nSharpened swords, magical arc, and of course, the most potent potions\nto heal your wounds and enhance your powers!";
     }
 
-
+    public String getDialogue(){
+        return dialogue;
+    }
+    public Inventory getInventory(){
+        return inventory;
+    }
+    
     public void spawn(Map map){
         map.setMerchant(this);
     }

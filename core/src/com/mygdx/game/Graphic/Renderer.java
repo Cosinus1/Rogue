@@ -44,6 +44,7 @@ public class Renderer {
     // Render all Objects
     renderObjects(map, hero, camera);
     renderDeadObjects(map, camera);
+    
       
    }
 
