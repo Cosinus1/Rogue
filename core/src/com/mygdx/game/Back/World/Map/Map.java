@@ -263,6 +263,8 @@ public class Map {
             //Elements
             updateElements(deltaTime);
             if(Elements!=null) List.addAll(Elements);
+            //Merchant
+            if(merchant != null) List.add(merchant);if(merchant != null) List.add(merchant);
             //Hero
             hero.update(deltaTime);
             List.add(hero);

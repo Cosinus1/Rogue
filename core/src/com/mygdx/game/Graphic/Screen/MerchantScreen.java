@@ -17,9 +17,9 @@ import com.mygdx.game.Back.Item.Item;
 import com.mygdx.game.Back.Item.ItemType;
 import com.mygdx.game.Back.Object.Character.Merchant;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
-import com.mygdx.game.Graphic.GraphicObject.GraphicElement.ButtonEditor;
-import com.mygdx.game.Graphic.GraphicObject.GraphicElement.MyMerchantButton;
-import com.mygdx.game.Graphic.GraphicObject.GraphicElement.MySkin;
+import com.mygdx.game.Graphic.GraphicObject.GraphicElement.Button.ButtonEditor;
+import com.mygdx.game.Graphic.GraphicObject.GraphicElement.Button.MyMerchantButton;
+import com.mygdx.game.Graphic.GraphicObject.GraphicElement.Button.MySkin;
 
 public class MerchantScreen implements Screen {
     private final MyGame game;
@@ -70,6 +70,10 @@ public class MerchantScreen implements Screen {
     }
 
     public void renderMoney(){
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(Color.WHITE);
+        shapeRenderer.rect(30,50, 130, 130);
+        shapeRenderer.end();
         batch.begin();
         font.draw(batch, "You have :\n"+ hero.getMoney() +"$", 45, 150);
         batch.end();
@@ -84,8 +88,6 @@ public class MerchantScreen implements Screen {
     @Override
     public void render(float delta) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-            shapeRenderer.setColor(Color.WHITE);
-            shapeRenderer.rect(30,50, 130, 130);
             shapeRenderer.setColor(Color.WHITE);
             shapeRenderer.rect(200,50, stage.getWidth()-400, 130);
         shapeRenderer.end();

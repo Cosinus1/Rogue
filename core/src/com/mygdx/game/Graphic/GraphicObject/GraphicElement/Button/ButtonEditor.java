@@ -1,4 +1,4 @@
-package com.mygdx.game.Graphic.GraphicObject.GraphicElement;
+package com.mygdx.game.Graphic.GraphicObject.GraphicElement.Button;
 
 import java.util.ArrayList;
 
@@ -26,7 +26,7 @@ public class ButtonEditor {
             table.row();
         }
         stage.addActor(table);
-        table.setPosition( 300,stage.getHeight() - 35*inventory.getSize());
+        table.setPosition( 300,stage.getHeight() - 50 - 50*inventory.getSize());
     }
 
 

@@ -85,10 +85,11 @@ public class GameScreen implements Screen {
         else{
          //Space Input
             if(Gdx.input.isKeyPressed(Keys.SPACE)) hero.Attack(map);
+            hero.IncrementAttackTimer(deltaTime);
+            if(hero.getName() == "warrior") if(Gdx.input.isKeyPressed(Keys.SPACE)) hero.Attack(map);
+            if(hero.getName() == "archer") if(Gdx.input.isKeyJustPressed(Keys.SPACE)) hero.Attack(map);
          }
-         hero.IncrementAttackTimer(deltaTime);
-         if(hero.getName() == "warrior") if(Gdx.input.isKeyPressed(Keys.SPACE)) hero.Attack(map);
-         if(hero.getName() == "archer") if(Gdx.input.isKeyJustPressed(Keys.SPACE)) hero.Attack(map);
+         
 
          //Enter input : change color
          if(Gdx.input.isKeyJustPressed(Keys.ENTER))BlacknWhite = !BlacknWhite;

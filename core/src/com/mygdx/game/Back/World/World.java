@@ -78,16 +78,9 @@ public class World {
             //Init inventory for debugging
             Potion potion1 = new Potion(10,"petite potion");
             Potion potion2 = new Potion(20, "moyenne potion");
-            Potion potion3 = new Potion(20," moyenne potion");
-            Arc arc = new Arc( "arc", 15 );
-            Sword sword = new Sword("excalibur",30, 1);
             Inventory bag = new Inventory();
             bag.addItem(potion1);
-            bag.addItem(arc);
             bag.addItem(potion2);
-            bag.addItem(potion3);
-            bag.addItem(sword);
-
 
             //Initialize the Hero
             this.Hero = hero;

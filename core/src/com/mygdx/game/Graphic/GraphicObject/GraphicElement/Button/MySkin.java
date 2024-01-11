@@ -1,4 +1,4 @@
-package com.mygdx.game.Graphic.GraphicObject.GraphicElement;
+package com.mygdx.game.Graphic.GraphicObject.GraphicElement.Button;
 
 
 import com.badlogic.gdx.graphics.Color;
