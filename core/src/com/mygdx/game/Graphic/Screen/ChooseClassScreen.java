@@ -17,7 +17,6 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 import com.mygdx.game.MyGame;
 import com.mygdx.game.Back.Inventory.Inventory;
-import com.mygdx.game.Back.Object.Character.Merchant;
 import com.mygdx.game.Back.Object.Character.Hero.Archer;
 import com.mygdx.game.Back.Object.Character.Hero.Warrior;
 
@@ -84,7 +83,6 @@ public class ChooseClassScreen implements Screen {
                 // Play pour jouer
                 Warrior warrior = new Warrior(0,0, 100, 200, 1000, 1, new Inventory());
                 game.setHero(warrior);
-                game.setMarchant(new Merchant(warrior));
                 game.gameScreen = new GameScreen(game);
                 game.setScreen(game.gameScreen);
             }
@@ -95,7 +93,6 @@ public class ChooseClassScreen implements Screen {
                 // Play pour jouer
                 Archer archer = new Archer(0,0, 100, 200, 1000, 1, new Inventory());
                 game.setHero(archer);
-                game.setMarchant(new Merchant(archer));
                 game.gameScreen = new GameScreen(game);
                 game.setScreen(game.gameScreen);
             }

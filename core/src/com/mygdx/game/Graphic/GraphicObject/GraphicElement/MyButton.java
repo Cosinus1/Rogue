@@ -76,7 +76,7 @@ public class MyButton extends TextButton {
             //On change les bouttons en dessous
             table.clear();
             InventoryIteratorInterface<Item> iterator = inventory.getIterator(type);
-            buttonEditor.createItemButton(iterator, mySkin.createStyle(newNavy), table, stage, buttonList, inventory, type, hero, 300, stage.getHeight() - 160);
+            buttonEditor.createItemButton(iterator, mySkin, table, stage, buttonList, inventory, type, hero);
         }
         else{
             if(!click){

@@ -10,23 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class MySkin {
-    public Skin createWhiteSkin(){
-        Skin skin = new Skin();
-        BitmapFont font = new BitmapFont();
-        font.setColor(Color.WHITE);
-
-        Pixmap pixmap = new Pixmap(200, 50, Format.RGBA8888);
-        pixmap.setColor(Color.WHITE);
-        pixmap.fill();
-        skin.add("buttonBackground", new Texture(pixmap));
-
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.font = font; // Définir la police pour le bouton
-        textButtonStyle.up = skin.newDrawable("buttonBackground", Color.WHITE); // Utiliser la texture ou Pixmap pour le visuel du bouton
-        skin.add("White", textButtonStyle); // Ajouter le style "default" pour les TextButton
-
-        return skin;
-    }
 
     public Skin createStyle(Color color){
         Skin skin = new Skin();

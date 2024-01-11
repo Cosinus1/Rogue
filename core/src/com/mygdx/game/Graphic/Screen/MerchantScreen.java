@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.Back.Inventory.InventoryIteratorInterface;
@@ -19,6 +20,7 @@ import com.mygdx.game.Back.Object.Character.Merchant;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
 import com.mygdx.game.Graphic.GraphicObject.GraphicElement.ButtonEditor;
 import com.mygdx.game.Graphic.GraphicObject.GraphicElement.MyButton;
+import com.mygdx.game.Graphic.GraphicObject.GraphicElement.MyMerchantButton;
 import com.mygdx.game.Graphic.GraphicObject.GraphicElement.MySkin;
 
 public class MerchantScreen implements Screen {
@@ -30,7 +32,7 @@ public class MerchantScreen implements Screen {
     private ButtonEditor buttonEditor;
     private Table table1;
     private Table table2;
-    private ArrayList<MyButton> buttonList;
+    private ArrayList<MyMerchantButton> buttonList;
     private Hero hero;
 
     private Stage stage;
@@ -57,10 +59,10 @@ public class MerchantScreen implements Screen {
         showtext = true; //On affiche le texte direct
 
         InventoryIteratorInterface<Item> iterator = merchant.getInventory().getIterator(ItemType.WEAPON);
-        buttonEditor.createItemButton(iterator, mySkin.createMerchantSkin(), table1, stage, buttonList, merchant.getInventory(),ItemType.ANY, hero, 400, 110);
+        buttonEditor.createMerchantButton(iterator, mySkin, table1, stage, buttonList, merchant.getInventory(),ItemType.ANY, hero, 400, 110);
         InventoryIteratorInterface<Item> iterator2 = merchant.getInventory().getIterator(ItemType.POTION);
-        buttonEditor.createItemButton(iterator2, mySkin.createMerchantSkin(), table2, stage, buttonList, merchant.getInventory(),ItemType.ANY, hero, 800, 110);
-    }
+        buttonEditor.createMerchantButton(iterator2, mySkin, table2, stage, buttonList, merchant.getInventory(), ItemType.POTION, hero, 800, 110); 
+     }
 
 
     public void renderText(){
@@ -74,9 +76,6 @@ public class MerchantScreen implements Screen {
         stage.draw();
     }
 
-    @Override
-    public void show() {
-    }
 
     @Override
     public void render(float delta) {
@@ -88,36 +87,51 @@ public class MerchantScreen implements Screen {
             renderText();
         }
         else{
-            //On affiche l'inventaire du marchand
-            renderInventaire();
+        //     //On affiche l'inventaire du marchand
+          renderInventaire();
+
+
         }
-        if(Gdx.input.isKeyJustPressed(Keys.SPACE)){
-            showtext = false;
-        }
-        if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) game.setScreen(game.gameScreen);
-       
+            if(Gdx.input.isKeyJustPressed(Keys.SPACE)){
+                showtext = false;
+            }
+            if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) game.setScreen(game.gameScreen);
     }
 
-    @Override
-    public void resize(int width, int height) {
-    }
 
-    @Override
-    public void pause() {
-    }
 
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void hide() {
-    }
 
     @Override
     public void dispose() {
         batch.dispose();
         font.dispose();
+    }
+
+
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
+    }
+
+
+    @Override
+    public void resize(int width, int height) {
+    }
+
+
+    @Override
+    public void pause() {
+    }
+
+
+    @Override
+    public void resume() {
+    }
+
+
+    @Override
+    public void hide() {
+        Gdx.input.setInputProcessor(null);
     }
     
 }

@@ -305,6 +305,7 @@ public class Map {
         updateElements();
         if(Elements!=null) List.addAll(Elements);
         List.add(hero);
+        if(merchant != null) List.add(merchant);
         List.addAll(Walls);
         Objects = List;
         sortObjects();

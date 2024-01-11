@@ -15,18 +15,18 @@ import com.mygdx.game.Back.Object.Character.Hero.Hero;
 public class ButtonEditor {
 
     //ajoute a la list des Mybutton
-    public void createItemButton(InventoryIteratorInterface<Item> iterator, Skin skin, Table table, Stage stage, ArrayList<MyButton> list, Inventory inventory, ItemType type, Hero hero, float x, float y){
+    public void createItemButton(InventoryIteratorInterface<Item> iterator, MySkin mySkin, Table table, Stage stage, ArrayList<MyButton> list, Inventory inventory, ItemType type, Hero hero){
         while(iterator.hasnext()){
             Item item = iterator.next();            
-            MyButton button = new MyButton(item.getName(), skin,table, stage, list,type, inventory,hero, false); 
+            MyButton button = new MyButton(item.getName(), mySkin.createStyle(Color.GRAY) ,table, stage, list,type, inventory,hero, false); 
             //On associe un objet a chaque bouton
             button.setassociatedItem(inventory.getItem(iterator.getPosition()));
             list.add(button);
-            table.add(button).padBottom(5);
+            table.add(button).padBottom(10);
             table.row();
         }
         stage.addActor(table);
-        table.setPosition( x,y);
+        table.setPosition( 300,stage.getHeight()-160);
     }
 
 
@@ -40,4 +40,18 @@ public class ButtonEditor {
         button.setText(newText);
     }
 
+    /*------------------------- Merchant Button --------------------------*/
+    public void createMerchantButton(InventoryIteratorInterface<Item> iterator, MySkin mySkin, Table table, Stage stage, ArrayList<MyMerchantButton> list, Inventory inventory, ItemType type, Hero hero, float x, float y){
+        while(iterator.hasnext()){
+            Item item = iterator.next();            
+            MyMerchantButton button = new MyMerchantButton(item.getName(), mySkin.createMerchantSkin() ,table, stage, list,type, inventory,hero); 
+            //On associe un objet a chaque bouton
+            button.setassociatedItem(inventory.getItem(iterator.getPosition()));
+            list.add(button);
+            table.add(button).padBottom(5);
+            table.row();
+        }
+        stage.addActor(table);
+        table.setPosition( x,y);
+    }
 }

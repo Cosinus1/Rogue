@@ -5,6 +5,7 @@ import java.util.Random;
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Item.Potion;
 import com.mygdx.game.Back.Item.Weapon.*;
+import com.mygdx.game.Back.Object.Character.Merchant;
 import com.mygdx.game.Back.Object.Character.Ennemie.*;
 import com.mygdx.game.Back.Object.Character.Hero.*;
 import com.mygdx.game.Back.Object.Element.Door;
@@ -96,7 +97,9 @@ public class World {
             Hero.setGraphicObject(new GraphicHero(Hero.getName(), Home));
             Hero.spawn(DungeonHub);
             Hero.spawn(Home);
-            Hero.spawn(Tavern);        
+            Hero.spawn(Tavern);  
+            Merchant merchant = new Merchant(Hero,320,270,Tavern);
+            merchant.spawn(Tavern);        
             //Initialize the Boss
             boss = new Boss(0,0,100, 0, 50,3, 10, null,new Massue("massue", 50, 2));
             //Initialize Dungeon

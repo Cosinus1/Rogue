@@ -65,7 +65,7 @@ public class InventoryScreen implements Screen{
 
         //Arme affiché de base
         InventoryIteratorInterface<Item> iterator = inventory.getIterator(ItemType.WEAPON);
-        buttonEditor.createItemButton(iterator, mySkin.createStyle(newNavy), table2, stage,weaponList, inventory,ItemType.WEAPON, hero, 300, stage.getHeight()-160);
+        buttonEditor.createItemButton(iterator, mySkin, table2, stage,weaponList, inventory,ItemType.WEAPON, hero);
     }
 
     public void reset(){
@@ -75,7 +75,7 @@ public class InventoryScreen implements Screen{
         potionButton.setClick(false);
         weaponButton.setClick(true);
         InventoryIteratorInterface<Item> iterator = inventory.getIterator(ItemType.WEAPON);
-        buttonEditor.createItemButton(iterator, mySkin.createStyle(newNavy), table2, stage,weaponList, inventory,ItemType.WEAPON, hero,300, stage.getHeight()-160);
+        buttonEditor.createItemButton(iterator, mySkin, table2, stage,weaponList, inventory,ItemType.WEAPON, hero);
     }
 
     @Override

@@ -82,7 +82,7 @@ public class GameScreen implements Screen {
                
             }
          }
-         else{
+        else{
          //Space Input
             if(Gdx.input.isKeyPressed(Keys.SPACE)) hero.Attack(map);
          }
