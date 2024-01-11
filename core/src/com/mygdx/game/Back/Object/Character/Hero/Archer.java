@@ -16,7 +16,8 @@ public class Archer extends Hero{
     }
 
     public void createArc(){
-        Arc arc = new Arc("arc", 50);
+        Arc arc = new Arc("arc", 20);
+
         this.arc = arc;
     }
 

@@ -44,6 +44,14 @@
         "TMX/Home.tmx#houses": {
             "scaleInDock": 0.33
         },
+        "TMX/Tavern.tmx": {
+            "scale": 1.4249999999999998,
+            "selectedLayer": 9,
+            "viewCenter": {
+                "x": 263.15789473684214,
+                "y": 160.35087719298247
+            }
+        },
         "TSX/Arrow.tsx": {
             "scaleInDock": 1,
             "scaleInEditor": 1
@@ -113,6 +121,7 @@
     "project": "Rogue_project.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "TMX/Tavern.tmx",
         "TMX/Dungeon.tmx",
         "TSX/tavern.tsx",
         "TSX/warrior.tsx",

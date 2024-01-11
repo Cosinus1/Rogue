@@ -79,7 +79,6 @@ public class GameScreen implements Screen {
          //Escapeinput : menu
          if(Gdx.input.isKeyPressed(Keys.ESCAPE)) game.setScreen(pauseScreen);
 
-         //E Input : Open inventory
          if(Gdx.input.isKeyJustPressed(Keys.E)) game.setScreen(inventoryScreen);
 
 /*---------------------------------------------NON PLAYER OBJECTS HANDLING--------------------------------------------- */

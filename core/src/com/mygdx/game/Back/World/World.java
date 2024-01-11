@@ -5,6 +5,7 @@ import java.util.Random;
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Item.Potion;
 import com.mygdx.game.Back.Item.Weapon.*;
+import com.mygdx.game.Back.Object.Character.Merchant;
 import com.mygdx.game.Back.Object.Character.Ennemie.*;
 import com.mygdx.game.Back.Object.Character.Hero.*;
 import com.mygdx.game.Back.Object.Element.Door;
@@ -72,27 +73,34 @@ public class World {
             this.CurrentMap = Home;
             this.CurrentcollisionLayer = Home.getcollisionLayer();
 
+        
             //Init inventory for debugging
-            Potion potion1 = new Potion(10,"petite potion");
-            Potion potion2 = new Potion(20, "moyenne potion");
-            Potion potion3 = new Potion(20," moyenne potion");
-            Arc arc = new Arc( "arc", 15 );
-            Sword sword = new Sword("excalibur",30, 1);
-            Inventory bag = new Inventory();
-            bag.addItem(potion1);
-            bag.addItem(arc);
-            bag.addItem(potion2);
-            bag.addItem(potion3);
-            bag.addItem(sword);
+            // Potion potion1 = new Potion(10,"petite potion");
+            // Potion potion2 = new Potion(20, "moyenne potion");
+            // Potion potion3 = new Potion(20," moyenne potion");
+            // Arc arc = new Arc( "arc", 15 );
+            // Sword sword = new Sword("excalibur",30, 1);
+            // Inventory bag = new Inventory();
+            // bag.addItem(potion1);
+            // bag.addItem(arc);
+            // bag.addItem(potion2);
+            // bag.addItem(potion3);
+            // bag.addItem(sword);
+
             //Initialize the Hero
             this.Hero = hero;
             Hero.setX(CurrentMap.getX());
             Hero.setY(CurrentMap.getY());
-            Hero.setBag(bag);
+
+            //Hero.setBag(bag);
+
             Hero.setGraphicObject(new GraphicHero(Hero.getName(), Home));
             Hero.spawn(DungeonHub);
             Hero.spawn(Home);
-            Hero.spawn(Tavern);        
+            Hero.spawn(Tavern);    
+            //Init merchant
+            Merchant merchant = new Merchant(Hero,320,270,Tavern);
+            merchant.spawn(Tavern);    
             //Initialize the Boss
             boss = new Boss(0,0,100, 0, 50,3, 10, null,new Massue("massue", 50, 2));
             //Initialize Dungeon

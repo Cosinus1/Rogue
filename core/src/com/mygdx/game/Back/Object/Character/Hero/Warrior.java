@@ -16,7 +16,8 @@ public class Warrior extends Hero{
     }
 
     public void createSword(){
-        Sword sword = new Sword("sword", 50, 3);
+
+        Sword sword = new Sword("sword", 20, 3);
         this.sword = sword;
     }
 

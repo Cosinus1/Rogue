@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
+import com.mygdx.game.Back.Object.Character.Merchant;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
 import com.mygdx.game.Graphic.Screen.Assets;
 import com.mygdx.game.Graphic.Screen.ChooseClassScreen;
@@ -15,6 +16,7 @@ public class MyGame extends Game {
     public Assets assets;
 
     private Hero hero;
+    private Merchant merchant;
 
     @Override
     public void create(){
@@ -37,9 +39,16 @@ public class MyGame extends Game {
     public Hero getHero(){
         return this.hero;
     }
+    public Merchant getMerchant(){
+        return this.merchant;
+    }
     
     public void setHero(Hero hero){
         this.hero = hero;
+    }
+
+    public void setMarchant(Merchant merchant){
+        this.merchant = merchant;
     }
     
 }

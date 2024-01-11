@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="git" orientation="orthogonal" renderorder="right-down" width="15" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="20" nextobjectid="2">
+<map version="1.2" tiledversion="1.2.4" orientation="orthogonal" renderorder="right-down" width="15" height="10" tilewidth="32" tileheight="32" infinite="0" nextlayerid="27" nextobjectid="2">
  <tileset firstgid="1" source="../TSX/PathAndObjects.tsx"/>
  <tileset firstgid="257" source="../TSX/perspective_walls.tsx"/>
+ <tileset firstgid="321" source="../TSX/merchant.tsx"/>
  <layer id="1" name="Tile Layer 1" width="15" height="10">
   <data encoding="csv">
 78,78,78,78,78,78,78,78,78,78,78,78,78,78,78,
@@ -16,7 +17,7 @@
 78,78,78,78,78,78,78,78,78,78,78,78,78,78,78
 </data>
  </layer>
- <layer id="3" name="Wall horizontal north" width="15" height="10" tintcolor="#64401b">
+ <layer id="3" name="Wall horizontal north" width="15" height="10">
   <data encoding="csv">
 282,266,266,266,266,266,266,266,266,266,266,266,266,266,266,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -30,7 +31,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="8" name="Copy of Wall horizontal north" width="15" height="10" tintcolor="#64401b">
+ <layer id="8" name="Copy of Wall horizontal north" width="15" height="10">
   <data encoding="csv">
 265,265,265,265,265,265,265,265,265,265,265,265,265,265,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -44,7 +45,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="2" name="Wall vertical west" width="15" height="10" tintcolor="#64401b">
+ <layer id="2" name="Wall vertical west" width="15" height="10">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 268,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -58,7 +59,7 @@
 268,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="6" name="Copy of Wall vertical west" width="15" height="10" tintcolor="#64401b">
+ <layer id="6" name="Copy of Wall vertical west" width="15" height="10">
   <data encoding="csv">
 260,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 260,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -72,7 +73,21 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="14" name="Copy of Wall vertical east" width="15" height="10" tintcolor="#64401b">
+ <layer id="26" name="merchant" width="15" height="10" visible="0">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,345,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="14" name="Copy of Wall vertical east" width="15" height="10">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,267,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,267,
@@ -86,7 +101,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,267
 </data>
  </layer>
- <layer id="15" name="Copy of Copy of Wall vertical east" width="15" height="10" tintcolor="#64401b">
+ <layer id="15" name="Copy of Copy of Wall vertical east" width="15" height="10">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,259,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,259,
@@ -100,7 +115,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="13" name="Copy of Copy of Wall horizontal south" width="15" height="10" tintcolor="#64401b">
+ <layer id="13" name="Copy of Copy of Wall horizontal south" width="15" height="10">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -114,7 +129,7 @@
 258,258,258,258,258,258,258,258,258,258,258,258,258,258,258
 </data>
  </layer>
- <layer id="16" name="Copy of Copy of Copy of Wall horizontal south" width="15" height="10" tintcolor="#64401b">
+ <layer id="16" name="Copy of Copy of Copy of Wall horizontal south" width="15" height="10">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
