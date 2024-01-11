@@ -79,16 +79,9 @@ public class GameScreen implements Screen {
          //Escapeinput : menu
          if(Gdx.input.isKeyPressed(Keys.ESCAPE)) game.setScreen(pauseScreen);
 
-<<<<<<< .merge_file_oT0JH6
-         
-=======
-         //F input : apply force to Hero (testing implementation)
-         if(Gdx.input.isKeyJustPressed(Keys.F)){
-            hero.applyForce(new Force(2000, -hero.getorX(), -hero.getorY()));    
-         }
          //E Input : Open inventory
          if(Gdx.input.isKeyJustPressed(Keys.E)) game.setScreen(inventoryScreen);
->>>>>>> .merge_file_U1FMQq
+
 /*---------------------------------------------NON PLAYER OBJECTS HANDLING--------------------------------------------- */
 
       /*-----------------------------------------------MOVE-------------------------------------------------------- */
