@@ -11,7 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Back.Inventory.*;
 import com.mygdx.game.Back.Item.*;
+import com.mygdx.game.Back.Item.Weapon.*;
+import com.mygdx.game.Back.Object.Character.Hero.Archer;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
+import com.mygdx.game.Back.Object.Character.Hero.Warrior;
 
 public class MyButton extends TextButton {
     private boolean click; //true si deja cliqué
@@ -92,9 +95,17 @@ public class MyButton extends TextButton {
             else{
                 if(type == ItemType.POTION){
                     hero.usePotion((Potion) associatedItem);
-                    inventory.removeItem(associatedItem);
-                    this.remove();
                 }
+                else if(type == ItemType.WEAPON){
+                    if(hero instanceof Archer){
+                        ((Archer)hero).changeWeapon((Arc)associatedItem);
+                    }
+                    else if(hero instanceof Warrior){
+                        ((Warrior)hero).changeWeapon((Sword)associatedItem);
+                    }
+                }
+                //On supprime le bouton
+                    this.remove();
             }
         }
 

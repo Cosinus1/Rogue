@@ -18,7 +18,7 @@ public class Arc extends Weapon {
     }
 
     public void presenter(){
-        System.out.println("Je suis un arc");
+        System.out.println(name + power);
     }
 
 

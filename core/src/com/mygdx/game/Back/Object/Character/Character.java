@@ -3,6 +3,7 @@ package com.mygdx.game.Back.Object.Character;
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Item.Booster;
 import com.mygdx.game.Back.Item.Potion;
+import com.mygdx.game.Back.Item.Weapon.Weapon;
 import com.mygdx.game.Back.World.Map.Map;
 import com.mygdx.game.Graphic.GraphicObject.GraphicObject;
 import com.mygdx.game.Back.Object.Object;
@@ -157,12 +158,14 @@ public abstract class Character extends Object{
         if(PV > PV_max){
             PV = PV_max;
         }
+        bag.removeItem(potion);
     }
 
     public void useBooster(Booster boost){
         defense += boost.getBoostDef();
         power += boost.getBoostDam();
     }
+
     
 /*----------------------------------------- FIGHT -------------------------------------- */  
     public void Attack(Object object, Map map){

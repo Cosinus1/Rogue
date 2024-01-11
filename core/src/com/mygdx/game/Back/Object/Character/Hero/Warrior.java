@@ -25,4 +25,14 @@ public class Warrior extends Hero{
         graphicObject.setBattleTexture();
     }
 
+    public void changeWeapon(Sword newSword){
+        System.out.println("L'ancienne arme était :");
+        sword.presenter();
+        bag.addItem(sword);
+        this.sword = newSword;
+        bag.removeItem(newSword);
+        System.out.println("L'a nouvelle arme equipé est : ");
+        sword.presenter();
+    }
+
 }

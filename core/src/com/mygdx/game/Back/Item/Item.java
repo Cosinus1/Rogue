@@ -1,8 +1,8 @@
 package com.mygdx.game.Back.Item;
 
 public abstract class Item {
-    private ItemType type;
-    private String name;
+    protected ItemType type;
+    protected String name;
 
     public Item(ItemType t, String name){
         this.type = t;

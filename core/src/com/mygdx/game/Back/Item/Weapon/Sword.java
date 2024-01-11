@@ -32,4 +32,9 @@ public class Sword extends Weapon{
         }
 
     }
+
+    public void presenter(){
+        System.out.println(name + power);
+    }
+
 }
