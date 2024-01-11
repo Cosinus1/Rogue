@@ -14,6 +14,7 @@ import com.mygdx.game.Graphic.*;
 public class GameScreen implements Screen {
     MyGame game;
     PauseScreen pauseScreen;
+    InventoryScreen inventoryScreen;
     
     private Map map;
     private World world;
@@ -56,6 +57,8 @@ public class GameScreen implements Screen {
 
         //Init menu pause
         pauseScreen = new PauseScreen(game);
+        // Init inventory screen
+        inventoryScreen = new InventoryScreen(game, hero);
     }
 
     @Override
@@ -73,10 +76,19 @@ public class GameScreen implements Screen {
          //Enter input : change color
          if(Gdx.input.isKeyJustPressed(Keys.ENTER))BlacknWhite = !BlacknWhite;
 
-         //Escapeinput : quits the game (implement Menu)
+         //Escapeinput : menu
          if(Gdx.input.isKeyPressed(Keys.ESCAPE)) game.setScreen(pauseScreen);
 
+<<<<<<< .merge_file_oT0JH6
          
+=======
+         //F input : apply force to Hero (testing implementation)
+         if(Gdx.input.isKeyJustPressed(Keys.F)){
+            hero.applyForce(new Force(2000, -hero.getorX(), -hero.getorY()));    
+         }
+         //E Input : Open inventory
+         if(Gdx.input.isKeyJustPressed(Keys.E)) game.setScreen(inventoryScreen);
+>>>>>>> .merge_file_U1FMQq
 /*---------------------------------------------NON PLAYER OBJECTS HANDLING--------------------------------------------- */
 
       /*-----------------------------------------------MOVE-------------------------------------------------------- */

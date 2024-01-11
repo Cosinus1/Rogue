@@ -150,12 +150,7 @@ public class ChooseClassScreen implements Screen {
     }
     @Override
     public void resize(int width, int height) {
-
         viewport.update(width, height, true); // Mettez à jour le viewport avec le redimensionnement
-
-
-
-
     }
     @Override
     public void pause() {
@@ -170,7 +165,6 @@ public class ChooseClassScreen implements Screen {
         // Stop BackgroundMusic
         //backgroundMusic.stop();
         Gdx.input.setInputProcessor(null); //Hide Buttons
-
     }
 
     @Override

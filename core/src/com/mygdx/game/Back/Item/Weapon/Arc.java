@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.mygdx.game.Back.Force;
-import com.mygdx.game.Back.Item.ItemType;
 import com.mygdx.game.Back.Object.Object;
 import com.mygdx.game.Back.Object.Element.Element;
 import com.mygdx.game.Back.Object.Element.ElementFactory;
@@ -13,18 +12,16 @@ import com.mygdx.game.Graphic.GraphicObject.GraphicElement.GraphicElement;
 
 public class Arc extends Weapon {
     private ElementFactory factory;
-    public Arc(ItemType t, String name, int power){
-        super(t, name, power);
+    public Arc(String name, int power){
+        super(name, power);
         this.factory = new ElementFactory();
     }
 
     public void presenter(){
-        System.out.println("Je suis un arc");
+        System.out.println(name + power);
     }
 
-    public String getName(){
-        return name;
-    }
+
     /*------------------------------ARROW TEXTURE-------------------------------- */
     public TextureMapObject Arrow(int OrX, int OrY){
         Texture texture = new Texture("PNG/arrow64.png");

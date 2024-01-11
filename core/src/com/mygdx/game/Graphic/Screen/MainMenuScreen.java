@@ -140,12 +140,7 @@ public class MainMenuScreen implements Screen {
     }
     @Override
     public void resize(int width, int height) {
-
         viewport.update(width, height, true); // Mettez à jour le viewport avec le redimensionnement
-
-
-
-
     }
     @Override
     public void pause() {

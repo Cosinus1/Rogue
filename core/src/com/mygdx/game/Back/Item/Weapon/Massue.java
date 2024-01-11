@@ -1,6 +1,5 @@
 package com.mygdx.game.Back.Item.Weapon;
 
-import com.mygdx.game.Back.Item.ItemType;
 import com.mygdx.game.Back.Object.Object;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
 import com.mygdx.game.Back.World.Map.Map;
@@ -8,14 +7,11 @@ import com.mygdx.game.Back.World.Map.Map;
 public class Massue extends Weapon{
     private int range;
 
-    public Massue(ItemType WEAPON, String name, int power, int range){
-        super(null, name, power);
+    public Massue(String name, int power, int range){
+        super(name, power);
         this.range = range;
     }
 
-    public String getName(){
-        return name;
-    }
     public int getRange(){
         return this.range;
     }

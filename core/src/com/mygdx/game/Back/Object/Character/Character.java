@@ -3,6 +3,7 @@ package com.mygdx.game.Back.Object.Character;
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Item.Booster;
 import com.mygdx.game.Back.Item.Potion;
+import com.mygdx.game.Back.Item.Weapon.Weapon;
 import com.mygdx.game.Back.World.Map.Map;
 import com.mygdx.game.Graphic.GraphicObject.GraphicObject;
 import com.mygdx.game.Back.Object.Object;
@@ -99,6 +100,9 @@ public abstract class Character extends Object{
     public void setAngle(){
         graphicObject.setAngle(OrX, OrY);
     }
+    public void setBag(Inventory inventory){
+        this.bag = inventory;
+    }
     
     /*-----------------------------------------CHECKERS-------------------------------------- */
     public boolean inRange(Character character, Map map){
@@ -150,22 +154,18 @@ public abstract class Character extends Object{
     /*----------------------------------------- ITEM -------------------------------------- */  
 
     public void usePotion(Potion potion){
-        //test de la présencce dans le sac 
-
-        PV = potion.getPvSoigner();
+        PV = PV + potion.getPvSoigner();
         if(PV > PV_max){
             PV = PV_max;
         }
-        // Remove potion du sac
+        bag.removeItem(potion);
     }
 
     public void useBooster(Booster boost){
-        //test de la présence dans le sac
         defense += boost.getBoostDef();
         power += boost.getBoostDam();
-        //range += boost.getBoostRange();
-        //remove booster du sac;
     }
+
     
 /*----------------------------------------- FIGHT -------------------------------------- */  
     public void Attack(Object object, Map map){

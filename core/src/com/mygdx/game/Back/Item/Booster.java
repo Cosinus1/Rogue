@@ -1,15 +1,19 @@
 package com.mygdx.game.Back.Item;
 
 public class Booster extends Item{
+        private int typeboost; //0 pour potion de damage, 1 pour def et 2 pour les deux
         private int boostDam;
         private int boostDef;
-        private int boostRange;
 
-        public Booster(ItemType t, int boostDam, int boostDef, int boostRange){
-            super(t);
+        public Booster(int boostDam, int boostDef, int boostRange, int type, String name){
+            super(ItemType.BOOSTER, name);
+            this.typeboost = type;
             this.boostDam = boostDam;
             this.boostDef = boostDef;
-            this.boostRange = boostRange;
+        }
+
+        public int getTypeBoost(){
+            return typeboost;
         }
 
         public int getBoostDam(){
@@ -18,12 +22,9 @@ public class Booster extends Item{
         public int getBoostDef(){
             return boostDef;
         }
-        public int getBoostRange(){
-            return boostRange;
-        }
 
         public void description(){
-            System.out.println("booster / +  "+boostDam + "/"+ boostDef+"/"+boostRange);
+            System.out.println("booster / +  "+boostDam + "/"+ boostDef);
         }
 
     }

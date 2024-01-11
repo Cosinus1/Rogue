@@ -16,9 +16,6 @@ public class GraphicHero extends GraphicCharacter {
         super(Name);
         getHeroTextures(map);
         TextureObject.setTextureRegion(moveTexture_list.get(0));
-
-        
-        
     }
 
 
