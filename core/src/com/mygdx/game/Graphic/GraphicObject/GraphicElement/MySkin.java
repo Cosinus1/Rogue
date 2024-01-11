@@ -49,4 +49,23 @@ public class MySkin {
         return skin;
     }
 
+    public Skin createBuyButton(){
+        Skin skin = new Skin();
+        BitmapFont font = new BitmapFont();
+
+        font.setColor(Color.BLACK);
+
+        Pixmap GrayPixmap = new Pixmap(100, 50, Format.RGBA8888);
+        GrayPixmap.setColor(Color.RED); // Couleur bleu marine
+        GrayPixmap.fill();
+        skin.add("buybutton", new Texture(GrayPixmap));
+
+        TextButton.TextButtonStyle customButtonStyle = new TextButton.TextButtonStyle();
+        customButtonStyle.font = font;
+        customButtonStyle.up = skin.newDrawable("buybutton", Color.RED); // Utiliser le fond bleu marine
+        skin.add("default", customButtonStyle);
+
+        return skin;
+    }
+
 }

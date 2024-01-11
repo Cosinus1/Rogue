@@ -3,14 +3,13 @@ package com.mygdx.game.Graphic.GraphicObject.GraphicElement;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Inventory.InventoryIteratorInterface;
 import com.mygdx.game.Back.Item.*;
+import com.mygdx.game.Back.Item.Weapon.Weapon;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
 
 public class ButtonEditor {
@@ -27,8 +26,9 @@ public class ButtonEditor {
             table.row();
         }
         stage.addActor(table);
-        table.setPosition( 300,stage.getHeight()-160);
+        table.setPosition( 300,stage.getHeight() - 35*inventory.getSize());
     }
+
 
 
     public void changeColor(MySkin mySkin, MyButton button, Color color){
@@ -42,10 +42,19 @@ public class ButtonEditor {
     }
 
     /*------------------------- Merchant Button --------------------------*/
-    public void createMerchantButton(InventoryIteratorInterface<Item> iterator, MySkin mySkin, Table table, Stage stage, ArrayList<MyMerchantButton> list, Inventory inventory, float x, float y){
+    public void createMerchantButton(InventoryIteratorInterface<Item> iterator, MySkin mySkin, Table table, Stage stage, ArrayList<MyMerchantButton> list, Inventory inventory, float x, float y, Hero hero){
         while(iterator.hasnext()){
-            Item item = iterator.next();            
-            MyMerchantButton button = new MyMerchantButton(item.getName(), mySkin.createMerchantSkin() ,table, stage); 
+            Item item = iterator.next();  
+            String name ="";    
+            if(item.getType() == ItemType.POTION){
+                Potion potion = (Potion)item;
+                name = potion.getName() + " (+" + potion.getPvSoigner() + "PV)";
+            }
+            else if(item.getType() == ItemType.WEAPON){
+                Weapon weapon = (Weapon) item;
+                name = weapon.getName() + " (power: " + weapon.getPower() + " range: " + weapon.getRange() + ")";
+            }         
+            MyMerchantButton button = new MyMerchantButton(name, mySkin.createMerchantSkin() ,table, stage, hero, inventory); 
             //On associe un objet a chaque bouton
             button.setassociatedItem(inventory.getItem(iterator.getPosition()));
             list.add(button);

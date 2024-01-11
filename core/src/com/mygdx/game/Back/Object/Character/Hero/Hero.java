@@ -6,17 +6,22 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Back.Force;
 import com.mygdx.game.Back.Inventory.Inventory;
+import com.mygdx.game.Back.Item.Item;
 import com.mygdx.game.Back.Object.Character.Character;
 import com.mygdx.game.Back.World.Map.Map;
 
 
 public class Hero extends Character{
-    protected int exp;
+    protected int money;
     
 
     public Hero(float x, float y, int pv, int defense, int power,int range, Inventory bag){
         super(x, y, pv, defense, power, range, bag);
-        this.exp = 0;       
+        this.money = 100;       
+    }
+
+    public int getMoney(){
+        return money;
     }
     /*--------------------------------------------------------------SPAWN----------------------------------------------------------------- */
     public void spawn(Map map){
@@ -117,6 +122,18 @@ public class Hero extends Character{
     public void Attack(Map map){
     }
 
+    //return -1 if hero doesn't have enough money
+    public int buyItem(Item item){
+        if(money>item.getValue()){
+                //On achete l'item
+                money -= item.getValue();
+                this.bag.addItem(item);
+                return 0;
+        }
+        else{
+                return -1;
+        }
+    }
 /*     public void GraphicHeroAttack(Map map){
         if(Gdx.input.isKeyPressed(Keys.SPACE)){
             Object.setTextureRegion(battleTexture_list.get((angle+index)%battleTexture_list.size()));

@@ -1,11 +1,5 @@
 package com.mygdx.game.Graphic.GraphicObject.GraphicElement;
 
-import java.util.ArrayList;
-
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -14,7 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Item.*;
-import com.mygdx.game.Back.Item.Weapon.*;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
 
 public class MyMerchantButton extends TextButton {
@@ -22,21 +15,17 @@ public class MyMerchantButton extends TextButton {
     private Table table;
     private Stage stage;
     private Item associatedItem;
-    private SpriteBatch batch;
-    private ShapeRenderer shapeRenderer;
-    private ButtonEditor buttonEditor;
-
-    private boolean showText;
+    private Hero hero;
+    private Inventory inventory;
 
 
-     public MyMerchantButton(String text, Skin skin, Table table, Stage stage){
+
+     public MyMerchantButton(String text, Skin skin, Table table, Stage stage, Hero hero, Inventory inventory){
         super(text, skin);
         this.table = table;
         this.stage = stage;
-        showText = false;
-        batch = new SpriteBatch();
-        shapeRenderer = new ShapeRenderer();
-        buttonEditor = new ButtonEditor();
+        this.hero = hero;
+        this.inventory = inventory;
         this.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
@@ -52,10 +41,14 @@ public class MyMerchantButton extends TextButton {
         associatedItem = item;
     }
 
-    
-
     private void setClickAction(){
-        System.out.println("click");
+        Table table2 = new Table();
+        MySkin mySkin = new MySkin();
+        BuyButton buyButton = new BuyButton("BUY ("+associatedItem.getValue() + "$)", mySkin.createBuyButton(), table2, stage, hero, inventory);
+        buyButton.setassociatedItem(associatedItem);
+        table2.add(buyButton);
+        stage.addActor(table2);
+        table2.setPosition(1100,110);
     }
 
 }

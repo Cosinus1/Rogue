@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.Back.Inventory.InventoryIteratorInterface;
@@ -19,7 +18,6 @@ import com.mygdx.game.Back.Item.ItemType;
 import com.mygdx.game.Back.Object.Character.Merchant;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
 import com.mygdx.game.Graphic.GraphicObject.GraphicElement.ButtonEditor;
-import com.mygdx.game.Graphic.GraphicObject.GraphicElement.MyButton;
 import com.mygdx.game.Graphic.GraphicObject.GraphicElement.MyMerchantButton;
 import com.mygdx.game.Graphic.GraphicObject.GraphicElement.MySkin;
 
@@ -59,15 +57,21 @@ public class MerchantScreen implements Screen {
         showtext = true; //On affiche le texte direct
 
         InventoryIteratorInterface<Item> iterator = merchant.getInventory().getIterator(ItemType.WEAPON);
-        buttonEditor.createMerchantButton(iterator, mySkin, table1, stage, buttonList, merchant.getInventory(),400, 110);
+        buttonEditor.createMerchantButton(iterator, mySkin, table1, stage, buttonList, merchant.getInventory(),400, 110, hero);
         InventoryIteratorInterface<Item> iterator2 = merchant.getInventory().getIterator(ItemType.POTION);
-        buttonEditor.createMerchantButton(iterator2, mySkin, table2, stage, buttonList, merchant.getInventory(),800, 110); 
+        buttonEditor.createMerchantButton(iterator2, mySkin, table2, stage, buttonList, merchant.getInventory(),800, 110, hero); 
      }
 
 
     public void renderText(){
         batch.begin();
             font.draw(batch, merchant.getDialogue(), 210,160);
+        batch.end();
+    }
+
+    public void renderMoney(){
+        batch.begin();
+        font.draw(batch, "You have :\n"+ hero.getMoney() +"$", 45, 150);
         batch.end();
     }
 
@@ -81,16 +85,18 @@ public class MerchantScreen implements Screen {
     public void render(float delta) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
             shapeRenderer.setColor(Color.WHITE);
+            shapeRenderer.rect(30,50, 130, 130);
+            shapeRenderer.setColor(Color.WHITE);
             shapeRenderer.rect(200,50, stage.getWidth()-400, 130);
         shapeRenderer.end();
+        
         if(showtext){
             renderText();
         }
         else{
         //     //On affiche l'inventaire du marchand
+          renderMoney();  
           renderInventaire();
-
-
         }
             if(Gdx.input.isKeyJustPressed(Keys.SPACE)){
                 showtext = false;

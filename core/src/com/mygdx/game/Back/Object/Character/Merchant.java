@@ -50,8 +50,11 @@ public class Merchant extends Object{
     //Init potion to send
     public void setPotion(){
         Potion potion1 = new Potion(10, "Litlle potion of Vitality");
+        potion1.setValue(10);
         Potion potion2 = new Potion(25, "Medium Elixir of Life");
+        potion2.setValue(25);
         Potion potion3 = new Potion(60, "Grand draught of Immortality");
+        potion3.setValue(50);
         inventory.addItem(potion1);
         inventory.addItem(potion2);
         inventory.addItem(potion3);
@@ -60,9 +63,14 @@ public class Merchant extends Object{
     //Init Sword to send
     public void setWarriorWeapon(){
         Sword sword1 = new Sword("Dagger of Fading Shadows", 30,1);
+
         Sword sword2 = new Sword("Mystic Gladeblade",40,6);
         Sword sword3 = new Sword("Thunderstrike Longsword",60,3);
         Sword sword4 = new Sword("Blade of the Eternal Dawn",100,6);
+        sword1.setValue(20);
+        sword2.setValue(60);
+        sword3.setValue(60);
+        sword4.setValue(120);
         inventory.addItem(sword1);
         inventory.addItem(sword2);
         inventory.addItem(sword3);
@@ -74,6 +82,10 @@ public class Merchant extends Object{
         Arc arc2 = new Arc("Mystic Moonshadow Bow",35);
         Arc arc3 = new Arc("Thunderstorm LongBow",50);
         Arc arc4 = new Arc("Bow of the Astral Gale",80);
+        arc1.setValue(20);
+        arc2.setValue(60);
+        arc3.setValue(60);
+        arc4.setValue(120);
         inventory.addItem(arc1);
         inventory.addItem(arc2);
         inventory.addItem(arc3);
