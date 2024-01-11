@@ -6,7 +6,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.MyGame;
-import com.mygdx.game.Back.Force;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
 import com.mygdx.game.Back.World.World;
 import com.mygdx.game.Back.World.Map.Map;
@@ -77,12 +76,7 @@ public class GameScreen implements Screen {
          //Escapeinput : quits the game (implement Menu)
          if(Gdx.input.isKeyPressed(Keys.ESCAPE)) game.setScreen(pauseScreen);
 
-         //F input : apply force to Hero (testing implementation)
-         if(Gdx.input.isKeyJustPressed(Keys.F)){
-            hero.applyForce(new Force(2000, -hero.getorX(), -hero.getorY()));
-            
-            
-         }
+         
 /*---------------------------------------------NON PLAYER OBJECTS HANDLING--------------------------------------------- */
 
       /*-----------------------------------------------MOVE-------------------------------------------------------- */
@@ -115,6 +109,7 @@ public class GameScreen implements Screen {
      
       //Update Map
       map.update(deltaTime);
+      //System.out.println("X : " + hero.getX()+ " Y : " + hero.getY());
       //Update World
       map = world.update(map);
       

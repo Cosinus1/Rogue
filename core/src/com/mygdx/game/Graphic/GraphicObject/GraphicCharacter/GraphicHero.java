@@ -74,8 +74,8 @@ public class GraphicHero extends GraphicCharacter {
         //float offsetY=0;
         TextureRegion textureRegion = TextureObject.getTextureRegion();
         // Render the object texture based on its position and properties
-        float objectX = hero.getX() ;
-        float objectY = hero.getY() ;
+        float objectX = hero.getX() - 16;
+        float objectY = hero.getY() - 16;
 
         float objectWidth = textureRegion.getRegionWidth()*scaleFactor;
         float objectHeight = textureRegion.getRegionHeight()*scaleFactor;
