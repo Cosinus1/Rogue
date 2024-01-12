@@ -1,4 +1,4 @@
-package com.mygdx.game.Graphic.GraphicObject.GraphicElement;
+package com.mygdx.game.Graphic.GraphicObject.GraphicElement.Button;
 
 import java.util.ArrayList;
 
@@ -29,7 +29,7 @@ public class MyButton extends TextButton {
     private Item associatedItem;
     private Hero hero;
 
-    public MyButton(String text, Skin skin, Table table,Stage stage,ArrayList<MyButton> list, ItemType type, Inventory inventory, Hero hero, boolean main){
+    public MyButton(String text, Skin skin, Table table, Stage stage,ArrayList<MyButton> list, ItemType type, Inventory inventory, Hero hero, boolean main){
         super(text, skin);
         click = false;
         this.table = table;

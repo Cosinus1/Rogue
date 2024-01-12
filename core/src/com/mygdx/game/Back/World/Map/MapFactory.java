@@ -88,8 +88,8 @@ public class MapFactory {
         // Add openings for doors (specify the positions and tiles for openings)
         for(int i=0; i<3; i++){
             for(int j=0; j<3; j++){
-                baseLayer.setCell(StartX+i-1, StartY+j-1, createCell(createOpeningTile(tileSets)));
-                baseLayer.setCell(EndX+i-1, EndY+j-1, createCell(createOpeningTile(tileSets)));
+                baseLayer.setCell(StartX+i-1, StartY+j-1, null);
+                baseLayer.setCell(EndX+i-1, EndY+j-1, null);
             }
         }
         //Add base walls inside the baseLayer
@@ -187,7 +187,7 @@ public class MapFactory {
             // Ensure Wallstarting point is  on borders if i< 3 else not too close to the corners 
             int breakwhile = 0;
             if(i<8){
-                    WallstartX = randomWallstart.nextInt(mapWidth-3)+2;
+                    WallstartX = randomWallstart.nextInt(mapWidth-6)+3;
                     WallstartY = randomWallstart.nextInt(2)*(mapHeight-4)+1;
             }else{
             do {
@@ -494,7 +494,7 @@ public class MapFactory {
             // Explore neighbors
             for (int i = -1; i <= 1; i++) {
                 for (int j = -1; j <= 1; j++) {
-                    if (i == 0 && j == 0) {
+                    if (i == j) {
                         continue;
                     }
 

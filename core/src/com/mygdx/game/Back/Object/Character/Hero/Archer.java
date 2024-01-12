@@ -16,13 +16,17 @@ public class Archer extends Hero{
     }
 
     public void createArc(){
-        Arc arc = new Arc("arc", 50);
+        Arc arc = new Arc("arc", 20);
+
         this.arc = arc;
     }
 
     public void Attack(Map map){
-        arc.Attack(this, map);
-        graphicObject.setBattleTexture();
+        if(attackTimer > attackCooldown){
+            arc.Attack(this, map);
+            graphicObject.setBattleTexture();
+            attackTimer = 0;
+        }
     }
 
     public void changeWeapon(Arc newArc){

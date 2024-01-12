@@ -27,6 +27,9 @@ public class Inventory {
         }
     }
 
+    public int getSize(){
+        return inventory.size();
+    }
     //renvoie une copie de la liste ( de l'inventaire)
     public ArrayList<Item> getItems(){
         return new ArrayList<>(inventory);

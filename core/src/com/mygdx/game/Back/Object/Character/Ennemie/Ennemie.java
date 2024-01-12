@@ -24,30 +24,38 @@ public class Ennemie extends Character {
     }
     
     /*----------------------------------GETTERS------------------------------------- */
-    public float getAttackTimer(){
-        return this.attackTimer;
+    
+    public int getDetecRange(){
+        return this.detectionRange;
     }
-    public float getAttackCooldown(){
-        return this.attackCooldown;
-    }
-    public int getRange(){
-        return this.range;
-    }
-
     /*----------------------------------SETTERS------------------------------------- */
     public void toggle_Attack(){
         this.attack_charged = !attack_charged;
     }
-
-    public void setAttackTimer(float delta){
-        this.attackTimer = delta;
-    }
     /*----------------------------------CHECKERS------------------------------------- */
-    public boolean isAttack_Charged(){
-        return this.attack_charged;
-    }
-    public int getDetecRange(){
-        return this.detectionRange;
+
+    public boolean isValidTrajectory(int startX, int startY, int endX, int endY, Map map){
+
+        int distanceX = endX - startX;
+        int distanceY = endY - startY;
+        int moveX = (int) Math.signum(distanceX);
+        int moveY = (int) Math.signum(distanceY);
+        boolean isValidX = false;
+        boolean isValidY = false;
+
+        if (distanceX == 0 && distanceY == 0) return true;
+        if (!isValidPosition(startX + moveX, startY, map)){
+            moveX = 0;
+            isValidX = true;
+        }
+        if (!isValidPosition(startX, startY+moveY, map)){
+            moveY = 0;
+            isValidY = true;
+        }
+        if(isValidX || isValidY){
+            return isValidTrajectory(startX+moveX, startY+moveY, endX, endY, map);
+        }
+        else return false;
     }
     /*---------------------------------SPAWN----------------------------------------- */
 
@@ -86,11 +94,12 @@ public class Ennemie extends Character {
             int endY = (int) Yh/tileWidth;
 
             //The position must be valid 
-            if (isValidTrajectory((int) X/tileWidth, (int) Y/tileWidth, endX, endY, (int) moveX/tileWidth, (int) moveY/tileWidth, map)) {
+            if (isValidTrajectory((int) X/tileWidth, (int) Y/tileWidth, endX, endY, (int) signX, (int) signY, map)) {
                 
                 switchtorandom = false;
                 if(!(inRange(hero, map))){
                     setPosition(X+moveX/speed, Y+moveY/speed);
+                    map.Wallcollision(this);
                     //Get the appropriate sprite for movement
                         //Set Angle
                         float delta = 6.0f;
@@ -109,6 +118,7 @@ public class Ennemie extends Character {
                 // Generate random movements
                 int randomX = random.nextInt(3) - 1; // Random movement in x direction (-1, 0, 1)
                 int randomY = random.nextInt(3) - 1; // Random movement in y direction (-1, 0, 1)
+                
         
                 // Get current character position
         
@@ -143,8 +153,13 @@ public class Ennemie extends Character {
                 //Update character's new position if valid
                 if (isValidPosition((int) newX/tileWidth, (int) newY/tileWidth, map)) {
                     setPosition(newX,newY);
-                    graphicObject.setMoveTexture();
                 }
+                map.Wallcollision(this);
+                    //Set angle
+                    OrX = randomX;
+                    OrY = randomY;
+                    setAngle();
+                graphicObject.setMoveTexture();
             }
         }
     
@@ -152,6 +167,11 @@ public class Ennemie extends Character {
     
     /*---------------------------------ATTACK--------------------------------------- */
     public void Attack(Map map){
+        if(attackTimer > attackCooldown){
+            weapon.Attack(this, map);
+            attackTimer = 0;
+            graphicObject.setBattleTexture();
+        }
         
     }
 }

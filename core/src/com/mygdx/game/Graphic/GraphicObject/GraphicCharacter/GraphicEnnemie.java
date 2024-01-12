@@ -70,23 +70,25 @@ public class GraphicEnnemie extends GraphicCharacter{
 
 
 /*------------------------------------------------------RENDER----------------------------------------------------------- */
-     public void render(Object object, SpriteBatch spriteBatch, OrthographicCamera camera){
+    public void render(Object object, SpriteBatch spriteBatch, OrthographicCamera camera){
         Ennemie ennemie = (Ennemie) object;
-        int scaleFactor;
-        //float offsetX=0;
-        //float offsetY=0;
-        TextureRegion textureRegion = TextureObject.getTextureRegion();
-        // Render the object texture based on its position and properties
-        float objectX = object.getX();
-        float objectY = object.getY();
-
+        int scaleFactor = 1;
         //Render bigger for boss
         if (TextureObject.getProperties().get("boss")=="boss"){
             scaleFactor = 2;
-            //offsetX += scaleFactor*16;
-            //offsetY -= scaleFactor*16;
         }
-        else scaleFactor = 1;
+        TextureRegion textureRegion;
+        //Get sprite : 
+        if(Attack_list.size()!=0) {
+            textureRegion = Attack_list.get(0);
+            Attack_list.remove(0);
+        }else{
+            textureRegion = TextureObject.getTextureRegion();
+        }
+        // Render the object texture based on its position and properties
+        float objectX = object.getX() - 16;
+        float objectY = object.getY() - 16*scaleFactor;
+
         float objectWidth = textureRegion.getRegionWidth()*scaleFactor;
         float objectHeight = textureRegion.getRegionHeight()*scaleFactor;
             
@@ -101,5 +103,5 @@ public class GraphicEnnemie extends GraphicCharacter{
         
             spriteBatch.draw(textureRegion, objectX, objectY, objectWidth, objectHeight);
             barlife.drawPNJLifeBar(objectX, objectY, ennemie.getPV(), spriteBatch, this);
-        }
+    }
 }

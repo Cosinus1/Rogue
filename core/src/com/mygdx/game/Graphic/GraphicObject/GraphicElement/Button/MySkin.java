@@ -1,4 +1,4 @@
-package com.mygdx.game.Graphic.GraphicObject.GraphicElement;
+package com.mygdx.game.Graphic.GraphicObject.GraphicElement.Button;
 
 
 import com.badlogic.gdx.graphics.Color;
@@ -10,23 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class MySkin {
-    public Skin createWhiteSkin(){
-        Skin skin = new Skin();
-        BitmapFont font = new BitmapFont();
-        font.setColor(Color.WHITE);
-
-        Pixmap pixmap = new Pixmap(200, 50, Format.RGBA8888);
-        pixmap.setColor(Color.WHITE);
-        pixmap.fill();
-        skin.add("buttonBackground", new Texture(pixmap));
-
-        TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.font = font; // Définir la police pour le bouton
-        textButtonStyle.up = skin.newDrawable("buttonBackground", Color.WHITE); // Utiliser la texture ou Pixmap pour le visuel du bouton
-        skin.add("White", textButtonStyle); // Ajouter le style "default" pour les TextButton
-
-        return skin;
-    }
 
     public Skin createStyle(Color color){
         Skin skin = new Skin();
@@ -47,21 +30,40 @@ public class MySkin {
 
     }
 
-    public Skin createPotionSkin(){
+    public Skin createMerchantSkin(){
         Skin skin = new Skin();
         BitmapFont font = new BitmapFont();
 
-        font.setColor(Color.GRAY);
+        font.setColor(Color.BLACK);
 
-        Pixmap GrayPixmap = new Pixmap(600, 50, Format.RGBA8888);
-        GrayPixmap.setColor(Color.GRAY); // Couleur bleu marine
+        Pixmap GrayPixmap = new Pixmap(370, 25, Format.RGBA8888);
+        GrayPixmap.setColor(Color.NAVY); // Couleur bleu marine
         GrayPixmap.fill();
-        skin.add("buttonBackground", new Texture(GrayPixmap));
+        skin.add("buttonMerchant", new Texture(GrayPixmap));
 
         TextButton.TextButtonStyle customButtonStyle = new TextButton.TextButtonStyle();
         customButtonStyle.font = font;
-        customButtonStyle.up = skin.newDrawable("buttonBackground", Color.GRAY); // Utiliser le fond bleu marine
-        skin.add("Gray", customButtonStyle);
+        customButtonStyle.up = skin.newDrawable("buttonMerchant", Color.GRAY); // Utiliser le fond bleu marine
+        skin.add("default", customButtonStyle);
+
+        return skin;
+    }
+
+    public Skin createBuyButton(){
+        Skin skin = new Skin();
+        BitmapFont font = new BitmapFont();
+
+        font.setColor(Color.BLACK);
+
+        Pixmap GrayPixmap = new Pixmap(100, 50, Format.RGBA8888);
+        GrayPixmap.setColor(Color.RED); // Couleur bleu marine
+        GrayPixmap.fill();
+        skin.add("buybutton", new Texture(GrayPixmap));
+
+        TextButton.TextButtonStyle customButtonStyle = new TextButton.TextButtonStyle();
+        customButtonStyle.font = font;
+        customButtonStyle.up = skin.newDrawable("buybutton", Color.RED); // Utiliser le fond bleu marine
+        skin.add("default", customButtonStyle);
 
         return skin;
     }
