@@ -84,7 +84,7 @@ public class MainMenuScreen implements Screen {
         });
 
         // Bouton Options
-        addbutton("Options");
+       // addbutton("Options");
 
         // Bouton Quit
         addbutton("Quit").addListener(new ClickListener(){
@@ -140,7 +140,12 @@ public class MainMenuScreen implements Screen {
     }
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height, true); // Mettez à jour le viewport avec le redimensionnement
+
+        viewport.update(width, height, true); // Met à jour le viewport avec le redimensionnement
+        viewport.apply();
+
+
+
     }
     @Override
     public void pause() {
