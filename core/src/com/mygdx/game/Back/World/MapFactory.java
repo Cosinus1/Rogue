@@ -436,7 +436,7 @@ public class MapFactory {
             for (int y = startY - searchRange; y <= startY + searchRange; y++) {
                 if (x > 1 && x < mapWidth && y > 1 && y < mapHeight) {
                     if (baseLayer.getCell(x, y) != null){
-                        if(baseLayer.getCell(x, y).getTile()!=null && !baseLayer.getCell(x, y).getTile().getProperties().containsKey("border")) {
+                        if(baseLayer.getCell(x, y).getTile()!=null && baseLayer.getCell(x, y).getTile().getProperties().containsKey("wall") && !baseLayer.getCell(x, y).getTile().getProperties().containsKey("border")) {
                             return true; // Found an existing chain 
                         }
                     }
