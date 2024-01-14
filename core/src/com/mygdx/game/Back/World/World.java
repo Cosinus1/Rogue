@@ -113,12 +113,10 @@ public class World {
     if (instance == null) {
         instance = new World(hero);
     }
+    else instance.setHero(hero);
     return instance;
     }
-    public static World getInstance() {
-    if (instance == null) System.out.println("ERROR : NO INSTANCE");
-    return instance;
-    }
+
     public Hero getHero(){
         return Hero;
     }
@@ -143,6 +141,21 @@ public class World {
     public TiledMapTileSets getTileSets(){
         return Tilesets;
     }
+/*------------------------------------------------SETTERS------------------------------------ */
+public void setHero(Hero hero){
+    //Initialize the Hero
+    Hero = hero;
+    Hero.setX(CurrentMap.getX());
+    Hero.setY(CurrentMap.getY());
+
+    Hero.setGraphicObject(new GraphicHero(Hero.getName(), Home));
+    Hero.spawn(DungeonHub);
+    Hero.spawn(Home);
+    Hero.spawn(Tavern);  
+    Merchant merchant = new Merchant(Hero,320,270,Tavern);
+    merchant.spawn(Tavern);          
+}
+
 
 /* --------------------------------------------- UPDATE ------------------------------------- */
     public Map update(Map map){
