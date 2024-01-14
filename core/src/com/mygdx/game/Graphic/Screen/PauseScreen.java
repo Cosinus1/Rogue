@@ -17,10 +17,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import com.mygdx.game.MyGame;
+import com.mygdx.game.Back.World.World;
 
-public class PauseScreen implements Screen{
+public class PauseScreen implements Screen {
 
-   private Stage stage;
+    private Stage stage;
 
     public PauseScreen(final MyGame game) {
 
@@ -35,20 +36,21 @@ public class PauseScreen implements Screen{
         skin.add("buttonBackground", new Texture(pixmap));
 
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
-        textButtonStyle.font = font; // Définir la police pour le bouton
-        textButtonStyle.up = skin.newDrawable("buttonBackground", Color.DARK_GRAY); // Utiliser la texture ou Pixmap pour le visuel du bouton
-        skin.add("default", textButtonStyle); // Ajouter le style "default" pour les TextButton
+        textButtonStyle.font = font; // Set the font for the button
+        textButtonStyle.up = skin.newDrawable("buttonBackground", Color.DARK_GRAY); // Use the texture or Pixmap for the button's visual
+        skin.add("default", textButtonStyle); // Add the "default" style for TextButton
 
         // Créer des boutons pour Continuer, Menu et Quitter
         TextButton continueButton = new TextButton("Continue", skin);
         TextButton menuButton = new TextButton("Menu", skin);
         TextButton quitButton = new TextButton("Quit", skin);
+        TextButton saveButton = new TextButton("Save", skin);
 
-        // Ajouter des gestionnaires d'événements pour les boutons
+        // Add event listeners for the buttons
         continueButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // Revenir à l'écran du jeu
+                // Return to the game screen
                 game.setScreen(game.gameScreen);
             }
         });
@@ -56,8 +58,7 @@ public class PauseScreen implements Screen{
         quitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // Quitter l'application
-                System.out.println("PAUSE QUIT TOGGLED");
+                // Quit the application
                 Gdx.app.exit();
             }
         });
@@ -65,22 +66,28 @@ public class PauseScreen implements Screen{
         menuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // Return to Main Menu
+                // Return to the main menu
                 game.setScreen(game.mainMenuScreen);
             }
         });
 
-        // Placer les boutons sur la scène
+        saveButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+            }
+        });
+
+        // Place the buttons on the stage
         Table table = new Table();
         table.center();
         table.add(continueButton).padBottom(20);
-
+        table.row();
+        table.add(saveButton).padBottom(20);
         table.row();
         table.add(menuButton).padBottom(20);
-
         table.row();
-        table.add(quitButton);
-        
+        table.add(quitButton).padBottom(20);
+
         stage.addActor(table);
 
         table.setPosition(
@@ -96,7 +103,7 @@ public class PauseScreen implements Screen{
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0,0,0,1);
+        Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1/30f));
@@ -124,6 +131,4 @@ public class PauseScreen implements Screen{
     public void dispose() {
         stage.dispose();
     }
-
-    
 }

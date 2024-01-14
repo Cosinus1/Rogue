@@ -5,7 +5,6 @@ import java.util.Comparator;
 import java.util.Collections;
 
 import com.badlogic.gdx.maps.*;
-import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
@@ -25,6 +24,7 @@ import com.mygdx.game.Back.Object.Character.Hero.Hero;
 import com.mygdx.game.Back.Object.Element.Door;
 import com.mygdx.game.Back.Object.Element.Element;
 import com.mygdx.game.Back.Object.Element.Wall;
+import com.mygdx.game.Back.Object.Element.WallFactory;
 import com.mygdx.game.Back.Object.Force;
 import com.mygdx.game.Back.Object.Object;
 import com.mygdx.game.Back.Object.Character.Character;
@@ -34,7 +34,7 @@ public class Map {
 
     private String Name;
 
-    private float x,y;//position 0 of the character
+    private float x,y;//position 0 of the Hero
     private Vector2 lastposition;
     private boolean isOpen;
     private float camx, camy; //position of the camera (used for Tavern)
@@ -50,6 +50,7 @@ public class Map {
 
     private String PVP;
 
+    //Objects Variables
     private Merchant merchant;
     private ArrayList<Door> Door_list;
     private ArrayList<Ennemie> NPCs, DeadNPCs;
@@ -58,7 +59,9 @@ public class Map {
     private ArrayList<Object> Objects;
 
     private Hero hero;
+    private WallFactory wallFactory;
 
+    //MP3
     private Music music;
 
     //constructeur
@@ -212,27 +215,17 @@ public class Map {
     public void addElement(Element element){
         Elements.add(element);
     }
-    public void addWalls(){
-        TiledMapTileLayer Base = (TiledMapTileLayer) tiledmap.getLayers().get("Base");
-        TiledMapTileLayer Middle = (TiledMapTileLayer) tiledmap.getLayers().get("Middle");
-        TiledMapTileLayer Top = (TiledMapTileLayer) tiledmap.getLayers().get("Top");
-        ArrayList<TiledMapTileLayer> Layers = new ArrayList<>();
-        Layers.add(Base); Layers.add(Middle); Layers.add(Top);
-        for(int X = 0; X<mapWidth; X++){
-            for(int Y = 0; Y<mapHeight-1; Y++){
-                for(TiledMapTileLayer layer : Layers){
-                    Cell cell = layer.getCell(X, Y);
-                    if(cell!=null && cell.getTile()!=null){
-                        Wall wall = new Wall(X*tilewidth, Y*tileheight, 32, 32);
-                        wall.setTextureObject(new TextureMapObject(cell.getTile().getTextureRegion()));
-                        Walls.add(wall);
-                    }
-                }
+    public void addWalls() {
+        WallFactory wallFactory = new WallFactory(tiledmap);
+        for (int x = 0; x < mapWidth; x++) {
+            for (int y = 0; y < mapHeight - 1; y++) {
+                Wall wall = wallFactory.createWall(x, y);
+                if(wall!=null) Walls.add(wall);
             }
         }
         System.out.println(Walls.size());
-
     }
+    
 
     /*--------------------------------------------------------------LIST SORTING------------------------------------------------------------------- */
     public void sortObjects(){
@@ -279,6 +272,7 @@ public class Map {
             for(Element element : Elements){
                 element.update(deltaTime);
                 Objectcollision(element);
+                Wallcollision(element);
                 if((element.getSpeedX()!=0 || element.getSpeedY()!=0) && (insideMap(element))) List.add(element);
             }
             Elements.clear();
@@ -290,6 +284,8 @@ public class Map {
             ArrayList<Ennemie> List = new ArrayList<>();
             for(Ennemie enemy : NPCs){
                 enemy.update(deltaTime);
+                Objectcollision(enemy);
+                Wallcollision(enemy);
                 if(enemy.getPV()<=0) DeadNPCs.add(enemy);
                 else List.add(enemy);
             }
@@ -342,20 +338,20 @@ public class Map {
 
                 float distanceX = wall.getX()-object.getX();
                 float distanceY = wall.getY()-object.getY();
-                if(Math.abs(distanceX)<17 && Math.abs(distanceY)<17){
-                    float signX = 0;
-                    float signY = 0;
+                if(Math.abs(distanceX)<16 && Math.abs(distanceY)<16){
+                    float signX = Math.signum(-distanceX);
+                    float signY = Math.signum(-distanceY);
                     if (Math.abs(distanceX)>Math.abs(distanceY)) signX = Math.signum(-distanceX);
                     else signY = Math.signum(-distanceY);
                     //Apply force to object (we ignore force(Object->wall))
-                    object.applyForce(new Force(1000, 1000, signX, signY));
+                    object.applyForce(new Force(50000, 50000, signX, signY));
                 }
             }
         }
     }
     public void Objectcollision(Object object1){
         ArrayList<Object> List = new ArrayList<>();
-        if(NPCs!=null) List.addAll(NPCs); if(Walls!=null) List.addAll(Walls); List.add(hero);
+        if(NPCs!=null) List.addAll(NPCs); if(Elements!=null) List.addAll(Elements); List.add(hero);
         if (List!=null){
             for (Object object2 : List){
 

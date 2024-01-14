@@ -15,6 +15,7 @@ public class Element extends Object{
     
     public Element(float x, float y, int width, int height){
         super(x, y, width, height);
+        this.mass = 5;
         this.graphicObject = new GraphicElement(width, height);
         this.friction = 1;
         this.Power = 10;

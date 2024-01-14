@@ -26,6 +26,7 @@ public abstract class Character extends Object{
     //constructeur
     public Character(float x, float y, int pv, int defense, int power,int range, Inventory bag){
         super(x, y, 32, 32);
+        this.mass = 20;
         this.PV = pv;
         this.PV_max = pv;
         this.defense = defense;
