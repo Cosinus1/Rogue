@@ -15,7 +15,6 @@ Game screen
     [Space] - pour attaquer 
     [Left] -  pour aller à gauche 
     [Right] - pour aller à droite 
-    [ENTER] - pour changer la couleur de l'écran 
     [F] - pour appliquer une force au héro 
     [E] - pour montrer l'inventaire 
     [ESC] - pour faire une pause 
