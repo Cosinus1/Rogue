@@ -17,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import com.mygdx.game.MyGame;
-import com.mygdx.game.Back.World.World;
 
 public class PauseScreen implements Screen {
 

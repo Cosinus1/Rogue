@@ -19,7 +19,6 @@ import com.mygdx.game.MyGame;
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Object.Character.Hero.Archer;
 import com.mygdx.game.Back.Object.Character.Hero.Warrior;
-import com.mygdx.game.Back.World.World;
 
 public class ChooseClassScreen implements Screen {
 
