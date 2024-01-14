@@ -189,10 +189,10 @@ public void setHero(Hero hero){
     public Map updateCurrentMap(Map map){
         if(map != null){
             
-            /*if(map.getMusic()!=null){
+            if(map.getMusic()!=null){
                 map.getMusic().play();
                 if(this.CurrentMap.getMusic()!=null)this.CurrentMap.getMusic().pause();
-            }*/
+            }
             this.CurrentMap = map;
             this.CurrentcollisionLayer = map.getcollisionLayer();
             if((map.getPVP() == "ON") && map.getNPCs().size()==0){
