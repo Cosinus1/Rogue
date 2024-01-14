@@ -2,7 +2,7 @@ package com.mygdx.game.Back.Object.Character.Hero;
 
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Item.Weapon.*;
-import com.mygdx.game.Back.World.Map.Map;
+import com.mygdx.game.Back.World.Map;
 
 
 public class Warrior extends Hero{
@@ -23,13 +23,9 @@ public class Warrior extends Hero{
 
 
     public void changeWeapon(Sword newSword){
-        System.out.println("L'ancienne arme était :");
-        sword.presenter();
         bag.addItem(sword);
         this.sword = newSword;
         bag.removeItem(newSword);
-        System.out.println("L'a nouvelle arme equipé est : ");
-        sword.presenter();
     }
     public void Attack(Map map){
         if(attackTimer > attackCooldown){

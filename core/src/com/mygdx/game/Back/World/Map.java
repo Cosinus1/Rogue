@@ -1,4 +1,4 @@
-package com.mygdx.game.Back.World.Map;
+package com.mygdx.game.Back.World;
 
 
 import java.util.Comparator;
@@ -26,7 +26,7 @@ import com.mygdx.game.Back.Object.Element.Door;
 import com.mygdx.game.Back.Object.Element.Element;
 import com.mygdx.game.Back.Object.Element.Wall;
 import com.mygdx.game.Back.Object.Element.WallFactory;
-import com.mygdx.game.Back.Force;
+import com.mygdx.game.Back.Object.Force;
 import com.mygdx.game.Back.Object.Object;
 import com.mygdx.game.Back.Object.Character.Character;
 import com.mygdx.game.Back.Object.Character.Merchant;
@@ -168,6 +168,9 @@ public class Map {
     }
     public int getTilewidth(){
         return this.tilewidth;
+    }
+    public Merchant getMerchant(){
+        return this.merchant;
     }
 
 /* --------------------------------------------- SETTERS ------------------------------------- */
@@ -318,8 +321,8 @@ public class Map {
                     if (Math.abs(distanceY)<10) signY = 0;
                     else signY = Math.signum(distanceY);
 
-                    object.applyInstantForce(new Force(10000, 10000, -signX, -signY, 0));
-                    ennemie.applyInstantForce(new Force(10000, 10000, signX, signY, 0));
+                    object.applyInstantForce(new Force(10000, 10000, -signX, -signY));
+                    ennemie.applyInstantForce(new Force(10000, 10000, signX, signY));
                 
 
                 }
@@ -340,7 +343,7 @@ public class Map {
                     if (Math.abs(distanceX)>Math.abs(distanceY)) signX = Math.signum(-distanceX);
                     else signY = Math.signum(-distanceY);
                     //Apply force to object (we ignore force(Object->wall))
-                    object.applyForce(new Force(50000, 50000, signX, signY, 5f));
+                    object.applyForce(new Force(50000, 50000, signX, signY));
                 }
             }
         }
@@ -360,8 +363,8 @@ public class Map {
                     if (Math.abs(distanceX)>Math.abs(distanceY)) signX = Math.signum(distanceX);
                     else signY = Math.signum(distanceY);
                     
-                    object1.applyForce(new Force(10000, 10000, -signX, -signY, 1.1f));
-                    object2.applyForce(new Force(10000, 10000, signX, signY, 1.1f));
+                    object1.applyForce(new Force(10000, 10000, -signX, -signY));
+                    object2.applyForce(new Force(10000, 10000, signX, signY));
                 }
             }
         }

@@ -5,7 +5,7 @@ import com.mygdx.game.Back.Item.*;
 import com.mygdx.game.Back.Item.Weapon.*;
 import com.mygdx.game.Back.Object.Character.Hero.Archer;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
-import com.mygdx.game.Back.World.Map.Map;
+import com.mygdx.game.Back.World.Map;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicMerchant;
 import com.mygdx.game.Back.Object.Object;
 
@@ -23,8 +23,16 @@ public class Merchant extends Object{
         else{
             setWarriorMerchant();
         }
-        this.dialogue = "Ah, welcome adventurer, welcome!\nIn my humble shops, you'll find everything a daring hero like yourself could desire.\n Sharpened swords, magical arc, and of course, the most potent potions to heal your wounds and enhance your powers!";
+        this.dialogue = "Ah, welcome adventurer, welcome!\nIn my humble shops, you'll find everything a daring hero like yourself could desire.\nSharpened swords, magical arc, and of course, the most potent potions\nto heal your wounds and enhance your powers!";
     }
+
+    public String getDialogue(){
+        return dialogue;
+    }
+    public Inventory getInventory(){
+        return inventory;
+    }
+
 
 
     public void spawn(Map map){
@@ -44,8 +52,11 @@ public class Merchant extends Object{
     //Init potion to send
     public void setPotion(){
         Potion potion1 = new Potion(10, "Litlle potion of Vitality");
+        potion1.setValue(10);
         Potion potion2 = new Potion(25, "Medium Elixir of Life");
+        potion2.setValue(25);
         Potion potion3 = new Potion(60, "Grand draught of Immortality");
+        potion3.setValue(50);
         inventory.addItem(potion1);
         inventory.addItem(potion2);
         inventory.addItem(potion3);
@@ -57,6 +68,10 @@ public class Merchant extends Object{
         Sword sword2 = new Sword("Mystic Gladeblade",40,6);
         Sword sword3 = new Sword("Thunderstrike Longsword",60,3);
         Sword sword4 = new Sword("Blade of the Eternal Dawn",100,6);
+        sword1.setValue(20);
+        sword2.setValue(60);
+        sword3.setValue(60);
+        sword4.setValue(120);
         inventory.addItem(sword1);
         inventory.addItem(sword2);
         inventory.addItem(sword3);
@@ -68,6 +83,10 @@ public class Merchant extends Object{
         Arc arc2 = new Arc("Mystic Moonshadow Bow",35);
         Arc arc3 = new Arc("Thunderstorm LongBow",50);
         Arc arc4 = new Arc("Bow of the Astral Gale",80);
+        arc1.setValue(20);
+        arc2.setValue(60);
+        arc3.setValue(60);
+        arc4.setValue(120);
         inventory.addItem(arc1);
         inventory.addItem(arc2);
         inventory.addItem(arc3);

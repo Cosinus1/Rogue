@@ -14,9 +14,9 @@ import com.mygdx.game.MyGame;
 import com.mygdx.game.Back.Inventory.*;
 import com.mygdx.game.Back.Item.*;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
-import com.mygdx.game.Graphic.GraphicObject.GraphicElement.ButtonEditor;
-import com.mygdx.game.Graphic.GraphicObject.GraphicElement.MyButton;
-import com.mygdx.game.Graphic.GraphicObject.GraphicElement.MySkin;
+import com.mygdx.game.Graphic.Decorator.ButtonEditor;
+import com.mygdx.game.Graphic.Decorator.MyButton;
+import com.mygdx.game.Graphic.Decorator.MySkin;
 
 public class InventoryScreen implements Screen{
     private final MyGame game;
@@ -50,9 +50,7 @@ public class InventoryScreen implements Screen{
         MySkin mySkin = new MySkin();
 
         //Boutons de base
-        Color newNavy = new Color(0,0,1,0.7f); 
-        weaponButton = new MyButton("WEAPON", mySkin.createStyle(newNavy),table2,stage,weaponList,ItemType.WEAPON,inventory,hero, true);
-        weaponButton.setClick(true);
+        weaponButton = new MyButton("WEAPON", mySkin.createStyle(Color.NAVY),table2,stage,weaponList,ItemType.WEAPON,inventory,hero, true);
         potionButton = new MyButton( "POTION", mySkin.createStyle(Color.NAVY),table2,stage,potionList,ItemType.POTION,inventory,hero, true);
         weaponButton.setButton(potionButton);
         potionButton.setButton(weaponButton);
@@ -62,20 +60,14 @@ public class InventoryScreen implements Screen{
         table.row();
         stage.addActor(table);
         table.setPosition( 600,stage.getHeight()-30);
-
-        //Arme affiché de base
-        InventoryIteratorInterface<Item> iterator = inventory.getIterator(ItemType.WEAPON);
-        buttonEditor.createItemButton(iterator, mySkin, table2, stage,weaponList, inventory,ItemType.WEAPON, hero);
     }
 
-    public void reset(){
-        Color newNavy = new Color(0,0,1,0.7f); 
+    public void reset(){ 
         buttonEditor.changeColor(mySkin, potionButton, Color.NAVY);
-        buttonEditor.changeColor(mySkin, weaponButton,newNavy);
+        buttonEditor.changeColor(mySkin, weaponButton,Color.NAVY);
         potionButton.setClick(false);
-        weaponButton.setClick(true);
-        InventoryIteratorInterface<Item> iterator = inventory.getIterator(ItemType.WEAPON);
-        buttonEditor.createItemButton(iterator, mySkin, table2, stage,weaponList, inventory,ItemType.WEAPON, hero);
+        weaponButton.setClick(false);
+        table2.clear();
     }
 
     @Override

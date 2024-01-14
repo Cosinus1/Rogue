@@ -2,6 +2,7 @@ package com.mygdx.game.Back.Object.Character.Hero;
 
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Item.Weapon.*;
+import com.mygdx.game.Back.World.Map;
 import com.mygdx.game.Back.World.Map.*;;
 
 

@@ -3,6 +3,7 @@ package com.mygdx.game.Back.Item;
 public abstract class Item {
     private ItemType type;
     protected String name;
+    protected int value;
 
     public Item(ItemType t, String name){
         this.type = t;
@@ -15,6 +16,12 @@ public abstract class Item {
     public String getName(){
         return name;
     }
-
+    public int getValue(){
+        return value;
+    }
+    public void setValue(int value){
+        this.value = value;
+    }
+    
     public abstract void description();
 }

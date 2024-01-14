@@ -40,8 +40,8 @@ public class PauseScreen implements Screen {
         textButtonStyle.up = skin.newDrawable("buttonBackground", Color.DARK_GRAY); // Use the texture or Pixmap for the button's visual
         skin.add("default", textButtonStyle); // Add the "default" style for TextButton
 
-        // Create buttons for Continue, Menu, Quit, and Save
-        TextButton continueButton = new TextButton("Continue", skin);
+        // Créer des boutons pour Continuer, Menu et Quitter
+        TextButton continueButton = new TextButton("Continuer", skin); // Utilisez votre skin pour les boutons
         TextButton menuButton = new TextButton("Menu", skin);
         TextButton quitButton = new TextButton("Quit", skin);
         TextButton saveButton = new TextButton("Save", skin);

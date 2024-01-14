@@ -3,11 +3,11 @@ package com.mygdx.game.Back.Item.Weapon;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.objects.TextureMapObject;
-import com.mygdx.game.Back.Force;
+import com.mygdx.game.Back.Object.Force;
 import com.mygdx.game.Back.Object.Object;
 import com.mygdx.game.Back.Object.Element.Element;
 import com.mygdx.game.Back.Object.Element.ElementFactory;
-import com.mygdx.game.Back.World.Map.Map;
+import com.mygdx.game.Back.World.Map;
 
 public class Staff extends Weapon {
     private ElementFactory factory;
@@ -43,7 +43,7 @@ public class Staff extends Weapon {
         float Y2 = map.getHero().getY();
         Element fireball = factory.createProjectile(X1, Y1);
         fireball.setTarget("hero");
-        fireball.applyForce(new Force(200,200, X2-X1, Y2-Y1, 1.01f));
+        fireball.applyForce(new Force(200,200, X2-X1, Y2-Y1));
         fireball.setTextureObject(Fireball(object.getorX(), object.getorY()));
         map.addElement(fireball);
     }

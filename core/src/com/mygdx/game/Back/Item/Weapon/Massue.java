@@ -2,7 +2,7 @@ package com.mygdx.game.Back.Item.Weapon;
 
 import com.mygdx.game.Back.Object.Object;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
-import com.mygdx.game.Back.World.Map.Map;
+import com.mygdx.game.Back.World.Map;
 
 public class Massue extends Weapon{
     private int range;

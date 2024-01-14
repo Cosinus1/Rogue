@@ -8,7 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 
 import com.mygdx.game.Back.Object.Object;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
-import com.mygdx.game.Back.World.Map.Map;
+import com.mygdx.game.Back.World.Map;
 
 public class GraphicHero extends GraphicCharacter {
 

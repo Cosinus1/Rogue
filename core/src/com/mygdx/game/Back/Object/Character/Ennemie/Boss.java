@@ -5,7 +5,7 @@ import java.util.Random;
 
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Item.Weapon.Weapon;
-import com.mygdx.game.Back.World.Map.Map;
+import com.mygdx.game.Back.World.Map;
 
 public class Boss extends Ennemie{
     ArrayList<String> Names = new ArrayList<>();

@@ -122,7 +122,6 @@ public class ChooseClassScreen implements Screen {
 
     }
 
-    /************* NOM DU JEU ************/
 
 
     @Override

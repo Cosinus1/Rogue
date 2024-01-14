@@ -10,6 +10,7 @@ import com.mygdx.game.Back.Item.Weapon.Weapon;
 import com.mygdx.game.Back.MovementStrategy.WanderMovementStrategy;
 import com.mygdx.game.Back.Object.Character.Character;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
+import com.mygdx.game.Back.World.Map;
 import com.mygdx.game.Back.World.Map.*;
 
 public class Ennemie extends Character {
