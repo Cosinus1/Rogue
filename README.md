@@ -32,6 +32,9 @@ Exécutez toutes les commandes dans le répertoire racine du projet (où vous av
 - **IntelliJ** doit importer le projet automatiquement lorsque vous ouvrez le répertoire du projet.
 - [PNG](https://github.com/Cosinus1/Rogue/tree/main/assets/PNG) (contient tous les fichiers `.png` pour le visuel du jeu )
 
+## Running from JAR
+Télécharger puis exécuter le .JAR
+
 ## Librairie utilisée 
 
  - **[Libgdx](https://libgdx.com/)**
