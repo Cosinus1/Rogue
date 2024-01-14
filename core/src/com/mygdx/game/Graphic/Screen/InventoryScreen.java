@@ -14,9 +14,9 @@ import com.mygdx.game.MyGame;
 import com.mygdx.game.Back.Inventory.*;
 import com.mygdx.game.Back.Item.*;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
-import com.mygdx.game.Graphic.GraphicObject.GraphicElement.Button.ButtonEditor;
-import com.mygdx.game.Graphic.GraphicObject.GraphicElement.Button.MyButton;
-import com.mygdx.game.Graphic.GraphicObject.GraphicElement.Button.MySkin;
+import com.mygdx.game.Graphic.Decorator.ButtonEditor;
+import com.mygdx.game.Graphic.Decorator.MyButton;
+import com.mygdx.game.Graphic.Decorator.MySkin;
 
 public class InventoryScreen implements Screen{
     private final MyGame game;

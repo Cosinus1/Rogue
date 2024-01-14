@@ -3,11 +3,11 @@ package com.mygdx.game.Back.Item.Weapon;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.objects.TextureMapObject;
-import com.mygdx.game.Back.Force;
+import com.mygdx.game.Back.Object.Force;
 import com.mygdx.game.Back.Object.Object;
 import com.mygdx.game.Back.Object.Element.Element;
 import com.mygdx.game.Back.Object.Element.ElementFactory;
-import com.mygdx.game.Back.World.Map.Map;
+import com.mygdx.game.Back.World.Map;
 import com.mygdx.game.Graphic.GraphicObject.GraphicElement.GraphicElement;
 
 public class Arc extends Weapon {

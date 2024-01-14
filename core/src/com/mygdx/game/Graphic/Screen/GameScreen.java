@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.MyGame;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
+import com.mygdx.game.Back.World.Map;
 import com.mygdx.game.Back.World.World;
-import com.mygdx.game.Back.World.Map.Map;
 import com.mygdx.game.Graphic.*;
 
 public class GameScreen implements Screen {

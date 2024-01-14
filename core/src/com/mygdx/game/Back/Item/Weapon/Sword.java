@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import com.mygdx.game.Back.Object.Object;
 import com.mygdx.game.Back.Object.Character.Character;
 import com.mygdx.game.Back.Object.Character.Ennemie.Ennemie;
-import com.mygdx.game.Back.World.Map.Map;
+import com.mygdx.game.Back.World.Map;
 
 public class Sword extends Weapon{
     private int range;

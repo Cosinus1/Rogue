@@ -17,9 +17,9 @@ import com.mygdx.game.Back.Item.Item;
 import com.mygdx.game.Back.Item.ItemType;
 import com.mygdx.game.Back.Object.Character.Merchant;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
-import com.mygdx.game.Graphic.GraphicObject.GraphicElement.Button.ButtonEditor;
-import com.mygdx.game.Graphic.GraphicObject.GraphicElement.Button.MyMerchantButton;
-import com.mygdx.game.Graphic.GraphicObject.GraphicElement.Button.MySkin;
+import com.mygdx.game.Graphic.Decorator.ButtonEditor;
+import com.mygdx.game.Graphic.Decorator.MyMerchantButton;
+import com.mygdx.game.Graphic.Decorator.MySkin;
 
 public class MerchantScreen implements Screen {
     private final MyGame game;

@@ -7,7 +7,7 @@ import com.mygdx.game.Back.Object.Object;
 import com.mygdx.game.Back.Object.Character.Ennemie.Ennemie;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
 import com.mygdx.game.Back.Object.Element.Door;
-import com.mygdx.game.Back.World.Map.Map;
+import com.mygdx.game.Back.World.Map;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;

@@ -2,8 +2,8 @@ package com.mygdx.game.Back.Item.Weapon;
 
 import com.mygdx.game.Back.Item.Item;
 import com.mygdx.game.Back.Item.ItemType;
-import com.mygdx.game.Back.World.Map.Map;
 import com.mygdx.game.Back.Object.Object;
+import com.mygdx.game.Back.World.Map;
 
 public class Weapon extends Item {
     protected int power;

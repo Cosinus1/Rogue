@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 //import com.badlogic.gdx.maps.MapObjects;
 //import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.mygdx.game.Back.World.Map.Map;
+import com.mygdx.game.Back.World.Map;
 
 public class RendererBW {
 

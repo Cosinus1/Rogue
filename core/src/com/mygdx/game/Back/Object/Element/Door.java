@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.Back.World.Map.Map;
+import com.mygdx.game.Back.World.Map;
 
 public class Door {
     private float x;

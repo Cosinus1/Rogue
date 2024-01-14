@@ -5,7 +5,7 @@ import com.mygdx.game.Back.Item.*;
 import com.mygdx.game.Back.Item.Weapon.*;
 import com.mygdx.game.Back.Object.Character.Hero.Archer;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
-import com.mygdx.game.Back.World.Map.Map;
+import com.mygdx.game.Back.World.Map;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicMerchant;
 import com.mygdx.game.Back.Object.Object;
 

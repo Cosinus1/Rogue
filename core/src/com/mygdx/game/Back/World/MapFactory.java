@@ -1,4 +1,4 @@
-package com.mygdx.game.Back.World.Map;
+package com.mygdx.game.Back.World;
 
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.tiled.TiledMap;

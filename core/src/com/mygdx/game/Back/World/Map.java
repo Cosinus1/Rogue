@@ -1,4 +1,4 @@
-package com.mygdx.game.Back.World.Map;
+package com.mygdx.game.Back.World;
 
 
 import java.util.Comparator;
@@ -25,7 +25,7 @@ import com.mygdx.game.Back.Object.Character.Hero.Hero;
 import com.mygdx.game.Back.Object.Element.Door;
 import com.mygdx.game.Back.Object.Element.Element;
 import com.mygdx.game.Back.Object.Element.Wall;
-import com.mygdx.game.Back.Force;
+import com.mygdx.game.Back.Object.Force;
 import com.mygdx.game.Back.Object.Object;
 import com.mygdx.game.Back.Object.Character.Character;
 import com.mygdx.game.Back.Object.Character.Merchant;

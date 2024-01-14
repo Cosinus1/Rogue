@@ -1,4 +1,4 @@
-package com.mygdx.game.Back;
+package com.mygdx.game.Back.Object;
 
 public class Force {
 

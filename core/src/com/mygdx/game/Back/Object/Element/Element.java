@@ -3,11 +3,10 @@ package com.mygdx.game.Back.Object.Element;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import com.mygdx.game.Back.World.Map.Map;
-
 import com.mygdx.game.Back.Object.Object;
 import com.mygdx.game.Back.Object.Character.Character;
 import com.mygdx.game.Back.Object.Character.Ennemie.Ennemie;
+import com.mygdx.game.Back.World.Map;
 import com.mygdx.game.Graphic.GraphicObject.GraphicElement.GraphicElement;
 
 public class Element extends Object{

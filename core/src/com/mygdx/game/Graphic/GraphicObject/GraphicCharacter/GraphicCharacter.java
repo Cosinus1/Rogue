@@ -10,10 +10,8 @@ import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
-
-
+import com.mygdx.game.Graphic.Decorator.BarLife;
 import com.mygdx.game.Graphic.GraphicObject.GraphicObject;
-import com.mygdx.game.Graphic.GraphicObject.GraphicElement.BarLife;
 
 public class GraphicCharacter extends GraphicObject{
 

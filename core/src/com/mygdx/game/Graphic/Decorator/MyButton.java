@@ -1,4 +1,4 @@
-package com.mygdx.game.Graphic.GraphicObject.GraphicElement.Button;
+package com.mygdx.game.Graphic.Decorator;
 
 import java.util.ArrayList;
 
