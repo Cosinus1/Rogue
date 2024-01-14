@@ -261,6 +261,9 @@ public class Map {
             //Hero
             hero.update(deltaTime);
             List.add(hero);
+            if(merchant!=null){
+                List.add(merchant);
+            }
             //Walls (no update necessary because they dont move)
             List.addAll(Walls);
         Objects = List;
@@ -338,7 +341,7 @@ public class Map {
 
                 float distanceX = wall.getX()-object.getX();
                 float distanceY = wall.getY()-object.getY();
-                if(Math.abs(distanceX)<16 && Math.abs(distanceY)<16){
+                if(Math.abs(distanceX)<14 && Math.abs(distanceY)<14){
                     float signX = Math.signum(-distanceX);
                     float signY = Math.signum(-distanceY);
                     if (Math.abs(distanceX)>Math.abs(distanceY)) signX = Math.signum(-distanceX);

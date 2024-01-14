@@ -79,10 +79,10 @@ public class Merchant extends Object{
     }
 
     public void setArcherWeapon(){
-        Arc arc1 = new Arc("Shadowstalker Arc", 25);
-        Arc arc2 = new Arc("Mystic Moonshadow Bow",35);
-        Arc arc3 = new Arc("Thunderstorm LongBow",50);
-        Arc arc4 = new Arc("Bow of the Astral Gale",80);
+        Arc arc1 = new Arc("Shadowstalker Arc", 50);
+        Arc arc2 = new Arc("Mystic Moonshadow Bow",65);
+        Arc arc3 = new Arc("Thunderstorm LongBow",80);
+        Arc arc4 = new Arc("Bow of the Astral Gale",100);
         arc1.setValue(20);
         arc2.setValue(60);
         arc3.setValue(60);

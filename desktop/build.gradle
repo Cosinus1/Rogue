@@ -7,6 +7,14 @@ project.ext.assetsDir = new File("../assets")
 
 import org.gradle.internal.os.OperatingSystem
 
+dependencies {
+    implementation "com.badlogicgames.gdx:gdx:1.9.10"
+    implementation "com.badlogicgames.gdx:gdx-backend-lwjgl:1.9.10"
+    implementation "com.badlogicgames.gdx:gdx-platform:1.9.10:natives-desktop"
+    implementation "com.badlogicgames.gdx:gdx-box2d:1.9.10"
+    implementation "com.badlogicgames.gdx:gdx-tools:1.9.10"
+}
+
 tasks.register('run', JavaExec) {
     dependsOn classes
     mainClass = project.mainClassName

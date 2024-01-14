@@ -9,21 +9,15 @@ import com.mygdx.game.Back.Object.Character.Merchant;
 import com.mygdx.game.Back.Object.Character.Ennemie.*;
 import com.mygdx.game.Back.Object.Character.Hero.*;
 import com.mygdx.game.Back.Object.Element.Door;
-import com.mygdx.game.Back.World.Map.*;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicBoss;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicHero;
 
-import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g3d.particles.ResourceData.SaveData;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonWriter.OutputType;
 
 
 public class World {
@@ -119,12 +113,10 @@ public class World {
     if (instance == null) {
         instance = new World(hero);
     }
+    else instance.setHero(hero);
     return instance;
     }
-    public static World getInstance() {
-    if (instance == null) System.out.println("ERROR : NO INSTANCE");
-    return instance;
-    }
+
     public Hero getHero(){
         return Hero;
     }
@@ -149,6 +141,21 @@ public class World {
     public TiledMapTileSets getTileSets(){
         return Tilesets;
     }
+/*------------------------------------------------SETTERS------------------------------------ */
+public void setHero(Hero hero){
+    //Initialize the Hero
+    Hero = hero;
+    Hero.setX(CurrentMap.getX());
+    Hero.setY(CurrentMap.getY());
+
+    Hero.setGraphicObject(new GraphicHero(Hero.getName(), Home));
+    Hero.spawn(DungeonHub);
+    Hero.spawn(Home);
+    Hero.spawn(Tavern);  
+    Merchant merchant = new Merchant(Hero,320,270,Tavern);
+    merchant.spawn(Tavern);          
+}
+
 
 /* --------------------------------------------- UPDATE ------------------------------------- */
     public Map update(Map map){
@@ -182,10 +189,10 @@ public class World {
     public Map updateCurrentMap(Map map){
         if(map != null){
             
-            /*if(map.getMusic()!=null){
+            if(map.getMusic()!=null){
                 map.getMusic().play();
                 if(this.CurrentMap.getMusic()!=null)this.CurrentMap.getMusic().pause();
-            }*/
+            }
             this.CurrentMap = map;
             this.CurrentcollisionLayer = map.getcollisionLayer();
             if((map.getPVP() == "ON") && map.getNPCs().size()==0){
@@ -247,8 +254,8 @@ public class World {
                 //Spawn Boss in the last Map
                 if(i == numberOfMaps){
                     do{
-                        bossX = randomX.nextInt(CurrentMap.getmapWidth());
-                        bossY = randomY.nextInt(CurrentMap.getmapHeight());
+                        bossX = randomX.nextInt(CurrentMap.getmapWidth()-3) +3;
+                        bossY = randomY.nextInt(CurrentMap.getmapHeight()-3)+3;
                     } while (!boss.isValidPosition(bossX,bossY, CurrentMap));
                     boss.setX(bossX);
                     boss.setY(bossY);
@@ -269,16 +276,17 @@ public class World {
             if(boss.getPV()<=0){
                 System.out.println("boss killed");
                 Dungeonlevel++;
+                Hero.setMoney(50);
                 disposeDungeon();
-                boss = new Boss(0,0,100, 0, 50,3, 10, null,new Massue("massue", 50, 2));
+                boss = new Boss(0,0,100+10*Dungeonlevel, Dungeonlevel*2, 50,2, 10, null,new Massue("massue", 50+5*Dungeonlevel, 2));
                 boss.setGraphicObject(new GraphicBoss(boss.getName(), DungeonHub.getTiledMap().getTileSets()));
                 
                 int bossX,bossY;
                 Random randomX = new Random();
                 Random randomY = new Random();
                 do{
-                        bossX = randomX.nextInt(CurrentMap.getmapWidth());
-                        bossY = randomY.nextInt(CurrentMap.getmapHeight());
+                        bossX = randomX.nextInt(CurrentMap.getmapWidth()-3) +3;
+                        bossY = randomY.nextInt(CurrentMap.getmapHeight()-3)+3;
                     } while (!boss.isValidPosition(bossX,bossY, CurrentMap));
                 boss.setX(bossX);
                 boss.setY(bossY);
@@ -309,51 +317,4 @@ public class World {
         map.getTiledMap().dispose();
     }
     /*----------------------------------------------LOAD&SAVE---------------------------------------------------- */
-    /*// Save the current state of the world
-    public void saveProgress() {
-        // Create a Json object for serialization
-        Json json = new Json();
-        json.setOutputType(OutputType.json);
-
-        // Create a data object to hold necessary information
-        SaveData saveData = new SaveData();
-        saveData.heroPositionX = Hero.getX();
-        saveData.heroPositionY = Hero.getY();
-        // Add other relevant data to saveData...
-
-        // Convert the SaveData object to JSON
-        String jsonData = json.prettyPrint(saveData);
-
-        // Write the JSON data to a file
-        try {
-            Path savePath = Paths.get("save.json");
-            Files.writeString(savePath, jsonData);
-            System.out.println("Game saved successfully.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    // Load a saved state of the world
-    public void loadProgress() {
-        // Read the JSON data from the file
-        try {
-            Path savePath = Paths.get("save.json");
-            String jsonData = Files.readString(savePath);
-
-            // Parse the JSON data into a SaveData object
-            Json json = new Json();
-            SaveData saveData = json.fromJson(SaveData.class, jsonData);
-
-            // Apply the loaded data to the world
-            Hero.setX(saveData.heroPositionX);
-            Hero.setY(saveData.heroPositionY);
-            // Apply other relevant data to the world...
-            
-            System.out.println("Game loaded successfully.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    */
-}
+   }

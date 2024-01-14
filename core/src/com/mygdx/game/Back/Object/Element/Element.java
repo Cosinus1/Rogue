@@ -34,7 +34,10 @@ public class Element extends Object{
             Iterator<Ennemie> Iterator = Enemies.iterator();
             while(Iterator.hasNext()){
                 Ennemie enemy = Iterator.next();
-                if(enemy.getHitbox().overlaps(Hitbox) && target == "enemy") this.Attack(enemy);
+                if(enemy.getHitbox().overlaps(Hitbox) && target == "enemy"){
+                    this.Attack(enemy);
+                    this.resetForces();
+                }
             }  
         }
         Character Hero = (Character) map.getHero();

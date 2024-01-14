@@ -3,7 +3,6 @@ package com.mygdx.game.Back.Object.Character.Hero;
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Item.Weapon.*;
 import com.mygdx.game.Back.World.Map;
-import com.mygdx.game.Back.World.Map.*;;
 
 
 public class Archer extends Hero{
@@ -17,7 +16,7 @@ public class Archer extends Hero{
     }
 
     public void createArc(){
-        Arc arc = new Arc("arc", 20);
+        Arc arc = new Arc("arc", 50);
 
         this.arc = arc;
     }

@@ -189,7 +189,7 @@ public class GraphicCharacter extends GraphicObject{
 
     /*-------------------------------------------RENDER---------------------------------------------- */
 
-  public void render(SpriteBatch batch, OrthographicCamera camera){
+  public void render(Object object, SpriteBatch batch, OrthographicCamera camera){
 
   } 
 

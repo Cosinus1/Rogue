@@ -19,7 +19,6 @@ import com.mygdx.game.MyGame;
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Object.Character.Hero.Archer;
 import com.mygdx.game.Back.Object.Character.Hero.Warrior;
-import com.mygdx.game.Back.World.World;
 
 public class ChooseClassScreen implements Screen {
 
@@ -41,30 +40,14 @@ public class ChooseClassScreen implements Screen {
 
     public ChooseClassScreen(final MyGame game, AssetManager assetManager) {
 
-        //this.backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("MP3/battleThemeA.mp3"));
         skin = assetManager.get(Assets.SKIN);
 
-        // load the background "music"
-        /*
-       Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("MP3/battleThemeA.mp3"));
-
-        // start the playback of the background music immediately
-        backgroundMusic.setLooping(true);
-        backgroundMusic.play(); */
-
-
+      
         viewport = new ExtendViewport(1200,800);
         stage = new Stage(viewport);
         // Create the background image
         backImage = new Texture(Gdx.files.internal("GIF/camp.gif"));
-       /*
-       ou bien on peut mettre celle-ci:
-       backImage = new Texture(Gdx.files.internal("camp.png"));
-        */
-
-        //BackgroundMusic
-        //backgroundMusic.play();
-
+       
 
         mainTable = new Table();
         mainTable.setFillParent(true);

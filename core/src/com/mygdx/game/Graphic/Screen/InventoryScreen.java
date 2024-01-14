@@ -22,7 +22,6 @@ public class InventoryScreen implements Screen{
     private final MyGame game;
     private ShapeRenderer shapeRenderer;
     private Stage stage;
-    private Hero hero;
     private Inventory inventory;
     private MySkin mySkin;
     private Table table;

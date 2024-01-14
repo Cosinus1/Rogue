@@ -22,8 +22,12 @@ public class Boss extends Ennemie{
         this.Class = chosen;   
         setName(chosen);
     }
-        public void Attack(Map map){
-        weapon.Attack(this, map);
-    }
-
+    
+    public void Attack(Map map){
+        if(attackTimer > attackCooldown){
+            weapon.Attack(this, map);
+            attackTimer = 0;
+            graphicObject.setBattleTexture();
+        }
+    }    
 }

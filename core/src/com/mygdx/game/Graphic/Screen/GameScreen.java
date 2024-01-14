@@ -22,7 +22,6 @@ public class GameScreen implements Screen {
     private Hero hero;
     private OrthographicCamera camera;
     private Renderer renderer;
-    private RendererBW rendererBW;
     private ShapeRenderer shapeRenderer;
 
     private boolean BlacknWhite = false;
@@ -48,7 +47,6 @@ public class GameScreen implements Screen {
 
          // Create the renderers for rendering shapes and textures
          renderer = new Renderer();
-         rendererBW = new RendererBW();
          shapeRenderer = new ShapeRenderer();
 
       
@@ -141,9 +139,7 @@ public class GameScreen implements Screen {
       hero.setlastY(hero.getY());
       /*----------------------------------------------------RENDER------------------------------------------------------ */
       //render the objects (dead until timed out and alive)
-      //In Color or B&W
-      if(BlacknWhite) rendererBW.render(map, camera);
-      else renderer.render(map, hero, camera);
+      renderer.render(map, hero, camera);
       
     }
 
