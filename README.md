@@ -10,7 +10,7 @@ Pour améliorer son équipement afin d'augmenter ses chances de survie, les joue
 ## Controls
 Note : Vous pouvez utiliser uniquement le clavier, le clavier + la souris pour jouer. Vous trouverez ci-dessous les mappages de touches par défaut.   
 
-Game screen
+_Game screen_
 
     [Space] - pour attaquer 
     [Left] -  pour aller à gauche 
