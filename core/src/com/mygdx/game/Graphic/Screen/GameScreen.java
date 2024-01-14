@@ -34,7 +34,7 @@ public class GameScreen implements Screen {
 
     public GameScreen(MyGame game){
         this.game = game;
-        world = new World(game.getHero());
+        world = World.getInstance(game.getHero());
          //Store current map from the world
          map = world.getCurrentMap();
     
@@ -98,7 +98,7 @@ public class GameScreen implements Screen {
          if(map.PNJAttack()) {
             //Waiting (hero dying animation to put here) 
             //Respawn hero at the Tavern
-            world.updateCurrentMap(world.getTavern());
+            map = world.updateCurrentMap(world.getTavern());
             waitingTime = 0f; // Reset waiting time
             //Update position
             hero.setPosition(world.getTavern().getX()-50, world.getTavern().getY());

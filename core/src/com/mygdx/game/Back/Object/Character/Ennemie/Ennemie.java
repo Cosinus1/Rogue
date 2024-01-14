@@ -7,6 +7,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Item.Weapon.Weapon;
+import com.mygdx.game.Back.MovementStrategy.WanderMovementStrategy;
 import com.mygdx.game.Back.Object.Character.Character;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
 import com.mygdx.game.Back.World.Map.*;
@@ -15,6 +16,8 @@ public class Ennemie extends Character {
     protected TiledMap tiledMap;
     protected Weapon weapon;
     protected int detectionRange;
+
+    protected WanderMovementStrategy WanderStrategy;
 
     public Ennemie(float x, float y, int pv, int defense, int power,int combatRange, int detectionRange, Inventory bag, Weapon weapon){
         super(x, y, pv, defense, power, combatRange, bag);
@@ -99,7 +102,6 @@ public class Ennemie extends Character {
                 switchtorandom = false;
                 if(!(inRange(hero, map))){
                     setPosition(X+moveX/speed, Y+moveY/speed);
-                    map.Wallcollision(this);
                     //Get the appropriate sprite for movement
                         //Set Angle
                         float delta = 6.0f;
@@ -154,7 +156,6 @@ public class Ennemie extends Character {
                 if (isValidPosition((int) newX/tileWidth, (int) newY/tileWidth, map)) {
                     setPosition(newX,newY);
                 }
-                map.Wallcollision(this);
                     //Set angle
                     OrX = randomX;
                     OrY = randomY;

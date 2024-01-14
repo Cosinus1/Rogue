@@ -11,15 +11,22 @@ import com.mygdx.game.Back.World.Map.*;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicBoss;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicHero;
 
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g3d.particles.ResourceData.SaveData;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonWriter.OutputType;
 
 
 public class World {
+
+    private static World instance;
 
     private Map Home;
     private Map Tavern;
@@ -113,6 +120,16 @@ public class World {
     }
     
 /* --------------------------------------------- GETTERS ------------------------------------- */
+    public static World getInstance(Hero hero) {
+    if (instance == null) {
+        instance = new World(hero);
+    }
+    return instance;
+    }
+    public static World getInstance() {
+    if (instance == null) System.out.println("ERROR : NO INSTANCE");
+    return instance;
+    }
     public Hero getHero(){
         return Hero;
     }
@@ -275,6 +292,7 @@ public class World {
             }else for(Map map : Dungeon) map.updatelastposition(map.getX(), map.getY());;
         }
     }
+    /*--------------------------------------------------DISPOSE------------------------------------------------------ */
     public void disposeDungeon(){
 
         for(Map map : Dungeon){
@@ -295,4 +313,52 @@ public class World {
     public void disposeTiledmaps(Map map){
         map.getTiledMap().dispose();
     }
+    /*----------------------------------------------LOAD&SAVE---------------------------------------------------- */
+    /*// Save the current state of the world
+    public void saveProgress() {
+        // Create a Json object for serialization
+        Json json = new Json();
+        json.setOutputType(OutputType.json);
+
+        // Create a data object to hold necessary information
+        SaveData saveData = new SaveData();
+        saveData.heroPositionX = Hero.getX();
+        saveData.heroPositionY = Hero.getY();
+        // Add other relevant data to saveData...
+
+        // Convert the SaveData object to JSON
+        String jsonData = json.prettyPrint(saveData);
+
+        // Write the JSON data to a file
+        try {
+            Path savePath = Paths.get("save.json");
+            Files.writeString(savePath, jsonData);
+            System.out.println("Game saved successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Load a saved state of the world
+    public void loadProgress() {
+        // Read the JSON data from the file
+        try {
+            Path savePath = Paths.get("save.json");
+            String jsonData = Files.readString(savePath);
+
+            // Parse the JSON data into a SaveData object
+            Json json = new Json();
+            SaveData saveData = json.fromJson(SaveData.class, jsonData);
+
+            // Apply the loaded data to the world
+            Hero.setX(saveData.heroPositionX);
+            Hero.setY(saveData.heroPositionY);
+            // Apply other relevant data to the world...
+            
+            System.out.println("Game loaded successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    */
 }

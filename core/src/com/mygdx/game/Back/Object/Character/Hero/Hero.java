@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Back.Force;
 import com.mygdx.game.Back.Inventory.Inventory;
-import com.mygdx.game.Back.Item.Weapon.Weapon;
 import com.mygdx.game.Back.Object.Character.Character;
 import com.mygdx.game.Back.World.Map.Map;
 
@@ -37,7 +36,7 @@ public class Hero extends Character{
         }
 
         //map.sortObjects();
-        map.PNJcollision(this);
+        map.Objectcollision(this);
         map.Wallcollision(this);
         
         // LEFT
@@ -50,7 +49,7 @@ public class Hero extends Character{
                 //Set Angle
                 setAngle();
                 //Apply Force
-                this.applyInstantForce(new Force(20000,20000, OrX, OrY));
+                this.applyInstantForce(new Force(200000,200000, OrX, OrY, 0));
                 //Set appropriate sprite
                 graphicObject.setMoveTexture();
                 
@@ -67,7 +66,7 @@ public class Hero extends Character{
                 //Set Angle
                 setAngle();
                 //Apply Force
-                this.applyInstantForce(new Force(20000,20000, OrX, OrY));
+                this.applyInstantForce(new Force(200000,200000, OrX, OrY, 0));
                 //Set appropriate sprite
                 graphicObject.setMoveTexture(); 
                 
@@ -83,7 +82,7 @@ public class Hero extends Character{
                 //Set Angle
                 setAngle();
                 //Apply Force
-                this.applyInstantForce(new Force(20000,20000, OrX, OrY));
+                this.applyInstantForce(new Force(200000,200000, OrX, OrY, 0));
                 //Set appropriate sprite
                 graphicObject.setMoveTexture();  
                 
@@ -99,7 +98,7 @@ public class Hero extends Character{
                 //Set Angle
                 setAngle();
                 //Apply Force
-                this.applyInstantForce(new Force(20000,20000, OrX, OrY));
+                this.applyInstantForce(new Force(200000,200000, OrX, OrY, 0));
                 //Set appropriate sprite
                 graphicObject.setMoveTexture();
 
@@ -108,7 +107,7 @@ public class Hero extends Character{
         }
         //F input : apply force to Hero (testing implementation)
         if(Gdx.input.isKeyJustPressed(Keys.F)){
-                this.applyForce(new Force(200,200, -OrX, -OrY));
+                this.applyForce(new Force(200,200, -OrX, -OrY, 0));
             
             
          }
