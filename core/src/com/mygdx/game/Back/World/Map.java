@@ -338,8 +338,8 @@ public class Map {
                 float distanceX = wall.getX()-object.getX();
                 float distanceY = wall.getY()-object.getY();
                 if(Math.abs(distanceX)<16 && Math.abs(distanceY)<16){
-                    float signX = 0;
-                    float signY = 0;
+                    float signX = Math.signum(-distanceX);
+                    float signY = Math.signum(-distanceY);
                     if (Math.abs(distanceX)>Math.abs(distanceY)) signX = Math.signum(-distanceX);
                     else signY = Math.signum(-distanceY);
                     //Apply force to object (we ignore force(Object->wall))

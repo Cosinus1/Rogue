@@ -8,12 +8,7 @@ public class SimpleMovementStrategy implements MovementStrategy {
 
     @Override
     public Vector2 getNextPosition(Object object, Map map) {
-        // Your implementation of the movement strategy goes here
-        // For example, move towards a specific point or follow a path
-        // You can use object's current position (object.getX(), object.getY())
-        // and the map to determine the next position.
-
-        // This is just a simple example that moves the object to the right.
+       
         float newX = object.getX() + 1;
         float newY = object.getY();
 
