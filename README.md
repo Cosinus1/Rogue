@@ -1,8 +1,7 @@
 
-# Titre et description du projet 
-ROGUE 
+# ROGUE  
 
-ROGUE est un jeu de role en 2D dont les joueurs peuvent choisir plusieurs personnages comme des guerriers et des archers. Leur but principal sera de confronter des ennemis pouvant etre des sorcières ou des gobelins dans différents étages du donjon. Et pour gagner, le joueur doit reussir à atteindre le dernier étage où se trouve le boss le plus gros, le plus fort et le plus redoutable.  
+ROGUE est un jeu de role en 2D dans lequel les joueurs peuvent choisir plusieurs personnages comme des guerriers et des archers. Leur but principal sera de confronter des ennemis pouvant etre des sorcières ou des gobelins dans différents étages du donjon. Et pour gagner, le joueur doit reussir à atteindre le dernier étage où se trouve le boss le plus gros, le plus fort et le plus redoutable.  
 Pour améliorer son équipement afin d'augmenter ses chances de survie, les joueurs peuvent visiter une boutique pour acheter des armes et des potions de guérison.
    
 
