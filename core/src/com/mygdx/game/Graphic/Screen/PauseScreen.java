@@ -40,7 +40,7 @@ public class PauseScreen implements Screen {
         skin.add("default", textButtonStyle); // Add the "default" style for TextButton
 
         // Créer des boutons pour Continuer, Menu et Quitter
-        TextButton continueButton = new TextButton("Continuer", skin); // Utilisez votre skin pour les boutons
+        TextButton continueButton = new TextButton("Continue", skin);
         TextButton menuButton = new TextButton("Menu", skin);
         TextButton quitButton = new TextButton("Quit", skin);
         TextButton saveButton = new TextButton("Save", skin);

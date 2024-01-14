@@ -5,7 +5,6 @@ import java.util.Comparator;
 import java.util.Collections;
 
 import com.badlogic.gdx.maps.*;
-import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
@@ -139,6 +138,9 @@ public class Map {
     public Hero getHero(){
         return this.hero;
     }
+    public Merchant getMerchant(){
+        return merchant;
+    }
     public Music getMusic(){
         return music;
     }
@@ -168,9 +170,6 @@ public class Map {
     }
     public int getTilewidth(){
         return this.tilewidth;
-    }
-    public Merchant getMerchant(){
-        return this.merchant;
     }
 
 /* --------------------------------------------- SETTERS ------------------------------------- */
@@ -257,6 +256,8 @@ public class Map {
             //Elements
             updateElements(deltaTime);
             if(Elements!=null) List.addAll(Elements);
+            //Merchant
+            if(merchant != null) List.add(merchant);if(merchant != null) List.add(merchant);
             //Hero
             hero.update(deltaTime);
             List.add(hero);

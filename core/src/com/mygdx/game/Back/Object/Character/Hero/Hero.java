@@ -4,9 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
-import com.mygdx.game.Back.Object.Force;
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Item.Item;
+import com.mygdx.game.Back.Object.Force;
 import com.mygdx.game.Back.Object.Character.Character;
 import com.mygdx.game.Back.World.Map;
 
