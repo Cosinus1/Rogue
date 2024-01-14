@@ -38,16 +38,16 @@ public class MainMenuScreen implements Screen {
 
     public MainMenuScreen(final MyGame game, AssetManager assetManager) {
 
-        this.backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("MP3/battleThemeA.mp3"));
+        //this.backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("MP3/battleThemeA.mp3"));
         skin = assetManager.get(Assets.SKIN);
 
         //load the background "music"
         
-       Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("MP3/battleThemeA.mp3"));
+       //Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("MP3/battleThemeA.mp3"));
 
         // start the playback of the background music immediately
-        backgroundMusic.setLooping(true);
-        backgroundMusic.play(); 
+        //backgroundMusic.setLooping(true);
+        //backgroundMusic.play(); 
 
 
         viewport = new ExtendViewport(1200,800);
@@ -153,7 +153,7 @@ public class MainMenuScreen implements Screen {
     @Override
     public void hide() {
         // Stop BackgroundMusic
-        backgroundMusic.stop();
+        //backgroundMusic.stop();
         Gdx.input.setInputProcessor(null); //Hide Buttons
 
     }

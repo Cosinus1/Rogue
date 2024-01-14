@@ -120,7 +120,7 @@ public class Hero extends Character{
         }
         //F input : apply force to Hero (testing implementation)
         if(Gdx.input.isKeyJustPressed(Keys.F)){
-                this.applyForce(new Force(200,200, -OrX, -OrY));
+                this.applyForce(new Force(200000,200000, -OrX, -OrY));
             
             
          }
