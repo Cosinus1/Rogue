@@ -8,9 +8,9 @@ Pour améliorer son équipement afin d'augmenter ses chances de survie, les joue
 
 
 ## Controls
-Note : Vous pouvez utiliser uniquement le clavier, le clavier + la souris pour jouer. Vous trouverez ci-dessous les mappages de touches par défaut.   
+_Note_ : Vous pouvez utiliser uniquement le clavier, le clavier + la souris pour jouer. Vous trouverez ci-dessous les mappages de touches par défaut.   
 
-Game screen
+_Game screen_
 
     [Space] - pour attaquer 
     [Left] -  pour aller à gauche 
@@ -32,11 +32,11 @@ Exécutez toutes les commandes dans le répertoire racine du projet (où vous av
 - [PNG](https://github.com/Cosinus1/Rogue/tree/main/assets/PNG) (contient tous les fichiers `.png` pour le visuel du jeu )
 
 ## Running from JAR
-Télécharger puis exécuter le .JAR
+Télécharger puis exécuter le `.JAR`
 
 ## Librairie utilisée 
 
- - **[Libgdx](https://libgdx.com/)**
+ - **[LibGDX](https://libgdx.com/)**
 
 ## Contributeurs
 - [Paul BOUGLE](https://github.com/Cosinus1)
