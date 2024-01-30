@@ -51,4 +51,7 @@ public class InventoryIterator implements InventoryIteratorInterface<Item> {
         }
         return position_temp;
     }
+    public int getPosition(){
+        return position;
+    }
 }

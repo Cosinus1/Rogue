@@ -6,22 +6,22 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.MyGame;
-import com.mygdx.game.Back.Force;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
+import com.mygdx.game.Back.World.Map;
 import com.mygdx.game.Back.World.World;
-import com.mygdx.game.Back.World.Map.Map;
 import com.mygdx.game.Graphic.*;
 
 public class GameScreen implements Screen {
     MyGame game;
     PauseScreen pauseScreen;
+    InventoryScreen inventoryScreen;
+    MerchantScreen MerchantScreen;
     
     private Map map;
     private World world;
     private Hero hero;
     private OrthographicCamera camera;
     private Renderer renderer;
-    private RendererBW rendererBW;
     private ShapeRenderer shapeRenderer;
 
     private boolean BlacknWhite = false;
@@ -34,10 +34,9 @@ public class GameScreen implements Screen {
 
     public GameScreen(MyGame game){
         this.game = game;
-        world = new World(game.getHero());
-         //Store current map from the world
-         map = world.getCurrentMap();
-    
+        world = World.getInstance(game.getHero());
+         //Store current map from the world and init as Home
+         map = world.getHome();
       //   map.getMusic().setLooping(true);
       //   map.getMusic().play();
         // create the camera
@@ -48,7 +47,6 @@ public class GameScreen implements Screen {
 
          // Create the renderers for rendering shapes and textures
          renderer = new Renderer();
-         rendererBW = new RendererBW();
          shapeRenderer = new ShapeRenderer();
 
       
@@ -57,6 +55,9 @@ public class GameScreen implements Screen {
 
         //Init menu pause
         pauseScreen = new PauseScreen(game);
+        // Init inventory screen
+        inventoryScreen = new InventoryScreen(game, hero);
+        
     }
 
     @Override
@@ -68,21 +69,37 @@ public class GameScreen implements Screen {
          //Arrows Inputs
          hero.move(camera, map);
 
+         if(map.getName().equals("Tavern")){
+            if(Gdx.input.isKeyPressed(Keys.SPACE)){
+               float x = hero.getX();
+               float y = hero.getY();
+               if(x>300 && x<340 && y>150 && y<240 && hero.getorY()==1){
+                  MerchantScreen = new MerchantScreen(game, map.getMerchant(), hero, camera);
+                  game.setScreen(MerchantScreen);
+               }
+               
+            }
+         }
+        else{
          //Space Input
-         if(Gdx.input.isKeyPressed(Keys.SPACE)) hero.Attack(map);
+            if(Gdx.input.isKeyPressed(Keys.SPACE)) hero.Attack(map);
+            hero.IncrementAttackTimer(deltaTime);
+            if(hero.getName() == "warrior") if(Gdx.input.isKeyPressed(Keys.SPACE)) hero.Attack(map);
+            if(hero.getName() == "archer") if(Gdx.input.isKeyJustPressed(Keys.SPACE)) hero.Attack(map);
+         }
+         
 
          //Enter input : change color
          if(Gdx.input.isKeyJustPressed(Keys.ENTER))BlacknWhite = !BlacknWhite;
 
-         //Escapeinput : quits the game (implement Menu)
-         if(Gdx.input.isKeyPressed(Keys.ESCAPE)) game.setScreen(pauseScreen);
+         //Escapeinput : menu
+         if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) game.setScreen(pauseScreen);
 
-         //F input : apply force to Hero (testing implementation)
-         if(Gdx.input.isKeyJustPressed(Keys.F)){
-            hero.applyForce(new Force(2000, -hero.getorX(), -hero.getorY()));
-            
-            
-         }
+         if(Gdx.input.isKeyJustPressed(Keys.E)) game.setScreen(inventoryScreen);
+
+          
+
+
 /*---------------------------------------------NON PLAYER OBJECTS HANDLING--------------------------------------------- */
 
       /*-----------------------------------------------MOVE-------------------------------------------------------- */
@@ -98,7 +115,7 @@ public class GameScreen implements Screen {
          if(map.PNJAttack()) {
             //Waiting (hero dying animation to put here) 
             //Respawn hero at the Tavern
-            world.updateCurrentMap(world.getTavern());
+            map = world.updateCurrentMap(world.getTavern());
             waitingTime = 0f; // Reset waiting time
             //Update position
             hero.setPosition(world.getTavern().getX()-50, world.getTavern().getY());
@@ -122,10 +139,8 @@ public class GameScreen implements Screen {
       hero.setlastY(hero.getY());
       /*----------------------------------------------------RENDER------------------------------------------------------ */
       //render the objects (dead until timed out and alive)
-      //In Color or B&W
-      if(BlacknWhite) rendererBW.render(map, camera);
-      else renderer.render(map, hero, camera);
-
+      renderer.render(map, hero, camera);
+      
     }
 
     @Override

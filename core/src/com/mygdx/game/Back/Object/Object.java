@@ -8,8 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.Back.Force;
-import com.mygdx.game.Back.World.Map.Map;
+import com.mygdx.game.Back.World.Map;
 import com.mygdx.game.Graphic.GraphicObject.GraphicObject;
 
 public class Object {
@@ -71,6 +70,12 @@ public class Object {
     public float getSpeedY(){
         return speedY;
     }
+    public float getAX(){
+        return aX;
+    }
+    public float getAY(){
+        return aY;
+    }
     public float getWidth(){
         return Hitbox.width;
     }
@@ -95,6 +100,10 @@ public class Object {
     public void applyForce(Force force){
         Forces.add(force);
     }
+    public void applyInstantForce(Force force){
+        aX += force.ForceX/mass;
+        aY += force.ForceY/mass;
+    }
     public void resetForces(){
         Forces = new ArrayList<>();
     }
@@ -115,10 +124,10 @@ public class Object {
     }
     public void PFD(){
         if(Forces != null){
+            
             Iterator<Force> Iterator = Forces.iterator();
             while(Iterator.hasNext()){
-                Force force = Iterator.next();
-            
+                Force force = Iterator.next();            
                 aX += force.ForceX/mass;
                 aY += force.ForceY/mass;
                 //Reduce Force Forces if friction
@@ -126,7 +135,7 @@ public class Object {
                 force.ForceY /= friction;
 
                 //Neglect Force when null
-                if(force.ForceX==0 && force.ForceY==0){
+                if(Math.abs(force.ForceX)<10 && Math.abs(force.ForceY)<10){
                     Iterator.remove();
                 }
             }
@@ -146,7 +155,6 @@ public class Object {
         X = speedX * deltaTime + Hitbox.x;
         Y = speedY * deltaTime + Hitbox.y;
 
-        //System.out.println("X : " + X + " Y ; " + Y);
         setPosition(X, Y);
 
         //Reset Acceleration
@@ -183,7 +191,7 @@ public class Object {
         int mapWidth = map.getmapWidth();
         int mapHeight = map.getmapHeight();
         //Check Map boundaries
-        if(X<1 || X>(mapWidth) || Y<0 || Y>(mapHeight-2)) return false;
+        if(X<2 || X>(mapWidth-2) || Y<2 || Y>(mapHeight-2)) return false;
         // Check distance from walls
         return map.checkDistancefromWall(X, Y);
     }
@@ -215,7 +223,8 @@ public class Object {
     }
     /*----------------------------------------------------------RENDER------------------------------------------------ */
     public void render(SpriteBatch spriteBatch, OrthographicCamera camera){
-        graphicObject.render(this, spriteBatch, camera);
+        
+        if(graphicObject != null)graphicObject.render(this, spriteBatch, camera);
     }
 
     

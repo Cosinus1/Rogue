@@ -1,9 +1,8 @@
 package com.mygdx.game.Back.Object.Character.Hero;
 
 import com.mygdx.game.Back.Inventory.Inventory;
-import com.mygdx.game.Back.Item.ItemType;
 import com.mygdx.game.Back.Item.Weapon.*;
-import com.mygdx.game.Back.World.Map.*;;
+import com.mygdx.game.Back.World.Map;
 
 
 public class Archer extends Hero{
@@ -17,13 +16,27 @@ public class Archer extends Hero{
     }
 
     public void createArc(){
-        Arc arc = new Arc(ItemType.WEAPON, "arc", 50);
+        Arc arc = new Arc("arc", 50);
+
         this.arc = arc;
     }
 
     public void Attack(Map map){
-        arc.Attack(this, map);
-        graphicObject.setBattleTexture();
+        if(attackTimer > attackCooldown){
+            arc.Attack(this, map);
+            graphicObject.setBattleTexture();
+            attackTimer = 0;
+        }
+    }
+
+    public void changeWeapon(Arc newArc){
+        System.out.println("L'ancienne arme était :");
+        arc.presenter();
+        bag.addItem(arc);
+        this.arc = newArc;
+        bag.removeItem(newArc);
+        System.out.println("L'a nouvelle arme equipé est : ");
+        arc.presenter();
     }
 
 }

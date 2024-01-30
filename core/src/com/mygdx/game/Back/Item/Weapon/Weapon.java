@@ -2,16 +2,14 @@ package com.mygdx.game.Back.Item.Weapon;
 
 import com.mygdx.game.Back.Item.Item;
 import com.mygdx.game.Back.Item.ItemType;
-import com.mygdx.game.Back.World.Map.Map;
 import com.mygdx.game.Back.Object.Object;
+import com.mygdx.game.Back.World.Map;
 
 public class Weapon extends Item {
-    protected String name;
     protected int power;
 
-    public Weapon(ItemType t, String name, int power){
-        super(t);
-        this.name=name;
+    public Weapon(String name, int power){
+        super(ItemType.WEAPON,name);
         this.power=power;
     }
 

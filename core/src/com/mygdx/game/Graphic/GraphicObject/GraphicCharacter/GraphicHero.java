@@ -8,7 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
 
 import com.mygdx.game.Back.Object.Object;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
-import com.mygdx.game.Back.World.Map.Map;
+import com.mygdx.game.Back.World.Map;
 
 public class GraphicHero extends GraphicCharacter {
 
@@ -16,9 +16,6 @@ public class GraphicHero extends GraphicCharacter {
         super(Name);
         getHeroTextures(map);
         TextureObject.setTextureRegion(moveTexture_list.get(0));
-
-        
-        
     }
 
 
@@ -72,10 +69,16 @@ public class GraphicHero extends GraphicCharacter {
         int scaleFactor = 1;
         //float offsetX=0;
         //float offsetY=0;
-        TextureRegion textureRegion = TextureObject.getTextureRegion();
+        TextureRegion textureRegion;
+        if(Attack_list.size()!=0) {
+            textureRegion = Attack_list.get(0);
+            Attack_list.remove(0);
+        }else{
+            textureRegion = TextureObject.getTextureRegion();
+        }
         // Render the object texture based on its position and properties
-        float objectX = hero.getX() ;
-        float objectY = hero.getY() ;
+        float objectX = hero.getX() - 16;
+        float objectY = hero.getY() - 16;
 
         float objectWidth = textureRegion.getRegionWidth()*scaleFactor;
         float objectHeight = textureRegion.getRegionHeight()*scaleFactor;

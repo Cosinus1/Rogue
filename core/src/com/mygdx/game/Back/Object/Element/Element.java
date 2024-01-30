@@ -3,11 +3,10 @@ package com.mygdx.game.Back.Object.Element;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import com.mygdx.game.Back.World.Map.Map;
-
 import com.mygdx.game.Back.Object.Object;
 import com.mygdx.game.Back.Object.Character.Character;
 import com.mygdx.game.Back.Object.Character.Ennemie.Ennemie;
+import com.mygdx.game.Back.World.Map;
 import com.mygdx.game.Graphic.GraphicObject.GraphicElement.GraphicElement;
 
 public class Element extends Object{
@@ -16,6 +15,7 @@ public class Element extends Object{
     
     public Element(float x, float y, int width, int height){
         super(x, y, width, height);
+        this.mass = 5;
         this.graphicObject = new GraphicElement(width, height);
         this.friction = 1;
         this.Power = 10;
@@ -34,7 +34,10 @@ public class Element extends Object{
             Iterator<Ennemie> Iterator = Enemies.iterator();
             while(Iterator.hasNext()){
                 Ennemie enemy = Iterator.next();
-                if(enemy.getHitbox().overlaps(Hitbox) && target == "enemy") this.Attack(enemy);
+                if(enemy.getHitbox().overlaps(Hitbox) && target == "enemy"){
+                    this.Attack(enemy);
+                    this.resetForces();
+                }
             }  
         }
         Character Hero = (Character) map.getHero();

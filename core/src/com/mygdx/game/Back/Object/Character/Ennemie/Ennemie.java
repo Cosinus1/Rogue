@@ -7,14 +7,19 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Item.Weapon.Weapon;
+import com.mygdx.game.Back.MovementStrategy.WanderMovementStrategy;
+import com.mygdx.game.Back.Object.Force;
 import com.mygdx.game.Back.Object.Character.Character;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
+import com.mygdx.game.Back.World.Map;
 import com.mygdx.game.Back.World.Map.*;
 
 public class Ennemie extends Character {
     protected TiledMap tiledMap;
     protected Weapon weapon;
     protected int detectionRange;
+
+    protected WanderMovementStrategy WanderStrategy;
 
     public Ennemie(float x, float y, int pv, int defense, int power,int combatRange, int detectionRange, Inventory bag, Weapon weapon){
         super(x, y, pv, defense, power, combatRange, bag);
@@ -24,30 +29,38 @@ public class Ennemie extends Character {
     }
     
     /*----------------------------------GETTERS------------------------------------- */
-    public float getAttackTimer(){
-        return this.attackTimer;
+    
+    public int getDetecRange(){
+        return this.detectionRange;
     }
-    public float getAttackCooldown(){
-        return this.attackCooldown;
-    }
-    public int getRange(){
-        return this.range;
-    }
-
     /*----------------------------------SETTERS------------------------------------- */
     public void toggle_Attack(){
         this.attack_charged = !attack_charged;
     }
-
-    public void setAttackTimer(float delta){
-        this.attackTimer = delta;
-    }
     /*----------------------------------CHECKERS------------------------------------- */
-    public boolean isAttack_Charged(){
-        return this.attack_charged;
-    }
-    public int getDetecRange(){
-        return this.detectionRange;
+
+    public boolean isValidTrajectory(int startX, int startY, int endX, int endY, Map map){
+
+        int distanceX = endX - startX;
+        int distanceY = endY - startY;
+        int moveX = (int) Math.signum(distanceX);
+        int moveY = (int) Math.signum(distanceY);
+        boolean isValidX = false;
+        boolean isValidY = false;
+
+        if (distanceX == 0 && distanceY == 0) return true;
+        if (!isValidPosition(startX + moveX, startY, map)){
+            moveX = 0;
+            isValidX = true;
+        }
+        if (!isValidPosition(startX, startY+moveY, map)){
+            moveY = 0;
+            isValidY = true;
+        }
+        if(isValidX || isValidY){
+            return isValidTrajectory(startX+moveX, startY+moveY, endX, endY, map);
+        }
+        else return false;
     }
     /*---------------------------------SPAWN----------------------------------------- */
 
@@ -86,7 +99,7 @@ public class Ennemie extends Character {
             int endY = (int) Yh/tileWidth;
 
             //The position must be valid 
-            if (isValidTrajectory((int) X/tileWidth, (int) Y/tileWidth, endX, endY, (int) moveX/tileWidth, (int) moveY/tileWidth, map)) {
+            if (isValidTrajectory((int) X/tileWidth, (int) Y/tileWidth, endX, endY, (int) signX, (int) signY, map)) {
                 
                 switchtorandom = false;
                 if(!(inRange(hero, map))){
@@ -109,42 +122,49 @@ public class Ennemie extends Character {
                 // Generate random movements
                 int randomX = random.nextInt(3) - 1; // Random movement in x direction (-1, 0, 1)
                 int randomY = random.nextInt(3) - 1; // Random movement in y direction (-1, 0, 1)
+                
         
                 // Get current character position
         
                 // Check previous movement direction of the character and add some probability to maintain direction
                 if(!(graphicObject.getTextureObject().getProperties().containsKey("previousMoveX"))){
-                    graphicObject.getTextureObject().getProperties().put("previousMoveX",X);
+                    graphicObject.getTextureObject().getProperties().put("previousMoveX",randomX);
                 }
                 if(!(graphicObject.getTextureObject().getProperties().containsKey("previousMoveY"))){
-                    graphicObject.getTextureObject().getProperties().put("previousMoveY",Y);
+                    graphicObject.getTextureObject().getProperties().put("previousMoveY",randomY);
                 }
 
-                float previousMoveY = (float) graphicObject.getTextureObject().getProperties().get("previousMoveY");
-                float previousMoveX = (float) graphicObject.getTextureObject().getProperties().get("previousMoveX");
+                int previousMoveY = (int) graphicObject.getTextureObject().getProperties().get("previousMoveY");
+                int previousMoveX = (int) graphicObject.getTextureObject().getProperties().get("previousMoveX");
         
                 // Probability to maintain direction (adjust as needed)
                 double probabilityToMaintainDirection;
                 do probabilityToMaintainDirection = Math.random(); while (probabilityToMaintainDirection<0.95);
         
                 if (random.nextDouble() < probabilityToMaintainDirection) {
-                    randomX = Math.round(previousMoveX * speed);
-                    randomY = Math.round(previousMoveY * speed);
+                    randomX = previousMoveX;
+                    randomY = previousMoveY;
                 } else {
                     // If not maintaining direction, randomly change direction
-                graphicObject.getTextureObject().getProperties().put("previousMoveX",randomX/speed);
-                graphicObject.getTextureObject().getProperties().put("previousMoveY",randomY/speed);
+                graphicObject.getTextureObject().getProperties().put("previousMoveX",randomX);
+                graphicObject.getTextureObject().getProperties().put("previousMoveY",randomY);
                 }
         
-                // Get New Position
-                float newX = X + (randomX * collisionLayer.getTileWidth() / speed);
+                // Set New Position
+                this.applyInstantForce(new Force(20000,20000, randomX, randomY));
+                //map.Wallcollision(this);
+                /*float newX = X + (randomX * collisionLayer.getTileWidth() / speed);
                 float newY = Y + (randomY * collisionLayer.getTileHeight() / speed);
         
-                //Update character's new position if valid
+                
                 if (isValidPosition((int) newX/tileWidth, (int) newY/tileWidth, map)) {
                     setPosition(newX,newY);
-                    graphicObject.setMoveTexture();
-                }
+                }*/
+                    //Set angle
+                    OrX = randomX;
+                    OrY = randomY;
+                    setAngle();
+                graphicObject.setMoveTexture();
             }
         }
     
@@ -152,6 +172,11 @@ public class Ennemie extends Character {
     
     /*---------------------------------ATTACK--------------------------------------- */
     public void Attack(Map map){
+        if(attackTimer > attackCooldown){
+            weapon.Attack(this, map);
+            attackTimer = 0;
+            graphicObject.setBattleTexture();
+        }
         
     }
 }

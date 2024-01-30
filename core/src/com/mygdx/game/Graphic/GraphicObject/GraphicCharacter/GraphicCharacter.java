@@ -10,10 +10,8 @@ import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
-
-
+import com.mygdx.game.Graphic.Decorator.BarLife;
 import com.mygdx.game.Graphic.GraphicObject.GraphicObject;
-import com.mygdx.game.Graphic.GraphicObject.GraphicElement.BarLife;
 
 public class GraphicCharacter extends GraphicObject{
 
@@ -22,12 +20,15 @@ public class GraphicCharacter extends GraphicObject{
     protected ArrayList<TextureRegion> moveTexture_list;
     protected ArrayList<TextureRegion> battleTexture_list;
     protected ArrayList<TextureRegion> deathTexture_list;
+    protected ArrayList<TextureRegion> Attack_list;//On going attack sprites
     protected BarLife barlife;
 
     //Status variables
     protected int death = 0;
     protected int index = 0; //to get the appropriate sprite (follow track of movement)
-    protected int angle = 0; 
+    protected int angle = 0;
+
+    protected boolean isFinishedAttack = false;
 
     public GraphicCharacter(String Name){
         super(32, 32);
@@ -36,6 +37,7 @@ public class GraphicCharacter extends GraphicObject{
         moveTexture_list = new ArrayList<>();
         battleTexture_list = new ArrayList<>();
         deathTexture_list = new ArrayList<>();
+        Attack_list = new ArrayList<>();
         barlife = new BarLife();
     }
 
@@ -115,21 +117,22 @@ public class GraphicCharacter extends GraphicObject{
     //Set appropriate Sprite for battle animation
     public void setBattleTexture(){
 
-        ArrayList<TextureRegion> BattleSprites = getBattleTexture_List();
-        int size = BattleSprites.size();
-    
-        if(index>size){
-            this.index = 4;
-
-        }else this.index +=8;
-        this.TextureObject.setTextureRegion(BattleSprites.get((angle+index%size)));
+        int size = battleTexture_list.size();
+        //reset index
+        index = 0;
+        while(index<=size){
+            Attack_list.add(new TextureRegion(battleTexture_list.get((angle+index%size))));
+            this.index +=8;
+        }        
     }
     
 
 
 /*------------------------------------------------------------------CHECKERS------------------------------------------------------------ */
     
-
+    public boolean isFinishedAttack(){
+        return this.isFinishedAttack;
+    }
 
 /*---------------------------------------------------------------------------------------------------------------------------------------- */
     public TiledMapTileSet getTileSet(TiledMapTileSets Tilesets, String Tileset_name){
@@ -186,7 +189,7 @@ public class GraphicCharacter extends GraphicObject{
 
     /*-------------------------------------------RENDER---------------------------------------------- */
 
-  public void render(SpriteBatch batch, OrthographicCamera camera){
+  public void render(Object object, SpriteBatch batch, OrthographicCamera camera){
 
   } 
 

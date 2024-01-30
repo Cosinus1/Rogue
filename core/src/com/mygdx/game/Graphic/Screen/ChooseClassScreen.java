@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import com.mygdx.game.MyGame;
+import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Object.Character.Hero.Archer;
 import com.mygdx.game.Back.Object.Character.Hero.Warrior;
 
@@ -39,30 +40,14 @@ public class ChooseClassScreen implements Screen {
 
     public ChooseClassScreen(final MyGame game, AssetManager assetManager) {
 
-        //this.backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("MP3/battleThemeA.mp3"));
         skin = assetManager.get(Assets.SKIN);
 
-        // load the background "music"
-        /*
-       Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("MP3/battleThemeA.mp3"));
-
-        // start the playback of the background music immediately
-        backgroundMusic.setLooping(true);
-        backgroundMusic.play(); */
-
-
+      
         viewport = new ExtendViewport(1200,800);
         stage = new Stage(viewport);
         // Create the background image
         backImage = new Texture(Gdx.files.internal("GIF/camp.gif"));
-       /*
-       ou bien on peut mettre celle-ci:
-       backImage = new Texture(Gdx.files.internal("camp.png"));
-        */
-
-        //BackgroundMusic
-        //backgroundMusic.play();
-
+       
 
         mainTable = new Table();
         mainTable.setFillParent(true);
@@ -80,7 +65,8 @@ public class ChooseClassScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Play pour jouer
-                game.setHero(new Warrior(0,0, 100, 200, 1000, 1, null));
+                Warrior warrior = new Warrior(0,0, 100, 200, 20, 1, new Inventory());
+                game.setHero(warrior);
                 game.gameScreen = new GameScreen(game);
                 game.setScreen(game.gameScreen);
             }
@@ -89,7 +75,8 @@ public class ChooseClassScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 // Play pour jouer
-                game.setHero(new Archer(0,0, 100, 200, 1000, 1, null));
+                Archer archer = new Archer(0,0, 100, 200, 20, 1, new Inventory());
+                game.setHero(archer);
                 game.gameScreen = new GameScreen(game);
                 game.setScreen(game.gameScreen);
             }
@@ -118,7 +105,6 @@ public class ChooseClassScreen implements Screen {
 
     }
 
-    /************* NOM DU JEU ************/
 
 
     @Override
@@ -150,12 +136,7 @@ public class ChooseClassScreen implements Screen {
     }
     @Override
     public void resize(int width, int height) {
-
         viewport.update(width, height, true); // Mettez à jour le viewport avec le redimensionnement
-
-
-
-
     }
     @Override
     public void pause() {
@@ -170,7 +151,6 @@ public class ChooseClassScreen implements Screen {
         // Stop BackgroundMusic
         //backgroundMusic.stop();
         Gdx.input.setInputProcessor(null); //Hide Buttons
-
     }
 
     @Override

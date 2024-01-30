@@ -5,7 +5,7 @@ import java.util.Random;
 
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Item.Weapon.Weapon;
-import com.mygdx.game.Back.World.Map.Map;
+import com.mygdx.game.Back.World.Map;
 
 public class Boss extends Ennemie{
     ArrayList<String> Names = new ArrayList<>();
@@ -20,10 +20,14 @@ public class Boss extends Ennemie{
         Random random = new Random();
         String chosen = (Names.get(random.nextInt(Names.size())));
         this.Class = chosen;   
-        setName(chosen);     
+        setName(chosen);
     }
-        public void Attack(Map map){
-        weapon.Attack(this, map);
-    }
-
+    
+    public void Attack(Map map){
+        if(attackTimer > attackCooldown){
+            weapon.Attack(this, map);
+            attackTimer = 0;
+            graphicObject.setBattleTexture();
+        }
+    }    
 }

@@ -41,23 +41,19 @@ public class MainMenuScreen implements Screen {
         //this.backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("MP3/battleThemeA.mp3"));
         skin = assetManager.get(Assets.SKIN);
 
-        // load the background "music"
-        /*
-       Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("MP3/battleThemeA.mp3"));
+        //load the background "music"
+        
+       //Music backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("MP3/battleThemeA.mp3"));
 
         // start the playback of the background music immediately
-        backgroundMusic.setLooping(true);
-        backgroundMusic.play(); */
+        //backgroundMusic.setLooping(true);
+        //backgroundMusic.play(); 
 
 
         viewport = new ExtendViewport(1200,800);
         stage = new Stage(viewport);
         // Create the background image
         backImage = new Texture(Gdx.files.internal("GIF/camp.gif"));
-       /*
-       ou bien on peut mettre celle-ci:
-       backImage = new Texture(Gdx.files.internal("camp.png"));
-        */
 
         //BackgroundMusic
         //backgroundMusic.play();
@@ -84,7 +80,7 @@ public class MainMenuScreen implements Screen {
         });
 
         // Bouton Options
-        addbutton("Options");
+       // addbutton("Options");
 
         // Bouton Quit
         addbutton("Quit").addListener(new ClickListener(){
@@ -109,7 +105,6 @@ public class MainMenuScreen implements Screen {
     }
 
     /************* NOM DU JEU ************/
-
 
     @Override
     public void render(float delta) {
@@ -141,8 +136,8 @@ public class MainMenuScreen implements Screen {
     @Override
     public void resize(int width, int height) {
 
-        viewport.update(width, height, true); // Mettez à jour le viewport avec le redimensionnement
-
+        viewport.update(width, height, true); // Met à jour le viewport avec le redimensionnement
+        viewport.apply();
 
 
 

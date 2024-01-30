@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileSets;
-import com.mygdx.game.Back.Item.ItemType;
 import com.mygdx.game.Back.Item.Weapon.*;
 import com.mygdx.game.Graphic.GraphicObject.GraphicCharacter.GraphicEnnemie;
 
@@ -17,11 +16,11 @@ public class EnnemieFactory {
     public Ennemie createEnnemie(float x, float y, String request){
         Ennemie ennemie = null;
         if("gobelin".equals(request)){
-            Massue massue = new Massue(ItemType.WEAPON,"massue", 30, 1);
+            Massue massue = new Massue("massue", 30, 1);
             ennemie = new Gobelin(x,y,50,0,10,2,5,null,massue);
         }
         if("sorciere".equals(request)){
-            Staff staff = new Staff(ItemType.WEAPON,"staff", 3, 5);
+            Staff staff = new Staff("staff", 3, 5);
             ennemie = new Sorciere(x, y, 50,0,10,5,10,null, staff);
         }
         ennemie.setGraphicObject(new GraphicEnnemie(ennemie.getName(), Tilesets));

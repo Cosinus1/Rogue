@@ -27,6 +27,9 @@ public class Inventory {
         }
     }
 
+    public int getSize(){
+        return inventory.size();
+    }
     //renvoie une copie de la liste ( de l'inventaire)
     public ArrayList<Item> getItems(){
         return new ArrayList<>(inventory);
@@ -36,7 +39,7 @@ public class Inventory {
     public InventoryIteratorInterface<Item> getIterator(ItemType itemType){
         return new InventoryIterator(this,itemType);
     }
-    // public InventoryIterator getIterator(){
-
-    // }
+    public void removeItem(Item item){
+        inventory.remove(item);
+    }
 }
