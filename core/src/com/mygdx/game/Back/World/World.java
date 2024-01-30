@@ -69,6 +69,11 @@ public class World {
         Home.addDoor(new Door(860, 415, DungeonHub));
         Home.addDoor(new Door(0, 400, Tavern));
 
+        //Set up collisions
+        DungeonHub.addWalls(true);
+        Tavern.addWalls(true);
+        Home.addWalls(true);
+
         //Align TavernMap
         this.Tavern.centerTavernMap();
 
@@ -188,7 +193,6 @@ public void setHero(Hero hero){
 
     public Map updateCurrentMap(Map map){
         if(map != null){
-            
             if(map.getMusic()!=null){
                 map.getMusic().play();
                 if(this.CurrentMap.getMusic()!=null)this.CurrentMap.getMusic().pause();
@@ -247,18 +251,20 @@ public void setHero(Hero hero){
 
                 //Add the Generated TiledMap into the Map
                 previousMap.updateTiledmap(mapFactory.createRandomTiledMap(DungeonHubMap.getTiledMap().getTileSets(), TileX, TileY));
-                previousMap.addWalls();
+                //Add Collisions with the walls
+                previousMap.addWalls(false);
                 
                 //Spawn Hero in the new map (This can be done in respawn)
                 Hero.spawn(previousMap);
                 //Spawn Boss in the last Map
                 if(i == numberOfMaps){
                     do{
-                        bossX = randomX.nextInt(CurrentMap.getmapWidth()-3) +3;
-                        bossY = randomY.nextInt(CurrentMap.getmapHeight()-3)+3;
-                    } while (!boss.isValidPosition(bossX,bossY, CurrentMap));
-                    boss.setX(bossX);
-                    boss.setY(bossY);
+                        bossX = randomX.nextInt(CurrentMap.getmapWidth());
+                        bossY = randomY.nextInt(CurrentMap.getmapHeight());
+                    } while (!boss.isValidPosition(bossX,bossY, CurrentMap) || bossX<2 || bossY<2 || bossY> CurrentMap.getmapWidth()-2);
+                    boss.setX(bossX*32);
+                    boss.setY(bossY*32);
+                    System.out.println("BOSS POS :" + bossX + " ; " + bossY);
         
                     boss.spawn(previousMap);
                 }
@@ -285,11 +291,13 @@ public void setHero(Hero hero){
                 Random randomX = new Random();
                 Random randomY = new Random();
                 do{
-                        bossX = randomX.nextInt(CurrentMap.getmapWidth()-3) +3;
-                        bossY = randomY.nextInt(CurrentMap.getmapHeight()-3)+3;
-                    } while (!boss.isValidPosition(bossX,bossY, CurrentMap));
-                boss.setX(bossX);
-                boss.setY(bossY);
+                    bossX = randomX.nextInt(CurrentMap.getmapWidth());
+                    bossY = randomY.nextInt(CurrentMap.getmapHeight());
+                } while (!boss.isValidPosition(bossX,bossY, CurrentMap) || bossX<2 || bossY<2 || bossY> CurrentMap.getmapWidth()-2);
+                boss.setX(bossX*32);
+                boss.setY(bossY*32);
+                System.out.println("BOSS POS :" + bossX + " ; " + bossY);
+            
 
                 initializeDungeon(numberOfMaps);
             }else for(Map map : Dungeon) map.updatelastposition(map.getX(), map.getY());;

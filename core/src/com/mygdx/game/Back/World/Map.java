@@ -215,12 +215,15 @@ public class Map {
     public void addElement(Element element){
         Elements.add(element);
     }
-    public void addWalls() {
+    public void addWalls(boolean hide) {
         WallFactory wallFactory = new WallFactory(tiledmap);
         for (int x = 0; x < mapWidth; x++) {
             for (int y = 0; y < mapHeight - 1; y++) {
                 Wall wall = wallFactory.createWall(x, y);
-                if(wall!=null) Walls.add(wall);
+                if(wall!=null){
+                    if(hide) wall.hide();
+                    Walls.add(wall);
+                }
             }
         }
         System.out.println(Walls.size());
@@ -341,13 +344,14 @@ public class Map {
 
                 float distanceX = wall.getX()-object.getX();
                 float distanceY = wall.getY()-object.getY();
-                if(Math.abs(distanceX)<14 && Math.abs(distanceY)<14){
-                    float signX = Math.signum(-distanceX);
-                    float signY = Math.signum(-distanceY);
+                if(Math.abs(distanceX)<16 && Math.abs(distanceY)<16){
+                    float signX = 0;
+                    float signY = 0;
                     if (Math.abs(distanceX)>Math.abs(distanceY)) signX = Math.signum(-distanceX);
                     else signY = Math.signum(-distanceY);
                     //Apply force to object (we ignore force(Object->wall))
-                    object.applyForce(new Force(50000, 50000, signX, signY));
+                    if(object instanceof Element) object.applyForce(new Force(50000, 50000, signX, signY));
+                    else object.applyInstantForce(new Force(200000, 200000, signX, signY));
                 }
             }
         }

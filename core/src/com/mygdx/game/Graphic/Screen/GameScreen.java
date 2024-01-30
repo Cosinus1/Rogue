@@ -35,8 +35,8 @@ public class GameScreen implements Screen {
     public GameScreen(MyGame game){
         this.game = game;
         world = World.getInstance(game.getHero());
-         //Store current map from the world
-         map = world.getCurrentMap();
+         //Store current map from the world and init as Home
+         map = world.getHome();
       //   map.getMusic().setLooping(true);
       //   map.getMusic().play();
         // create the camera
@@ -73,8 +73,8 @@ public class GameScreen implements Screen {
             if(Gdx.input.isKeyPressed(Keys.SPACE)){
                float x = hero.getX();
                float y = hero.getY();
-               if(x>300 && x<340 && y>200 && y<240 && hero.getorY()==1){
-                  MerchantScreen = new MerchantScreen(game, map.getMerchant(), hero);
+               if(x>300 && x<340 && y>150 && y<240 && hero.getorY()==1){
+                  MerchantScreen = new MerchantScreen(game, map.getMerchant(), hero, camera);
                   game.setScreen(MerchantScreen);
                }
                

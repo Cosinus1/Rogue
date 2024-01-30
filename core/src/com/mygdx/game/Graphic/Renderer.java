@@ -60,7 +60,7 @@ public class Renderer {
       }
 
       for(Object object: map.getObjects()){
-         object.render(spriteBatch, camera);
+         if(object != null) object.render(spriteBatch, camera);
       }
       
       spriteBatch.end();

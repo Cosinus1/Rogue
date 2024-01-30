@@ -19,8 +19,8 @@ public abstract class Character extends Object{
     protected String name;
    
     protected boolean attack_charged = false;
-    protected float attackTimer = 1f;
-    protected float attackCooldown = 2f;
+    protected float attackTimer = 0f;
+    protected float attackCooldown = 1f;
 
 
     //constructeur

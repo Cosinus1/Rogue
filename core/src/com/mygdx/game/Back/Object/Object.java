@@ -223,7 +223,8 @@ public class Object {
     }
     /*----------------------------------------------------------RENDER------------------------------------------------ */
     public void render(SpriteBatch spriteBatch, OrthographicCamera camera){
-        graphicObject.render(this, spriteBatch, camera);
+        
+        if(graphicObject != null)graphicObject.render(this, spriteBatch, camera);
     }
 
     

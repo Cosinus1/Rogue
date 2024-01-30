@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.mygdx.game.Back.Inventory.Inventory;
 import com.mygdx.game.Back.Item.Weapon.Weapon;
 import com.mygdx.game.Back.MovementStrategy.WanderMovementStrategy;
+import com.mygdx.game.Back.Object.Force;
 import com.mygdx.game.Back.Object.Character.Character;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
 import com.mygdx.game.Back.World.Map;
@@ -127,36 +128,38 @@ public class Ennemie extends Character {
         
                 // Check previous movement direction of the character and add some probability to maintain direction
                 if(!(graphicObject.getTextureObject().getProperties().containsKey("previousMoveX"))){
-                    graphicObject.getTextureObject().getProperties().put("previousMoveX",X);
+                    graphicObject.getTextureObject().getProperties().put("previousMoveX",randomX);
                 }
                 if(!(graphicObject.getTextureObject().getProperties().containsKey("previousMoveY"))){
-                    graphicObject.getTextureObject().getProperties().put("previousMoveY",Y);
+                    graphicObject.getTextureObject().getProperties().put("previousMoveY",randomY);
                 }
 
-                float previousMoveY = (float) graphicObject.getTextureObject().getProperties().get("previousMoveY");
-                float previousMoveX = (float) graphicObject.getTextureObject().getProperties().get("previousMoveX");
+                int previousMoveY = (int) graphicObject.getTextureObject().getProperties().get("previousMoveY");
+                int previousMoveX = (int) graphicObject.getTextureObject().getProperties().get("previousMoveX");
         
                 // Probability to maintain direction (adjust as needed)
                 double probabilityToMaintainDirection;
                 do probabilityToMaintainDirection = Math.random(); while (probabilityToMaintainDirection<0.95);
         
                 if (random.nextDouble() < probabilityToMaintainDirection) {
-                    randomX = Math.round(previousMoveX * speed);
-                    randomY = Math.round(previousMoveY * speed);
+                    randomX = previousMoveX;
+                    randomY = previousMoveY;
                 } else {
                     // If not maintaining direction, randomly change direction
-                graphicObject.getTextureObject().getProperties().put("previousMoveX",randomX/speed);
-                graphicObject.getTextureObject().getProperties().put("previousMoveY",randomY/speed);
+                graphicObject.getTextureObject().getProperties().put("previousMoveX",randomX);
+                graphicObject.getTextureObject().getProperties().put("previousMoveY",randomY);
                 }
         
-                // Get New Position
-                float newX = X + (randomX * collisionLayer.getTileWidth() / speed);
+                // Set New Position
+                this.applyInstantForce(new Force(20000,20000, randomX, randomY));
+                //map.Wallcollision(this);
+                /*float newX = X + (randomX * collisionLayer.getTileWidth() / speed);
                 float newY = Y + (randomY * collisionLayer.getTileHeight() / speed);
         
-                //Update character's new position if valid
+                
                 if (isValidPosition((int) newX/tileWidth, (int) newY/tileWidth, map)) {
                     setPosition(newX,newY);
-                }
+                }*/
                     //Set angle
                     OrX = randomX;
                     OrY = randomY;

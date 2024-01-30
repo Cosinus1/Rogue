@@ -16,4 +16,8 @@ public class Wall extends Object {
         // Set the texture for rendering
         ((GraphicWall) this.graphicObject).setTextureObject(new TextureMapObject(wallTexture));
     }
+
+    public void hide(){
+        graphicObject = null;
+    }
 }

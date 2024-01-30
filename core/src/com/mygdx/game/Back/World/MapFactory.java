@@ -172,7 +172,7 @@ public class MapFactory {
         TiledMapTileLayer newLayer;
 
     
-        while (i < 20) { //Number of chains
+        while (i < 10) { //Number of chains
             boolean breakcondition = false;//Break if no position is found
             // Choose a random Wallstarting point along the border
             int WallstartX, WallstartY;
@@ -226,7 +226,7 @@ public class MapFactory {
                 int direction = -1;
                 int orientation = -1;
 
-                while (chainLength < 20) { //Desired chainlength
+                while (chainLength < 10) { //Desired chainlength
 
                     //get the distance between Current Position and Wallend & orientation
                     distanceX = (WallendX-currentX)*(WallendX-currentX);
@@ -322,10 +322,11 @@ public class MapFactory {
                         j++;
                     }
                     newCells.clear();
+                    i++; // Increment the chain count
+
                 }
                 
             }
-            i++; // Increment the chain count
         }
     }    
     

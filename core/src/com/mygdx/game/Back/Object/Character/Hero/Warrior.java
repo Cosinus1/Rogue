@@ -10,6 +10,7 @@ public class Warrior extends Hero{
 
     public Warrior(float x, float y, int pv, int defense, int power,int range, Inventory bag){
         super(x, y, pv, defense, power, range, bag);
+        this.attackCooldown = 0.5f;
         setName("warrior");
         this.Class = "warrior";
         createSword();

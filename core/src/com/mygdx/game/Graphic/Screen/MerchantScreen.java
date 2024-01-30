@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -38,7 +39,7 @@ public class MerchantScreen implements Screen {
     private BitmapFont font;
     private ShapeRenderer shapeRenderer;
 
-    public MerchantScreen(final MyGame game, Merchant merchant, Hero hero){
+    public MerchantScreen(final MyGame game, Merchant merchant, Hero hero, OrthographicCamera camera){
         this.game = game;
         this.merchant = merchant;
         batch = new SpriteBatch();
