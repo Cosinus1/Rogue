@@ -27,12 +27,16 @@ Vous avez seulement besoin de Java 11 installé pour exécuter ROGUE à partir d
 Exécutez toutes les commandes dans le répertoire racine du projet (où vous avez cloné / extrait le projet, en utilisant une invite de commande / terminal).
 
 - Télécharger / cloner [la source depuis GitHub](https://github.com/Cosinus1/Rogue.git)
-- Lignes de commande pour lancer : `gradlew run` (sur Linux vous devrez peut-être utiliser ` ./gradlew run`)
+- Lignes de commande pour lancer : `gradle wrapper` pour compiler puis `gradlew desktop:run` (sur Linux vous devrez peut-être utiliser ` ./gradlew desktop:run`)
 - **IntelliJ** doit importer le projet automatiquement lorsque vous ouvrez le répertoire du projet.
 - [PNG](https://github.com/Cosinus1/Rogue/tree/main/assets/PNG) (contient tous les fichiers `.png` pour le visuel du jeu )
 
 ## Running from JAR
 Télécharger puis exécuter le `.JAR`
+Sous Linux, executer la commande `chmod +x Rogue.jar`
+
+Si le jar n'est pas disponible, il est possible de le créer via gradle 
+avec la commande `./gradlew jar
 
 ## Librairie utilisée 
 
