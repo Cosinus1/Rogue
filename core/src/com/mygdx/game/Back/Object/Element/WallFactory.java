@@ -22,16 +22,17 @@ public class WallFactory {
 
         TextureRegion wallTexture = getTextureRegionSafely(x, y);
 
-        if(wallTexture!=null) return new Wall(x * baseLayer.getTileWidth(), y * baseLayer.getTileHeight(), 32, 32, wallTexture);
-        else return null;
+        if (wallTexture != null)
+            return new Wall(x * baseLayer.getTileWidth(), y * baseLayer.getTileHeight(), 32, 32, wallTexture);
+        else
+            return null;
     }
+
     private TextureRegion getTextureRegionSafely(int x, int y) {
         TextureRegion baseTexture = getTextureRegionSafely(baseLayer, x, y);
         TextureRegion middleTexture = getTextureRegionSafely(middleLayer, x, y);
         TextureRegion topTexture = getTextureRegionSafely(topLayer, x, y);
 
-        // Choose which layer's texture to return based on your logic
-        // For example, you can prioritize top layer over middle and base
         if (topTexture != null) {
             return topTexture;
         } else if (middleTexture != null) {
@@ -40,6 +41,7 @@ public class WallFactory {
             return baseTexture;
         }
     }
+
     private TextureRegion getTextureRegionSafely(TiledMapTileLayer layer, int x, int y) {
         if (layer != null) {
             TiledMapTileLayer.Cell cell = layer.getCell(x, y);
@@ -47,7 +49,6 @@ public class WallFactory {
                 return cell.getTile().getTextureRegion();
             }
         }
-        // Return a default texture region or handle null case as needed
         return null;
     }
 }

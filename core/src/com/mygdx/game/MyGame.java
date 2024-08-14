@@ -19,36 +19,36 @@ public class MyGame extends Game {
     private Merchant merchant;
 
     @Override
-    public void create(){
-        
+    public void create() {
+
         // Load Button Textures
         assets = new Assets();
         assets.loadAll();
         assets.getAssetManager().finishLoading();
-        //Init volume
+        // Init volume
         Volume.get();
 
         mainMenuScreen = new MainMenuScreen(this, assets.getAssetManager());
         chooseClassScreen = new ChooseClassScreen(this, assets.getAssetManager());
-  
-        //Set the Main screen
+
+        // Set the Main screen
         setScreen(mainMenuScreen);
 
+    }
 
-    } 
-    
-    public Hero getHero(){
+    public Hero getHero() {
         return this.hero;
     }
-    public Merchant getMerchant(){
+
+    public Merchant getMerchant() {
         return this.merchant;
     }
-    
-    public void setHero(Hero hero){
+
+    public void setHero(Hero hero) {
         this.hero = hero;
     }
 
-    public void setMerchant(Merchant merchant){
+    public void setMerchant(Merchant merchant) {
         this.merchant = merchant;
     }
 }

@@ -1,5 +1,6 @@
 package com.mygdx.game.Graphic.Screen;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
@@ -66,8 +67,11 @@ public class GameScreen implements Screen {
    public void render(float delta) {
       //Get Time
       deltaTime = Gdx.graphics.getDeltaTime();
-      //Update music volume
-      map.getMusic().setVolume(Volume.get());
+      if (map != null && map.getMusic() != null) {
+         map.getMusic().setVolume(Volume.get());
+     }
+     
+
 
 
 /*-------------------------------------------------INPUTS---------------------------------------------------------- */
