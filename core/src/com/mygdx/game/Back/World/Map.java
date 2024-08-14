@@ -99,6 +99,7 @@ public class Map {
         this.music = music;
         //init renderer for the map
         renderer = new OrthogonalTiledMapRenderer(tiledmap);
+
     }
 
 /* --------------------------------------------- GETTERS ------------------------------------- */
@@ -216,7 +217,7 @@ public class Map {
         Elements.add(element);
     }
     public void addWalls(boolean hide) {
-        WallFactory wallFactory = new WallFactory(tiledmap);
+        if (wallFactory == null) wallFactory = new WallFactory(tiledmap);
         for (int x = 0; x < mapWidth; x++) {
             for (int y = 0; y < mapHeight - 1; y++) {
                 Wall wall = wallFactory.createWall(x, y);

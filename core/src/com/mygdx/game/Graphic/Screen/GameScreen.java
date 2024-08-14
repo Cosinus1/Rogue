@@ -10,10 +10,12 @@ import com.mygdx.game.Back.Object.Character.Hero.Hero;
 import com.mygdx.game.Back.World.Map;
 import com.mygdx.game.Back.World.World;
 import com.mygdx.game.Graphic.*;
+import com.mygdx.game.Graphic.Sound.Volume;
 
 public class GameScreen implements Screen {
     MyGame game;
     PauseScreen pauseScreen;
+    SettingsScreen settingsScreen;
     InventoryScreen inventoryScreen;
     MerchantScreen MerchantScreen;
     
@@ -35,35 +37,39 @@ public class GameScreen implements Screen {
     public GameScreen(MyGame game){
         this.game = game;
         world = World.getInstance(game.getHero());
-         //Store current map from the world and init as Home
+      //Store current map from the world and init as Home
          map = world.getHome();
-      //   map.getMusic().setLooping(true);
-      //   map.getMusic().play();
-        // create the camera
+         map.getMusic().setLooping(true);
+         map.getMusic().play();
+      // create the camera
             camera = new OrthographicCamera();
             camera.setToOrtho(false, 960, 640);
-            //Update Camera
+         //Update Camera
             camera.update();
 
-         // Create the renderers for rendering shapes and textures
+      // Create the renderers for rendering shapes and textures
          renderer = new Renderer();
          shapeRenderer = new ShapeRenderer();
 
-      
-        // Initialize our champion
-        hero = world.getHero();
+   
+      // Initialize our champion
+         hero = world.getHero();
 
-        //Init menu pause
-        pauseScreen = new PauseScreen(game);
-        // Init inventory screen
-        inventoryScreen = new InventoryScreen(game, hero);
-        
+      //Init screens
+         pauseScreen = new PauseScreen(game);
+         settingsScreen = new SettingsScreen(game);
+         inventoryScreen = new InventoryScreen(game, hero);
+      
     }
 
     @Override
    public void render(float delta) {
       //Get Time
       deltaTime = Gdx.graphics.getDeltaTime();
+      //Update music volume
+      map.getMusic().setVolume(Volume.get());
+
+
 /*-------------------------------------------------INPUTS---------------------------------------------------------- */
       //Keyboard
          //Arrows Inputs
@@ -92,9 +98,9 @@ public class GameScreen implements Screen {
          //Enter input : change color
          if(Gdx.input.isKeyJustPressed(Keys.ENTER))BlacknWhite = !BlacknWhite;
 
-         //Escapeinput : menu
+         //Escape input : menu
          if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)) game.setScreen(pauseScreen);
-
+         //E input : inventory
          if(Gdx.input.isKeyJustPressed(Keys.E)) game.setScreen(inventoryScreen);
 
           

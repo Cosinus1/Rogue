@@ -42,7 +42,7 @@ public class PauseScreen implements Screen {
         // Créer des boutons pour Continuer, Menu et Quitter
         TextButton continueButton = new TextButton("Continue", skin);
         TextButton menuButton = new TextButton("Menu", skin);
-        TextButton quitButton = new TextButton("Quit", skin);
+        TextButton settingsButton = new TextButton("Settings", skin);
         TextButton saveButton = new TextButton("Save", skin);
 
         // Add event listeners for the buttons
@@ -54,11 +54,11 @@ public class PauseScreen implements Screen {
             }
         });
 
-        quitButton.addListener(new ClickListener() {
+        settingsButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // Quit the application
-                Gdx.app.exit();
+                // Go to Settings
+                game.setScreen(game.gameScreen.settingsScreen);
             }
         });
 
@@ -83,9 +83,9 @@ public class PauseScreen implements Screen {
         table.row();
         table.add(saveButton).padBottom(20);
         table.row();
-        table.add(menuButton).padBottom(20);
+        table.add(settingsButton).padBottom(20);
         table.row();
-        table.add(quitButton).padBottom(20);
+        table.add(menuButton).padBottom(20);
 
         stage.addActor(table);
 
