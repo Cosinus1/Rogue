@@ -7,6 +7,7 @@ import com.mygdx.game.Graphic.Screen.Assets;
 import com.mygdx.game.Graphic.Screen.ChooseClassScreen;
 import com.mygdx.game.Graphic.Screen.GameScreen;
 import com.mygdx.game.Graphic.Screen.MainMenuScreen;
+import com.mygdx.game.Graphic.Sound.Volume;
 
 public class MyGame extends Game {
 
@@ -14,7 +15,6 @@ public class MyGame extends Game {
     public ChooseClassScreen chooseClassScreen;
     public GameScreen gameScreen;
     public Assets assets;
-
     private Hero hero;
     private Merchant merchant;
 
@@ -25,12 +25,13 @@ public class MyGame extends Game {
         assets = new Assets();
         assets.loadAll();
         assets.getAssetManager().finishLoading();
-        
+        //Init volume
+        Volume.get();
+
         mainMenuScreen = new MainMenuScreen(this, assets.getAssetManager());
         chooseClassScreen = new ChooseClassScreen(this, assets.getAssetManager());
   
         //Set the Main screen
-        //setScreen(gameScreen);
         setScreen(mainMenuScreen);
 
 
@@ -47,8 +48,7 @@ public class MyGame extends Game {
         this.hero = hero;
     }
 
-    public void setMarchant(Merchant merchant){
+    public void setMerchant(Merchant merchant){
         this.merchant = merchant;
     }
-    
 }

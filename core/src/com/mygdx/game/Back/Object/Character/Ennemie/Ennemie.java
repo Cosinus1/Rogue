@@ -12,7 +12,6 @@ import com.mygdx.game.Back.Object.Force;
 import com.mygdx.game.Back.Object.Character.Character;
 import com.mygdx.game.Back.Object.Character.Hero.Hero;
 import com.mygdx.game.Back.World.Map;
-import com.mygdx.game.Back.World.Map.*;
 
 public class Ennemie extends Character {
     protected TiledMap tiledMap;
