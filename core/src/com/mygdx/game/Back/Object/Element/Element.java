@@ -9,42 +9,44 @@ import com.mygdx.game.Back.Object.Character.Ennemie.Ennemie;
 import com.mygdx.game.Back.World.Map;
 import com.mygdx.game.Graphic.GraphicObject.GraphicElement.GraphicElement;
 
-public class Element extends Object{
+public class Element extends Object {
     public int Power;
     public String target;
-    
-    public Element(float x, float y, int width, int height){
+
+    public Element(float x, float y, int width, int height) {
         super(x, y, width, height);
         this.mass = 5;
         this.graphicObject = new GraphicElement(width, height);
-        this.friction = 1;
+        this.friction = 0.1f;
         this.Power = 10;
         this.target = "enemy";
     }
+
     /*-----------------------------------------------------------------SETTERS----------------------------------------------------------- */
-    public void setTarget(String target){
+    public void setTarget(String target) {
         this.target = target;
     }
     /*----------------------------------------------------------------CHECKERS---------------------------------------------------------- */
-    
+
     /*--------------------------------------------------------ATTACK----------------------------------------------------------------- */
-    public void LookforAttack(Map map){
+    public void LookforAttack(Map map) {
         ArrayList<Ennemie> Enemies = map.getNPCs();
-        if(Enemies!=null){
+        if (Enemies != null) {
             Iterator<Ennemie> Iterator = Enemies.iterator();
-            while(Iterator.hasNext()){
+            while (Iterator.hasNext()) {
                 Ennemie enemy = Iterator.next();
-                if(enemy.getHitbox().overlaps(Hitbox) && target == "enemy"){
+                if (enemy.getHitbox().overlaps(Hitbox) && target == "enemy") {
                     this.Attack(enemy);
                     this.resetForces();
                 }
-            }  
+            }
         }
         Character Hero = (Character) map.getHero();
-        if(Hero.getHitbox().overlaps(Hitbox) && target == "hero") this.Attack(Hero);     
+        if (Hero.getHitbox().overlaps(Hitbox) && target == "hero")
+            this.Attack(Hero);
     }
-    
-    public void Attack(Character character){
+
+    public void Attack(Character character) {
         character.recevoirDegats(Power);
     }
 }

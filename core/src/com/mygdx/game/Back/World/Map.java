@@ -410,23 +410,40 @@ public class Map {
     }
 
     public void Wallcollision(Object object) {
+        float restitution = 1.1f; // Coefficient of restitution
+
         if (Walls != null) {
             for (Wall wall : Walls) {
 
                 float distanceX = wall.getX() - object.getX();
                 float distanceY = wall.getY() - object.getY();
+
+                // Check if the object is within collision distance of the wall
                 if (Math.abs(distanceX) < 16 && Math.abs(distanceY) < 16) {
                     float signX = 0;
                     float signY = 0;
-                    if (Math.abs(distanceX) > Math.abs(distanceY))
+
+                    // Determine the axis of collision
+                    if (Math.abs(distanceX) > Math.abs(distanceY)) {
                         signX = Math.signum(-distanceX);
-                    else
+                    } else {
                         signY = Math.signum(-distanceY);
-                    // Apply force to object (we ignore force(Object->wall))
-                    if (object instanceof Element)
-                        object.applyForce(new Force(50000, 50000, signX, signY));
-                    else
-                        object.applyInstantForce(new Force(200000, 200000, signX, signY));
+                    }
+
+                    // Calculate the change in Speed due to collision
+                    float deltaVx = (signX != 0) ? -object.getSpeedX() * (1 + restitution) : 0;
+                    float deltaVy = (signY != 0) ? -object.getSpeedY() * (1 + restitution) : 0;
+
+                    // Calculate the force to apply
+                    float forceX = object.getMass() * deltaVx;
+                    float forceY = object.getMass() * deltaVy;
+
+                    // Apply the calculated forces based on object type
+                    if (object instanceof Element) {
+                        object.applyForce(new Force(forceX, forceY, signX, signY));
+                    } else {
+                        object.applyInstantForce(new Force(forceX * 4, forceY * 4, signX, signY));
+                    }
                 }
             }
         }
