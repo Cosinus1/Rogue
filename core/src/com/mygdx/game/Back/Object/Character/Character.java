@@ -10,17 +10,20 @@ import com.mygdx.game.Back.World.Map;
 public abstract class Character extends Object {
 
     protected String Class;
+    // Battle stats
     protected int PV;
     protected int PV_max;
     protected int defense;
     protected int power;
     protected int range;
-    protected Inventory bag;
-    protected String name;
-
     protected boolean attack_charged = false;
     protected float attackTimer = 0f;
     protected float attackCooldown = 1f;
+    // Movement stats
+    protected float movementSpeed = 5.0f;
+    // Millascenous stats
+    protected Inventory bag;
+    protected String name;
 
     // constructeur
     public Character(float x, float y, int pv, int defense, int power, int range, Inventory bag) {
@@ -32,7 +35,8 @@ public abstract class Character extends Object {
         this.power = power;
         this.range = range;
         this.bag = bag;
-        this.friction = 0.9f;
+        this.friction = 20.0f;
+        this.movementSpeed = 20;
     }
 
     /*----------------------------------------- GETTERS -------------------------------------- */

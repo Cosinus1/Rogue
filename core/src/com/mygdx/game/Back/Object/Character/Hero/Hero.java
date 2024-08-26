@@ -43,23 +43,17 @@ public class Hero extends Character {
             Vector3 touchPos = new Vector3();
             touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             camera.unproject(touchPos);
-            Hitbox.x = touchPos.x;
-            Hitbox.y = touchPos.y;
+            this.setPosition(touchPos.x, touchPos.y);
         }
-
-        // Apply collision detection before moving
-        map.Objectcollision(this);
-        map.Wallcollision(this);
-
         // Define movement speed
-        float movementForceMagnitude = 5000; // Adjusted for realism
+        this.movementSpeed = 50000; // Adjusted for realism
 
         // LEFT
         if (Gdx.input.isKeyPressed(Keys.LEFT)) {
             OrX = -1;
             OrY = 0;
             setAngle();
-            applyInstantForce(new Force(movementForceMagnitude, 0, OrX, OrY));
+            this.applyForce(new Force(this.movementSpeed, 0, OrX, OrY));
             graphicObject.setMoveTexture();
         }
 
@@ -68,7 +62,7 @@ public class Hero extends Character {
             OrX = 1;
             OrY = 0;
             setAngle();
-            applyInstantForce(new Force(movementForceMagnitude, 0, OrX, OrY));
+            this.applyForce(new Force(this.movementSpeed, 0, OrX, OrY));
             graphicObject.setMoveTexture();
         }
 
@@ -77,7 +71,7 @@ public class Hero extends Character {
             OrX = 0;
             OrY = 1;
             setAngle();
-            applyInstantForce(new Force(0, movementForceMagnitude, OrX, OrY));
+            this.applyForce(new Force(0, this.movementSpeed, OrX, OrY));
             graphicObject.setMoveTexture();
         }
 
@@ -86,13 +80,13 @@ public class Hero extends Character {
             OrX = 0;
             OrY = -1;
             setAngle();
-            applyInstantForce(new Force(0, movementForceMagnitude, OrX, OrY));
+            this.applyForce(new Force(0, this.movementSpeed, OrX, OrY));
             graphicObject.setMoveTexture();
         }
 
         // F input: apply force to Hero (testing implementation)
         if (Gdx.input.isKeyJustPressed(Keys.F)) {
-            applyForce(new Force(movementForceMagnitude, movementForceMagnitude, -OrX, -OrY));
+            this.applyForce(new Force(this.movementSpeed, this.movementSpeed, -OrX, -OrY));
         }
     }
 

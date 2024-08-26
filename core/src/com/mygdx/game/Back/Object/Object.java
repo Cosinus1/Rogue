@@ -38,7 +38,7 @@ public class Object {
 
         this.graphicObject = new GraphicObject(width, height);
         Forces = new ArrayList<>();
-        this.friction = 1.1f;
+        this.friction = 10000.1f;
 
         this.mass = 1;
 
@@ -143,48 +143,46 @@ public class Object {
     }
 
     public void PFD() {
-        if (Forces != null) {
+
+        if (Forces.size() != 0) {
 
             Iterator<Force> Iterator = Forces.iterator();
             while (Iterator.hasNext()) {
                 Force force = Iterator.next();
-                aX += force.ForceX / mass;
-                aY += force.ForceY / mass;
-
                 // Apply friction to reduce force over time
                 force.ForceX /= (1 + friction);
                 force.ForceY /= (1 + friction);
+                // PFD
+                aX += force.ForceX / mass;
+                aY += force.ForceY / mass;
 
                 // Remove negligible forces
-                if (Math.abs(force.ForceX) < 10 && Math.abs(force.ForceY) < 10) {
+                if (Math.abs(force.ForceX) <= 0.1 && Math.abs(force.ForceY) <= 0.1) {
                     Iterator.remove();
                 }
             }
         } else {
-            System.err.println("No Forces applied");
+            aX = 0;
+            aY = 0;
         }
     }
 
     public void update(float deltaTime) {
         PFD();
-
-        // Update Speed considering friction (which acts as a drag)
-        speedX += aX * deltaTime;
-        speedY += aY * deltaTime;
-
-        speedX /= (1 + friction * deltaTime);
-        speedY /= (1 + friction * deltaTime);
-
+        speedX = aX * deltaTime;
+        speedY = aY * deltaTime;
         // Update Position
         X += speedX * deltaTime;
         Y += speedY * deltaTime;
-
         setPosition(X, Y);
 
-        // Reset Acceleration
-        aX = 0;
-        aY = 0;
+        // Print acceleration using printf
+        System.out.printf("acceleration: %.2f, %.2f%n", aX, aY);
+
+        // Print speed using printf
+        System.out.printf("speed: %.2f, %.2f%n", speedX, speedY);
     }
+
     /*--------------------------------------------------------------CHECKERS-------------------------------------------------------- */
 
     public boolean inRange(Object object, Map map) {
