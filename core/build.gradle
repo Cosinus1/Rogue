@@ -5,4 +5,15 @@ sourceSets.main.java.srcDirs = [ "src/" ]
 
 eclipse.project.name = appName + "-core"
 
+dependencies {
+    implementation "com.badlogicgames.gdx:gdx:1.9.10"
+    implementation "com.badlogicgames.gdx:gdx-box2d:1.9.10"
+    implementation "org.xerial:sqlite-jdbc:3.36.0.3"
+}
 
+task executeDbScripts(type: JavaExec) {
+    main = 'com.mygdx.game.DatabaseManager'
+    classpath = sourceSets.main.runtimeClasspath
+    args = ['scripts/db/create_tables.sql', 'scripts/db/insert_data.sql']
+    workingDir = project.projectDir
+}
